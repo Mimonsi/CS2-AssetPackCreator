@@ -1,0 +1,173 @@
+using System.Web;
+
+namespace AssetPackCreator
+{
+    public partial class Main : Form
+    {
+        public Main()
+        {
+            InitializeComponent();
+        }
+        private Dictionary<int, Asset> addedAssets = new Dictionary<int, Asset>();
+        private string assetPackName = "";
+        //private string assetPackDirectory = @"C:\Users\Konsi\Documents\CS2-Modding\CS2-CustomAssetPack\CustomAssetPack";
+        // current dir
+        private string assetPackDirectory = Directory.GetCurrentDirectory();
+        private void cmdRenameProject_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtProjectName.Text) || txtProjectName.Text.Contains(" ") || !txtProjectName.Text.ToLower().EndsWith("assetpack"))
+            {
+                MessageBox.Show("Please enter a name that ends with 'AssetPack' and does not contain any spaces or other characters", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string oldSolutionName = assetPackName;
+            string newSolutionName = txtProjectName.Text;
+
+
+            if (MessageBox.Show("Detected Solution file: " + oldSolutionName + ".sln. Would you like to continue renaming it to " + newSolutionName + ".sln?", "Info", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information) != DialogResult.Yes)
+            {
+                return;
+            }
+
+            try
+            {
+                File.Move($"{oldSolutionName}.sln", $"{newSolutionName}.sln");
+
+                File.Move($"{oldSolutionName}.csproj", $"{newSolutionName}.csproj");
+
+                string csprojContent = File.ReadAllText($"{newSolutionName}.sln");
+                csprojContent = csprojContent.Replace(oldSolutionName, newSolutionName);
+                File.WriteAllText($"{newSolutionName}.sln", csprojContent);
+
+                MessageBox.Show("Solution successfully renamed.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error renaming solution: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+            //groupRename.Enabled = false;
+            // Look for sln file in current folder
+            foreach (string file in Directory.GetFiles(assetPackDirectory))
+            {
+                if (file.EndsWith(".sln"))
+                {
+                    assetPackName = Path.GetFileNameWithoutExtension(file);
+                    break;
+                }
+            }
+            txtProjectName.Text = assetPackName;
+            selectAssetsDialog.InitialDirectory = $@"C:\Users\{Environment.UserName}\AppData\LocalLow\Colossal Order\Cities Skylines II\StreamingAssets~";
+        }
+
+        private void SetThumbnailIcon(string path, string thumbnailPath)
+        {
+
+        }
+
+        private void cmdBrowseAssets_Click(object sender, EventArgs e)
+        {
+            if (selectAssetsDialog.ShowDialog() != DialogResult.OK)
+                return;
+            foreach (string s in selectAssetsDialog.FileNames)
+            {
+
+                // Copy files to local /Resource/assets folder
+                //var baseAssetDir = @"C:\Users\Konsi\Documents\CS2-Modding\CS2-CustomAssetPack\CustomAssetPack";
+                var baseAssetDir = Directory.GetCurrentDirectory();
+                string dest = Path.Combine(baseAssetDir, "Resources", "assets", Path.GetFileName(s));
+                if (!File.Exists(dest))
+                {
+                    File.Copy(s, dest);
+                }
+
+
+                string initialName = Path.GetFileNameWithoutExtension(s);
+                if (!lbAssets.Items.Contains(initialName))
+                {
+                    int index = lbAssets.Items.Add(initialName);
+                    addedAssets.Add(index, new Asset()
+                    {
+                        path = dest,
+                        prefabName = initialName
+                    });
+                }
+            }
+        }
+
+        private void cmdRemoveSelectedAsset_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < addedAssets.Count; i++)
+            {
+                if (addedAssets[i].path == lbAssets.SelectedItem.ToString())
+                {
+                    addedAssets.Remove(i);
+                    lbAssets.Items.Remove(i);
+                    break;
+                }
+            }
+        }
+
+        private void cmdAddThumbnail_Click(object sender, EventArgs e)
+        {
+            Asset selected = addedAssets[lbAssets.SelectedIndex];
+            if (cmdAddThumbnail.Text == "Remove Thumbnail")
+            {
+                selected.thumbnailPath = "";
+                SetThumbnailIcon(selected.path, selected.thumbnailPath);
+            }
+            else
+            {
+                var x = addThumbnailDialog.ShowDialog();
+                if (x == DialogResult.OK)
+                {
+                    if (!string.IsNullOrEmpty(addThumbnailDialog.FileName))
+                    {
+                        selected.thumbnailPath = addThumbnailDialog.FileName;
+                        SetThumbnailIcon(selected.path, selected.thumbnailPath);
+                    }
+                }
+            }
+            int i = lbAssets.SelectedIndex;
+            lbAssets.SelectedIndex = -1;
+            lbAssets.SelectedIndex = i;
+        }
+
+
+        private void lbAssets_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = lbAssets.SelectedIndex;
+            if (index == -1)
+            {
+                cmdAddThumbnail.Enabled = false;
+                cmdRemoveSelectedAsset.Enabled = false;
+                return;
+            }
+            cmdRemoveSelectedAsset.Enabled = true;
+            cmdAddThumbnail.Enabled = true;
+            Asset selected = addedAssets[index];
+            txtPrefabName.Text = selected.prefabName;
+            if (selected.HasThumbnail())
+            {
+                thumbnailBox.ImageLocation = selected.thumbnailPath;
+                cmdAddThumbnail.Text = "Remove Thumbnail";
+            }
+            else
+            {
+                thumbnailBox.ImageLocation = "";
+                cmdAddThumbnail.Text = "Add Thumbnail";
+            }
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
