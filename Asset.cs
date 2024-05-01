@@ -6,24 +6,15 @@ using System.Threading.Tasks;
 
 namespace AssetPackCreator
 {
-    internal class Asset
+    public class Asset
     {
-        public Asset() { }
-        public string dir;
         public string prefabName;
-
-        public string prefabPath
-        {
-            get
-            {
-                return System.IO.Path.Combine(dir, prefabName + ".Prefab");
-            }
-        }
-
         public string thumbnailExt;
 
         public bool HasThumbnail()
-        { return File.Exists(Path.Combine(dir, prefabName + thumbnailExt)); }
+        {
+            return !string.IsNullOrEmpty(thumbnailExt);
+        }
 
         public void UpdateThumbnailInPrefab()
         {
@@ -51,6 +42,15 @@ namespace AssetPackCreator
             {
                 sw.Write(text);
             }*/
+        }
+
+        public override string ToString()
+        {
+            if (HasThumbnail())
+            {
+                return $"\u2705 {prefabName}";
+            }
+            return $"\u274c {prefabName}";
         }
     }
 }

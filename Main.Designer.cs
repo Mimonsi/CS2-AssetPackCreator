@@ -55,6 +55,7 @@
             // 
             // cmdRenameProject
             // 
+            cmdRenameProject.Enabled = false;
             cmdRenameProject.Location = new Point(6, 81);
             cmdRenameProject.Name = "cmdRenameProject";
             cmdRenameProject.Size = new Size(256, 34);
@@ -69,6 +70,7 @@
             txtProjectName.Name = "txtProjectName";
             txtProjectName.Size = new Size(256, 29);
             txtProjectName.TabIndex = 1;
+            txtProjectName.TextChanged += txtProjectName_TextChanged;
             // 
             // label1
             // 
