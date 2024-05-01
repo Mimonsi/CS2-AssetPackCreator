@@ -111,6 +111,7 @@
             cmdStep2.TabIndex = 4;
             cmdStep2.Text = "Step 2: Add Assets to your Pack";
             cmdStep2.UseVisualStyleBackColor = true;
+            cmdStep2.Click += cmdStep2_Click;
             // 
             // cmdStep1
             // 
@@ -120,6 +121,7 @@
             cmdStep1.TabIndex = 3;
             cmdStep1.Text = "Step 1: Name your Asset Pack";
             cmdStep1.UseVisualStyleBackColor = true;
+            cmdStep1.Click += cmdStep1_Click;
             // 
             // groupAddAssets
             // 

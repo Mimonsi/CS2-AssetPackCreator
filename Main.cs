@@ -51,7 +51,8 @@ namespace AssetPackCreator
 
         private void Main_Load(object sender, EventArgs e)
         {
-            //groupRename.Enabled = false;
+            groupRename.Enabled = false;
+            groupAddAssets.Enabled = false;
             // Look for sln file in current folder
             foreach (string file in Directory.GetFiles(assetPackDirectory))
             {
@@ -63,11 +64,8 @@ namespace AssetPackCreator
             }
             txtProjectName.Text = assetPackName;
             selectAssetsDialog.InitialDirectory = $@"C:\Users\{Environment.UserName}\AppData\LocalLow\Colossal Order\Cities Skylines II\StreamingAssets~";
-        }
 
-        private void SetThumbnailIcon(string path, string thumbnailPath)
-        {
-
+            cmdStep1_Click(sender, e);
         }
 
         private void cmdBrowseAssets_Click(object sender, EventArgs e)
@@ -80,20 +78,18 @@ namespace AssetPackCreator
                 // Copy files to local /Resource/assets folder
                 //var baseAssetDir = @"C:\Users\Konsi\Documents\CS2-Modding\CS2-CustomAssetPack\CustomAssetPack";
                 var baseAssetDir = Directory.GetCurrentDirectory();
-                string dest = Path.Combine(baseAssetDir, "Resources", "assets", Path.GetFileName(s));
-                if (!File.Exists(dest))
-                {
-                    File.Copy(s, dest);
-                }
-
+                string dest = Path.Combine(baseAssetDir, "Resources", "assets", Path.GetFileNameWithoutExtension(s));
 
                 string initialName = Path.GetFileNameWithoutExtension(s);
                 if (!lbAssets.Items.Contains(initialName))
                 {
+                    if (!Directory.Exists(dest))
+                        Directory.CreateDirectory(dest);
+                    File.Copy(s, Path.Combine(dest, Path.GetFileName(s)), true);
                     int index = lbAssets.Items.Add(initialName);
                     addedAssets.Add(index, new Asset()
                     {
-                        path = dest,
+                        dir = dest,
                         prefabName = initialName
                     });
                 }
@@ -104,8 +100,9 @@ namespace AssetPackCreator
         {
             for (int i = 0; i < addedAssets.Count; i++)
             {
-                if (addedAssets[i].path == lbAssets.SelectedItem.ToString())
+                if (addedAssets[i].dir == lbAssets.SelectedItem.ToString())
                 {
+                    Directory.Delete(addedAssets[i].dir, true);
                     addedAssets.Remove(i);
                     lbAssets.Items.Remove(i);
                     break;
@@ -118,18 +115,22 @@ namespace AssetPackCreator
             Asset selected = addedAssets[lbAssets.SelectedIndex];
             if (cmdAddThumbnail.Text == "Remove Thumbnail")
             {
-                selected.thumbnailPath = "";
-                SetThumbnailIcon(selected.path, selected.thumbnailPath);
+                selected.SetThumbnailPath("");
             }
             else
             {
                 var x = addThumbnailDialog.ShowDialog();
                 if (x == DialogResult.OK)
                 {
+
                     if (!string.IsNullOrEmpty(addThumbnailDialog.FileName))
                     {
-                        selected.thumbnailPath = addThumbnailDialog.FileName;
-                        SetThumbnailIcon(selected.path, selected.thumbnailPath);
+                        var baseAssetDir = Directory.GetCurrentDirectory();
+                        string dest = Path.Combine(selected.dir, Path.GetFileName(addThumbnailDialog.FileName));
+                        File.Copy(addThumbnailDialog.FileName, dest, true);
+
+                        selected.SetThumbnailPath(addThumbnailDialog.FileName);
+                        cmdAddThumbnail.Text = "Remove Thumbnail";
                     }
                 }
             }
@@ -168,6 +169,18 @@ namespace AssetPackCreator
         private void label3_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void cmdStep1_Click(object sender, EventArgs e)
+        {
+            groupAddAssets.Enabled = false;
+            groupRename.Enabled = true;
+        }
+
+        private void cmdStep2_Click(object sender, EventArgs e)
+        {
+            groupAddAssets.Enabled = true;
+            groupRename.Enabled = false;
         }
     }
 }

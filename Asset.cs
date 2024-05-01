@@ -9,10 +9,15 @@ namespace AssetPackCreator
     internal class Asset
     {
         public Asset() { }
-        public string path;
+        public string dir;
         public string prefabName;
         public string thumbnailPath;
 
         public bool HasThumbnail() { return !string.IsNullOrEmpty(thumbnailPath); }
+
+        public void SetThumbnailPath(string thumbnailPath)
+        {
+
+        }
     }
 }

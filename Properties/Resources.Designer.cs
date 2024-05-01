@@ -59,15 +59,5 @@ namespace AssetPackCreator.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap CarProp01 {
-            get {
-                object obj = ResourceManager.GetObject("CarProp01", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }
