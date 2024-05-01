@@ -12,9 +12,9 @@ namespace AssetPackCreator
         public string prefabName;
         public string thumbnailExt;
 
-        public string assetPath => $"{pack.baseDirectory.FullName}\\{prefabName}";
-        public string prefabPath => $"{assetPath}\\{prefabName}.Prefab";
-        public string thumbnailPath => $"{assetPath}\\{prefabName}{thumbnailExt}";
+        public string assetPath => $@"{pack.baseDirectory.FullName}\{prefabName}";
+        public string prefabPath => $@"{assetPath}\{prefabName}.Prefab";
+        public string thumbnailPath => $@"{assetPath}\{prefabName}{thumbnailExt}";
 
         public bool HasThumbnail()
         {
