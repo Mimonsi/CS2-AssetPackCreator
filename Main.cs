@@ -128,7 +128,6 @@ namespace AssetPackCreator
 
                     if (!string.IsNullOrEmpty(addThumbnailDialog.FileName))
                     {
-                        var baseAssetDir = Directory.GetCurrentDirectory();
                         string dest = Path.Combine(selected.dir, Path.GetFileName(addThumbnailDialog.FileName));
                         File.Copy(addThumbnailDialog.FileName, dest, true);
                         selected.thumbnailPath = dest;
@@ -188,7 +187,6 @@ namespace AssetPackCreator
 
         private void cmdApplyAssetName_Click(object sender, EventArgs e)
         {
-            
             if (string.IsNullOrEmpty(txtPrefabName.Text) || txtPrefabName.Text.Length < 5)
             {
                 MessageBox.Show("Please enter at least 5 characters", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -198,17 +196,29 @@ namespace AssetPackCreator
 
             string oldPrefabName = selected.prefabName;
             string oldDir = selected.dir;
+            string oldThumbnailPath = selected.thumbnailPath;
+
             selected.prefabName = txtPrefabName.Text;
 
             string newDir = Path.Combine(Path.GetDirectoryName(oldDir), selected.prefabName);
+            File.Move(Path.Combine(oldDir, oldPrefabName + ".Prefab"), Path.Combine(oldDir, selected.prefabName + ".Prefab"));
+            File.Move(Path.Combine(oldDir, oldPrefabName + ".Prefab.cid"), Path.Combine(oldDir, selected.prefabName + ".Prefab.cid"));
+            if (!string.IsNullOrEmpty(oldThumbnailPath))
+            {
+                File.Move(Path.Combine(oldThumbnailPath), Path.Combine(oldDir, Path.GetFileName(oldThumbnailPath)));
+            }
+
             Directory.Move(oldDir, newDir);
             selected.dir = newDir;
 
-            File.Move(Path.Combine(newDir, oldPrefabName + ".Prefab"), Path.Combine(newDir, selected.prefabName + ".Prefab"));
-            File.Move(Path.Combine(newDir, oldPrefabName + ".Prefab.cid"), Path.Combine(newDir, selected.prefabName + ".Prefab.cid"));
 
-            selected.thumbnailPath = selected.thumbnailPath.Replace(oldDir, newDir);
-            selected.UpdateThumbnailInPrefab();
+            if (selected.HasThumbnail())
+            {
+                File.Move(selected.thumbnailPath, Path.Combine(newDir, Path.GetFileName(selected.thumbnailPath)));
+                selected.thumbnailPath = Path.Combine(newDir, Path.GetFileName(selected.thumbnailPath));
+                selected.UpdateThumbnailInPrefab();
+            }
+
         }
 
         private void txtPrefabName_TextChanged(object sender, EventArgs e)
