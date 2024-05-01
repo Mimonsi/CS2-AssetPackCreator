@@ -36,6 +36,7 @@
             cmdStep2 = new Button();
             cmdStep1 = new Button();
             groupAddAssets = new GroupBox();
+            cmdApplyAssetName = new Button();
             cmdAddThumbnail = new Button();
             cmdRemoveSelectedAsset = new Button();
             thumbnailBox = new PictureBox();
@@ -125,6 +126,7 @@
             // 
             // groupAddAssets
             // 
+            groupAddAssets.Controls.Add(cmdApplyAssetName);
             groupAddAssets.Controls.Add(cmdAddThumbnail);
             groupAddAssets.Controls.Add(cmdRemoveSelectedAsset);
             groupAddAssets.Controls.Add(thumbnailBox);
@@ -140,6 +142,18 @@
             groupAddAssets.TabIndex = 4;
             groupAddAssets.TabStop = false;
             groupAddAssets.Text = "Add Assets";
+            // 
+            // cmdApplyAssetName
+            // 
+            cmdApplyAssetName.Enabled = false;
+            cmdApplyAssetName.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cmdApplyAssetName.Location = new Point(266, 157);
+            cmdApplyAssetName.Name = "cmdApplyAssetName";
+            cmdApplyAssetName.Size = new Size(152, 33);
+            cmdApplyAssetName.TabIndex = 8;
+            cmdApplyAssetName.Text = "Apply Name";
+            cmdApplyAssetName.UseVisualStyleBackColor = true;
+            cmdApplyAssetName.Click += cmdApplyAssetName_Click;
             // 
             // cmdAddThumbnail
             // 
@@ -178,6 +192,7 @@
             txtPrefabName.Name = "txtPrefabName";
             txtPrefabName.Size = new Size(306, 29);
             txtPrefabName.TabIndex = 7;
+            txtPrefabName.TextChanged += txtPrefabName_TextChanged;
             // 
             // label3
             // 
@@ -272,5 +287,6 @@
         private TextBox txtPrefabName;
         private Label label3;
         private PictureBox thumbnailBox;
+        private Button cmdApplyAssetName;
     }
 }

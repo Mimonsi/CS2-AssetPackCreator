@@ -15,9 +15,20 @@ namespace AssetPackCreator
 
         public bool HasThumbnail() { return !string.IsNullOrEmpty(thumbnailPath); }
 
-        public void SetThumbnailPath(string thumbnailPath)
+        public void UpdateThumbnailInPrefab()
         {
-
+            MessageBox.Show(Path.Combine(Path.Combine(dir, prefabName), prefabName + ".Prefab"));
+            using (StreamReader sr = new StreamReader(Path.Combine(Path.Combine(dir, prefabName), prefabName + ".Prefab")))
+            {
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    if (line.Contains("<thumbnail>"))
+                    {
+                        break;
+                    }
+                }
+            }
         }
     }
 }

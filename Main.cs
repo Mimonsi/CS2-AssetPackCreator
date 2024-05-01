@@ -86,6 +86,7 @@ namespace AssetPackCreator
                     if (!Directory.Exists(dest))
                         Directory.CreateDirectory(dest);
                     File.Copy(s, Path.Combine(dest, Path.GetFileName(s)), true);
+                    File.Copy(s + ".cid", Path.Combine(dest, Path.GetFileName(s) + ".cid"), true);
                     int index = lbAssets.Items.Add(initialName);
                     addedAssets.Add(index, new Asset()
                     {
@@ -115,7 +116,9 @@ namespace AssetPackCreator
             Asset selected = addedAssets[lbAssets.SelectedIndex];
             if (cmdAddThumbnail.Text == "Remove Thumbnail")
             {
-                selected.SetThumbnailPath("");
+                selected.thumbnailPath = "";
+                thumbnailBox.ImageLocation = selected.thumbnailPath;
+                selected.UpdateThumbnailInPrefab();
             }
             else
             {
@@ -128,9 +131,9 @@ namespace AssetPackCreator
                         var baseAssetDir = Directory.GetCurrentDirectory();
                         string dest = Path.Combine(selected.dir, Path.GetFileName(addThumbnailDialog.FileName));
                         File.Copy(addThumbnailDialog.FileName, dest, true);
-
-                        selected.SetThumbnailPath(addThumbnailDialog.FileName);
-                        cmdAddThumbnail.Text = "Remove Thumbnail";
+                        selected.thumbnailPath = dest;
+                        thumbnailBox.ImageLocation = selected.thumbnailPath;
+                        selected.UpdateThumbnailInPrefab();
                     }
                 }
             }
@@ -181,6 +184,39 @@ namespace AssetPackCreator
         {
             groupAddAssets.Enabled = true;
             groupRename.Enabled = false;
+        }
+
+        private void cmdApplyAssetName_Click(object sender, EventArgs e)
+        {
+            
+            if (string.IsNullOrEmpty(txtPrefabName.Text) || txtPrefabName.Text.Length < 5)
+            {
+                MessageBox.Show("Please enter at least 5 characters", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            Asset selected = addedAssets[lbAssets.SelectedIndex];
+
+            string oldPrefabName = selected.prefabName;
+            string oldDir = selected.dir;
+            selected.prefabName = txtPrefabName.Text;
+
+            string newDir = Path.Combine(Path.GetDirectoryName(oldDir), selected.prefabName);
+            Directory.Move(oldDir, newDir);
+            selected.dir = newDir;
+
+            File.Move(Path.Combine(newDir, oldPrefabName + ".Prefab"), Path.Combine(newDir, selected.prefabName + ".Prefab"));
+            File.Move(Path.Combine(newDir, oldPrefabName + ".Prefab.cid"), Path.Combine(newDir, selected.prefabName + ".Prefab.cid"));
+
+            selected.thumbnailPath = selected.thumbnailPath.Replace(oldDir, newDir);
+            selected.UpdateThumbnailInPrefab();
+        }
+
+        private void txtPrefabName_TextChanged(object sender, EventArgs e)
+        {
+            if (lbAssets.SelectedIndex < 0)
+                return;
+            Asset selected = addedAssets[lbAssets.SelectedIndex];
+            cmdApplyAssetName.Enabled = txtPrefabName.Text != selected.prefabName;
         }
     }
 }
