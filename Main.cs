@@ -29,6 +29,7 @@ namespace AssetPackCreator
             pack = new AssetPack(txtProjectName.Text, Path.Combine(Directory.GetCurrentDirectory(), "Resources", "assets", txtProjectName.Text));
 
             lbAssets.DataSource = pack.assets;
+            lbAssets.DisplayMember = "displayText";
             selectAssetsDialog.InitialDirectory = $@"C:\Users\{Environment.UserName}\AppData\LocalLow\Colossal Order\Cities Skylines II\StreamingAssets~";
 
             cmdStep1_Click(sender, e);

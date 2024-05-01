@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AssetPackCreator
 {
-    public class Asset
+    public class Asset : INotifyPropertyChanged
     {
         public AssetPack pack;
         public string prefabName;
         public string thumbnailExt;
+        public string displayText;
 
         public string assetPath => $@"{pack.baseDirectory.FullName}\{prefabName}";
         public string prefabPath => $@"{assetPath}\{prefabName}.Prefab";
@@ -26,6 +29,7 @@ namespace AssetPackCreator
             thumbnailExt = Path.GetExtension(fileName);
             File.Copy(fileName, $"{thumbnailPath}", true);
             UpdateThumbnailInPrefab();
+            SetField(ref displayText, $"\u2705 {prefabName}");
         }
 
         public void DeleteThumbnail()
@@ -33,6 +37,7 @@ namespace AssetPackCreator
             if (HasThumbnail())
                 File.Delete(thumbnailPath);
             UpdateThumbnailInPrefab();
+            SetField(ref displayText, $"\u274c {prefabName}");
         }
 
         public string GetIconPath()
@@ -71,9 +76,24 @@ namespace AssetPackCreator
         {
             if (HasThumbnail())
             {
-                return $"\u2705 {prefabName}";
+                return $"✔️ {prefabName}";
             }
-            return $"\u274c {prefabName}";
+            return $"❌ {prefabName}";
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
         }
     }
 }
