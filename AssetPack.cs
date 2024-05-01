@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+// ReSharper disable LocalizableElement
 
 namespace AssetPackCreator;
 
@@ -34,7 +35,7 @@ namespace AssetPackCreator;
             {
                 if (a.prefabName == prefabName)
                 {
-                    MessageBox.Show("Asset already exists in the pack", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Asset {prefabName} already exists in the pack", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
@@ -51,5 +52,10 @@ namespace AssetPackCreator;
             assets.Add(asset);
         }
 
+        public void RemoveAsset(Asset asset)
+        {
+            Directory.Delete(Path.Combine(baseDirectory.FullName, asset.prefabName), true);
+            assets.Remove(asset);
+        }
     }
 

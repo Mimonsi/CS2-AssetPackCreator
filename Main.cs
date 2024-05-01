@@ -84,8 +84,8 @@ namespace AssetPackCreator
 
         private void lbAssets_SelectedIndexChanged(object sender, EventArgs e)
         {
-            /*int index = lbAssets.SelectedIndex;
-            if (index == -1)
+            Asset? selected = (Asset)lbAssets.SelectedItem;
+            if (selected == null)
             {
                 cmdAddThumbnail.Enabled = false;
                 cmdRemoveSelectedAsset.Enabled = false;
@@ -93,7 +93,6 @@ namespace AssetPackCreator
             }
             cmdRemoveSelectedAsset.Enabled = true;
             cmdAddThumbnail.Enabled = true;
-            Asset selected = addedAssets[index];
             txtPrefabName.Text = selected.prefabName;
             if (selected.HasThumbnail())
             {
@@ -105,21 +104,13 @@ namespace AssetPackCreator
                 thumbnailBox.ImageLocation = "";
                 cmdAddThumbnail.Text = "Add Thumbnail";
             }
-            */
+
         }
 
         private void cmdRemoveSelectedAsset_Click(object sender, EventArgs e)
         {
-            /*for (int i = 0; i < addedAssets.Count; i++)
-            {
-                if (addedAssets[i].dir == lbAssets.SelectedItem.ToString())
-                {
-                    Directory.Delete(addedAssets[i].dir, true);
-                    addedAssets.Remove(i);
-                    lbAssets.Items.Remove(i);
-                    break;
-                }
-            }*/
+            Asset? selected = (Asset)lbAssets.SelectedItem;
+            pack.RemoveAsset(selected);
         }
 
         private void cmdAddThumbnail_Click(object sender, EventArgs e)

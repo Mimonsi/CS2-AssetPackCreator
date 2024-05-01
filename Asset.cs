@@ -11,9 +11,20 @@ namespace AssetPackCreator
         public string prefabName;
         public string thumbnailExt;
 
+        public string thumbnailPath
+        {
+            get
+            {
+                var x = $"{prefabName}.{thumbnailExt}";
+                if (File.Exists(x))
+                    return x;
+                return "";
+            }
+        }
+
         public bool HasThumbnail()
         {
-            return !string.IsNullOrEmpty(thumbnailExt);
+            return !string.IsNullOrEmpty(thumbnailExt) && File.Exists(thumbnailPath);
         }
 
         public void UpdateThumbnailInPrefab()
