@@ -47,10 +47,13 @@
             label2 = new Label();
             selectAssetsDialog = new OpenFileDialog();
             addThumbnailDialog = new OpenFileDialog();
+            statusStrip1 = new StatusStrip();
+            statusLabel = new ToolStripStatusLabel();
             groupRename.SuspendLayout();
             groupBox1.SuspendLayout();
             groupAddAssets.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)thumbnailBox).BeginInit();
+            statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // cmdRenameProject
@@ -249,11 +252,27 @@
             addThumbnailDialog.FileName = "Thumbnail";
             addThumbnailDialog.Filter = "PNG Files | *.png|Scaled Vector Graphics | *.svg";
             // 
+            // statusStrip1
+            // 
+            statusStrip1.Items.AddRange(new ToolStripItem[] { statusLabel });
+            statusStrip1.Location = new Point(0, 606);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(965, 22);
+            statusStrip1.TabIndex = 5;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // statusLabel
+            // 
+            statusLabel.Name = "statusLabel";
+            statusLabel.Size = new Size(39, 17);
+            statusLabel.Text = "Ready";
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(965, 628);
+            Controls.Add(statusStrip1);
             Controls.Add(groupAddAssets);
             Controls.Add(groupBox1);
             Controls.Add(groupRename);
@@ -266,7 +285,10 @@
             groupAddAssets.ResumeLayout(false);
             groupAddAssets.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)thumbnailBox).EndInit();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -290,5 +312,7 @@
         private Label label3;
         private PictureBox thumbnailBox;
         private Button cmdApplyAssetName;
+        private StatusStrip statusStrip1;
+        private ToolStripStatusLabel statusLabel;
     }
 }

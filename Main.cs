@@ -5,12 +5,21 @@ namespace AssetPackCreator
 {
     public partial class Main : Form
     {
+        public static Main Instance;
+        public static int delay = 100;
         public Main()
         {
             InitializeComponent();
+            Instance = this;
         }
 
         private AssetPack pack;
+
+        public static void UpdateStatus(string text)
+        {
+            Instance.statusLabel.Text = text;
+            Thread.Sleep(delay);
+        }
 
         private void Main_Load(object sender, EventArgs e)
         {
@@ -25,8 +34,12 @@ namespace AssetPackCreator
                     break;
                 }
             }
+            var assetsDir = Path.Combine(Directory.GetCurrentDirectory(), "Resources", "assets", txtProjectName.Text);
 
-            pack = new AssetPack(txtProjectName.Text, Path.Combine(Directory.GetCurrentDirectory(), "Resources", "assets", txtProjectName.Text));
+            if (Directory.Exists(assetsDir))
+                pack = AssetPack.Load(txtProjectName.Text, assetsDir);
+            else
+                pack = AssetPack.New(txtProjectName.Text, assetsDir);
 
             lbAssets.DataSource = pack.assets;
             lbAssets.DisplayMember = "displayText";

@@ -11,7 +11,49 @@ namespace AssetPackCreator;
         public string name;
         public DirectoryInfo baseDirectory;
 
-        public AssetPack(string name, string baseDirectoryPath)
+        public static AssetPack New(string name, string baseDirectoryPath)
+        {
+            Main.UpdateStatus("Creating Empty Asset Pack");
+            return new AssetPack(name, baseDirectoryPath);
+        }
+
+        public static AssetPack Load(string name, string baseDirectoryPath)
+        {
+            Main.UpdateStatus("Loading existing Asset Pack");
+            AssetPack pack = new AssetPack(name, baseDirectoryPath);
+            try
+            {
+                foreach(DirectoryInfo assetDir in new DirectoryInfo(baseDirectoryPath).GetDirectories())
+                {
+                    Main.UpdateStatus($"Loading Asset: {assetDir.Name}");
+                    Asset asset = new Asset()
+                    {
+                        pack = pack,
+                        prefabName = assetDir.Name,
+                        thumbnailExt = "",
+                    };
+                    foreach(string ext in supportedThumbnailExtensions)
+                    {
+                        if (File.Exists(Path.Combine(assetDir.FullName, assetDir.Name + ext)))
+                        {
+                            asset.thumbnailExt = ext;
+                            break;
+                        }
+                    }
+                    asset.displayText = asset.HasThumbnail() ? $"\u2705 {asset.prefabName}" : $"\u274c {asset.prefabName}";
+                    asset.UpdateThumbnailInPrefab();
+                    asset.pack.assets.Add(asset);
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Error loading existing Asset Pack: {e.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            Main.UpdateStatus($"Loaded existing Asset Pack with {pack.assets.Count} assets");
+            return pack;
+        }
+
+        private AssetPack(string name, string baseDirectoryPath)
         {
             this.name = name;
             baseDirectory = new DirectoryInfo(baseDirectoryPath);
