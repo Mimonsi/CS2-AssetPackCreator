@@ -46,6 +46,7 @@ namespace AssetPackCreator;
             File.Copy(path + ".cid", Path.Combine(prefabDir, prefabName + ".Prefab.cid"), true);
             Asset asset = new Asset()
             {
+                pack = this,
                 prefabName = prefabName,
                 thumbnailExt = "",
             };

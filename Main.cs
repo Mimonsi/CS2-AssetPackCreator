@@ -115,32 +115,30 @@ namespace AssetPackCreator
 
         private void cmdAddThumbnail_Click(object sender, EventArgs e)
         {
-            /*Asset selected = addedAssets[lbAssets.SelectedIndex];
-            if (cmdAddThumbnail.Text == "Remove Thumbnail")
+            Asset? selected = (Asset) lbAssets.SelectedItem;
+            if (selected == null)
+                return;
+            if (cmdAddThumbnail.Text == "Remove Thumbnail") // Remove Thumbnail
             {
-                selected.thumbnailPath = "";
+                selected.DeleteThumbnail();
+                selected.thumbnailExt = "";
                 thumbnailBox.ImageLocation = selected.thumbnailPath;
-                selected.UpdateThumbnailInPrefab();
             }
-            else
+            else // Add Thumbnail
             {
                 var x = addThumbnailDialog.ShowDialog();
                 if (x == DialogResult.OK)
                 {
-
                     if (!string.IsNullOrEmpty(addThumbnailDialog.FileName))
                     {
-                        string dest = Path.Combine(selected.dir, Path.GetFileName(addThumbnailDialog.FileName));
-                        File.Copy(addThumbnailDialog.FileName, dest, true);
-                        selected.thumbnailPath = dest;
+                        selected.AddThumbnail(addThumbnailDialog.FileName);
                         thumbnailBox.ImageLocation = selected.thumbnailPath;
-                        selected.UpdateThumbnailInPrefab();
                     }
                 }
             }
             int i = lbAssets.SelectedIndex;
             lbAssets.SelectedIndex = -1;
-            lbAssets.SelectedIndex = i;*/
+            lbAssets.SelectedIndex = i;
         }
 
         private void label3_Click(object sender, EventArgs e)
