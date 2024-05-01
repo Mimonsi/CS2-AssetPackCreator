@@ -25,6 +25,11 @@ namespace AssetPackCreator;
                 return;
             name = newName;
             Directory.Move(baseDirectory.FullName, Path.Combine(baseDirectory.Parent.FullName, newName));
+            baseDirectory = new DirectoryInfo(Path.Combine(baseDirectory.Parent.FullName, newName));
+            foreach(Asset a in assets)
+            {
+                a.UpdateThumbnailInPrefab();
+            }
         }
 
         public void AddAsset(string path)

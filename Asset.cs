@@ -61,7 +61,7 @@ namespace AssetPackCreator
                 }
             }
 
-            using (StreamWriter sw = new StreamWriter(prefabPath + ".copy.Prefab"))
+            using (StreamWriter sw = new StreamWriter(prefabPath))
             {
                 sw.Write(text);
             }
