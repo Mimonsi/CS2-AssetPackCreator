@@ -51,7 +51,7 @@
             label2 = new Label();
             selectAssetsDialog = new OpenFileDialog();
             addThumbnailDialog = new OpenFileDialog();
-            statusStrip1 = new StatusStrip();
+            statusStrip = new StatusStrip();
             toolStripMenuButton = new ToolStripSplitButton();
             toolStripMenu_OpenAppDir = new ToolStripMenuItem();
             statusLabel = new ToolStripStatusLabel();
@@ -78,11 +78,12 @@
             mainTabControl = new TabControl();
             tabPrepare = new TabPage();
             tabPublishConfig = new TabPage();
+            cmdMarkdownPreview = new Button();
             groupRename.SuspendLayout();
             groupBox1.SuspendLayout();
             groupAddAssets.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)assetThumbnailBox).BeginInit();
-            statusStrip1.SuspendLayout();
+            statusStrip.SuspendLayout();
             groupPrepare.SuspendLayout();
             groupPDXCredentials.SuspendLayout();
             groupPublishConfig.SuspendLayout();
@@ -322,14 +323,14 @@
             addThumbnailDialog.FileName = "Thumbnail";
             addThumbnailDialog.Filter = "PNG Files | *.png|Scaled Vector Graphics | *.svg";
             // 
-            // statusStrip1
+            // statusStrip
             // 
-            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuButton, statusLabel });
-            statusStrip1.Location = new Point(0, 484);
-            statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(980, 22);
-            statusStrip1.TabIndex = 5;
-            statusStrip1.Text = "statusStrip1";
+            statusStrip.Items.AddRange(new ToolStripItem[] { toolStripMenuButton, statusLabel });
+            statusStrip.Location = new Point(0, 463);
+            statusStrip.Name = "statusStrip";
+            statusStrip.Size = new Size(973, 22);
+            statusStrip.TabIndex = 5;
+            statusStrip.Text = "statusStrip1";
             // 
             // toolStripMenuButton
             // 
@@ -468,6 +469,7 @@
             // groupPublishConfig
             // 
             groupPublishConfig.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            groupPublishConfig.Controls.Add(cmdMarkdownPreview);
             groupPublishConfig.Controls.Add(label10);
             groupPublishConfig.Controls.Add(packThumbnailBox);
             groupPublishConfig.Controls.Add(label9);
@@ -520,8 +522,9 @@
             txtPublishLongDescription.Location = new Point(281, 115);
             txtPublishLongDescription.Multiline = true;
             txtPublishLongDescription.Name = "txtPublishLongDescription";
-            txtPublishLongDescription.Size = new Size(431, 238);
+            txtPublishLongDescription.Size = new Size(431, 295);
             txtPublishLongDescription.TabIndex = 5;
+            txtPublishLongDescription.TextChanged += txtPublishLongDescription_TextChanged;
             // 
             // label8
             // 
@@ -591,13 +594,23 @@
             tabPublishConfig.Text = "Publish Configuration";
             tabPublishConfig.UseVisualStyleBackColor = true;
             // 
+            // cmdMarkdownPreviw
+            // 
+            cmdMarkdownPreview.Location = new Point(637, 88);
+            cmdMarkdownPreview.Name = "cmdMarkdownPreview";
+            cmdMarkdownPreview.Size = new Size(75, 29);
+            cmdMarkdownPreview.TabIndex = 9;
+            cmdMarkdownPreview.Text = "Preview";
+            cmdMarkdownPreview.UseVisualStyleBackColor = true;
+            cmdMarkdownPreview.Click += CmdMarkdownPreviewClick;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(980, 506);
+            ClientSize = new Size(973, 485);
             Controls.Add(mainTabControl);
-            Controls.Add(statusStrip1);
+            Controls.Add(statusStrip);
             Controls.Add(groupBox1);
             Name = "Main";
             Text = " ";
@@ -608,8 +621,8 @@
             groupAddAssets.ResumeLayout(false);
             groupAddAssets.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)assetThumbnailBox).EndInit();
-            statusStrip1.ResumeLayout(false);
-            statusStrip1.PerformLayout();
+            statusStrip.ResumeLayout(false);
+            statusStrip.PerformLayout();
             groupPrepare.ResumeLayout(false);
             groupPrepare.PerformLayout();
             groupPDXCredentials.ResumeLayout(false);
@@ -645,7 +658,7 @@
         private Label label3;
         private PictureBox assetThumbnailBox;
         private Button cmdApplyAssetName;
-        private StatusStrip statusStrip1;
+        private StatusStrip statusStrip;
         private ToolStripStatusLabel statusLabel;
         private Button cmdStep1;
         private GroupBox groupPrepare;
@@ -676,5 +689,6 @@
         private TabControl mainTabControl;
         private TabPage tabPrepare;
         private TabPage tabPublishConfig;
+        private Button cmdMarkdownPreview;
     }
 }
