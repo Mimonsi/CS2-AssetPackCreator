@@ -12,21 +12,25 @@ namespace AssetPackCreator
 {
     public partial class MarkdownPreview : Form
     {
-        private string html;
-        public MarkdownPreview(string html)
+        public MarkdownPreview()
         {
-            this.html = html;
             InitializeComponent();
             Task t = webView.EnsureCoreWebView2Async();
-            while(!t.IsCompletedSuccessfully)
+            while (!t.IsCompletedSuccessfully)
             {
                 Application.DoEvents();
             }
+            markdownTimer.Start();
         }
 
         private void MarkdownPreview_Load(object sender, EventArgs e)
         {
-            webView.CoreWebView2.NavigateToString(html);
+            markdownTimer_Tick(this, new EventArgs());
+        }
+
+        private void markdownTimer_Tick(object sender, EventArgs e)
+        {
+            webView.CoreWebView2.NavigateToString(Main.markdownPreviewHtml);
         }
     }
 }

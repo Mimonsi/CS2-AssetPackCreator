@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             webView = new Microsoft.Web.WebView2.WinForms.WebView2();
+            markdownTimer = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)webView).BeginInit();
             SuspendLayout();
             // 
@@ -43,6 +45,11 @@
             webView.Size = new Size(776, 526);
             webView.TabIndex = 0;
             webView.ZoomFactor = 1D;
+            // 
+            // markdownTimer
+            // 
+            markdownTimer.Interval = 1000;
+            markdownTimer.Tick += markdownTimer_Tick;
             // 
             // MarkdownPreview
             // 
@@ -60,5 +67,6 @@
         #endregion
 
         private Microsoft.Web.WebView2.WinForms.WebView2 webView;
+        private System.Windows.Forms.Timer markdownTimer;
     }
 }

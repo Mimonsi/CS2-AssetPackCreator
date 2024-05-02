@@ -353,14 +353,14 @@ namespace AssetPackCreator
 
         private void txtPublishLongDescription_TextChanged(object sender, EventArgs e)
         {
-
+            var md = txtPublishLongDescription.Text;
+            markdownPreviewHtml = Markdig.Markdown.ToHtml(md);
         }
 
+        public static string markdownPreviewHtml;
         private void CmdMarkdownPreviewClick(object sender, EventArgs e)
         {
-            var md = txtPublishLongDescription.Text;
-            var html = Markdig.Markdown.ToHtml(md);
-            MarkdownPreview preview = new MarkdownPreview(html);
+            MarkdownPreview preview = new MarkdownPreview();
             preview.Show();
         }
     }
