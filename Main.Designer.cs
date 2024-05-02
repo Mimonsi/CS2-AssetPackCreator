@@ -67,6 +67,7 @@
             label5 = new Label();
             txtPdxMail = new TextBox();
             groupPublishConfig = new GroupBox();
+            cmdMarkdownPreview = new Button();
             label10 = new Label();
             packThumbnailBox = new PictureBox();
             label9 = new Label();
@@ -78,7 +79,9 @@
             mainTabControl = new TabControl();
             tabPrepare = new TabPage();
             tabPublishConfig = new TabPage();
-            cmdMarkdownPreview = new Button();
+            cmdStep6 = new Button();
+            tabPublish = new TabPage();
+            cmdPublishNewMod = new Button();
             groupRename.SuspendLayout();
             groupBox1.SuspendLayout();
             groupAddAssets.SuspendLayout();
@@ -91,6 +94,7 @@
             mainTabControl.SuspendLayout();
             tabPrepare.SuspendLayout();
             tabPublishConfig.SuspendLayout();
+            tabPublish.SuspendLayout();
             SuspendLayout();
             // 
             // cmdRenameProject
@@ -136,6 +140,7 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(cmdStep6);
             groupBox1.Controls.Add(cmdStep5);
             groupBox1.Controls.Add(cmdStep4);
             groupBox1.Controls.Add(cmdStep1);
@@ -487,6 +492,16 @@
             groupPublishConfig.TabStop = false;
             groupPublishConfig.Text = "Publish Configuration (will be displayed in PDX Mods)";
             // 
+            // cmdMarkdownPreview
+            // 
+            cmdMarkdownPreview.Location = new Point(637, 88);
+            cmdMarkdownPreview.Name = "cmdMarkdownPreview";
+            cmdMarkdownPreview.Size = new Size(75, 29);
+            cmdMarkdownPreview.TabIndex = 9;
+            cmdMarkdownPreview.Text = "Preview";
+            cmdMarkdownPreview.UseVisualStyleBackColor = true;
+            cmdMarkdownPreview.Click += CmdMarkdownPreviewClick;
+            // 
             // label10
             // 
             label10.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -563,6 +578,7 @@
             // 
             mainTabControl.Controls.Add(tabPrepare);
             mainTabControl.Controls.Add(tabPublishConfig);
+            mainTabControl.Controls.Add(tabPublish);
             mainTabControl.Location = new Point(224, 12);
             mainTabControl.Name = "mainTabControl";
             mainTabControl.SelectedIndex = 0;
@@ -594,15 +610,37 @@
             tabPublishConfig.Text = "Publish Configuration";
             tabPublishConfig.UseVisualStyleBackColor = true;
             // 
-            // cmdMarkdownPreviw
+            // cmdStep6
             // 
-            cmdMarkdownPreview.Location = new Point(637, 88);
-            cmdMarkdownPreview.Name = "cmdMarkdownPreview";
-            cmdMarkdownPreview.Size = new Size(75, 29);
-            cmdMarkdownPreview.TabIndex = 9;
-            cmdMarkdownPreview.Text = "Preview";
-            cmdMarkdownPreview.UseVisualStyleBackColor = true;
-            cmdMarkdownPreview.Click += CmdMarkdownPreviewClick;
+            cmdStep6.Location = new Point(0, 368);
+            cmdStep6.Name = "cmdStep6";
+            cmdStep6.Size = new Size(188, 62);
+            cmdStep6.TabIndex = 8;
+            cmdStep6.Text = "Step 6: Open Publish Menu";
+            cmdStep6.UseVisualStyleBackColor = true;
+            cmdStep6.Click += cmdStep6_Click;
+            // 
+            // tabPublish
+            // 
+            tabPublish.Controls.Add(cmdPublishNewMod);
+            tabPublish.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            tabPublish.Location = new Point(4, 24);
+            tabPublish.Name = "tabPublish";
+            tabPublish.Padding = new Padding(3);
+            tabPublish.Size = new Size(737, 416);
+            tabPublish.TabIndex = 2;
+            tabPublish.Text = "Publish";
+            tabPublish.UseVisualStyleBackColor = true;
+            // 
+            // cmdPublishNewMod
+            // 
+            cmdPublishNewMod.Location = new Point(0, 0);
+            cmdPublishNewMod.Name = "cmdPublishNewMod";
+            cmdPublishNewMod.Size = new Size(195, 66);
+            cmdPublishNewMod.TabIndex = 0;
+            cmdPublishNewMod.Text = "Publish New Mod";
+            cmdPublishNewMod.UseVisualStyleBackColor = true;
+            cmdPublishNewMod.Click += cmdPublishNewMod_Click;
             // 
             // Main
             // 
@@ -633,6 +671,7 @@
             mainTabControl.ResumeLayout(false);
             tabPrepare.ResumeLayout(false);
             tabPublishConfig.ResumeLayout(false);
+            tabPublish.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -678,7 +717,7 @@
         private Button cmdStep5;
         private GroupBox groupPublishConfig;
         private Label label7;
-        private Button button1;
+        private Button cmdPublishNewMod;
         private TextBox txtPublishDisplayName;
         private Label label8;
         private TextBox txtPublishShortDescription;
@@ -690,5 +729,7 @@
         private TabPage tabPrepare;
         private TabPage tabPublishConfig;
         private Button cmdMarkdownPreview;
+        private Button cmdStep6;
+        private TabPage tabPublish;
     }
 }

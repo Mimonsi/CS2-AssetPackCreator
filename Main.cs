@@ -98,6 +98,9 @@ namespace AssetPackCreator
                     groupPublishConfig.Enabled = true;
                     mainTabControl.SelectTab(1);
                     break;
+                case 6:
+                    mainTabControl.SelectTab(2);
+                    break;
                 default:
                     MessageBox.Show("Unknown step", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     break;
@@ -362,6 +365,18 @@ namespace AssetPackCreator
         {
             MarkdownPreview preview = new MarkdownPreview();
             preview.Show();
+        }
+
+        private void cmdStep6_Click(object sender, EventArgs e)
+        {
+            ChooseStep(6);
+        }
+
+        private void cmdPublishNewMod_Click(object sender, EventArgs e)
+        {
+            var localModPath = Path.Combine("C:\\Users", Environment.UserName, "AppData", "LocalLow", "Colossal Order", "Cities Skylines II", "Mods", pack.name);
+            var publishConfigPath = Path.Combine(Directory.GetCurrentDirectory(), "Properties", "PublishConfiguration.xml");
+            Publisher.PublishNewMod(settings.Cities2Path, publishConfigPath, settings.PdxMail, settings.PdxPassword, localModPath);
         }
     }
 }
