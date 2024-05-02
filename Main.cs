@@ -7,10 +7,12 @@ namespace AssetPackCreator
     {
         public static Main Instance;
         public static int delay = 100;
+        public static Settings settings;
         public Main()
         {
             InitializeComponent();
             Instance = this;
+            settings = Settings.Load();
         }
 
         private AssetPack pack;
@@ -23,8 +25,7 @@ namespace AssetPackCreator
 
         private void Main_Load(object sender, EventArgs e)
         {
-            groupRename.Enabled = false;
-            groupAddAssets.Enabled = false;
+            ChooseStep(1);
             // Look for sln file in current folder
             foreach (string file in Directory.GetFiles(Directory.GetCurrentDirectory()))
             {
@@ -45,12 +46,52 @@ namespace AssetPackCreator
             lbAssets.DisplayMember = "displayText";
             selectAssetsDialog.InitialDirectory = $@"C:\Users\{Environment.UserName}\AppData\LocalLow\Colossal Order\Cities Skylines II\StreamingAssets~";
 
-            cmdStep1_Click(sender, e);
+            // Load Settings
+            txtCities2Location.Text = settings.Cities2Path;
+            txtPdxMail.Text = settings.PdxMail;
+            txtPdxPw.Text = settings.PdxPassword;
+            cbSavePassword.Checked = settings.SavePassword;
+        }
+
+        private void ChooseStep(int step)
+        {
+            switch (step)
+            {
+                case 1:
+                    groupPrepare.Enabled = true;
+                    groupRename.Enabled = false;
+                    groupAddAssets.Enabled = false;
+                    groupPDXCredentials.Enabled = false;
+                    cmdStep1.Enabled = true;
+                    break;
+                case 2:
+                    groupPrepare.Enabled = false;
+                    groupRename.Enabled = true;
+                    groupAddAssets.Enabled = false;
+                    groupPDXCredentials.Enabled = false;
+                    cmdStep1.Enabled = false;
+                    break;
+                case 3:
+                    groupPrepare.Enabled = false;
+                    groupRename.Enabled = false;
+                    groupAddAssets.Enabled = true;
+                    groupPDXCredentials.Enabled = false;
+                    break;
+                case 4:
+                    groupPrepare.Enabled = false;
+                    groupRename.Enabled = false;
+                    groupAddAssets.Enabled = false;
+                    groupPDXCredentials.Enabled = true;
+                    break;
+                default:
+                    MessageBox.Show("?");
+                    break;
+            }
         }
 
         private void cmdRenameProject_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtProjectName.Text) || txtProjectName.Text.Contains(" ") || !txtProjectName.Text.ToLower().EndsWith("assetpack"))
+            if (string.IsNullOrEmpty(txtProjectName.Text) || txtProjectName.Text.Contains(" ") || !txtProjectName.Text.ToLower().EndsWith("assetpack") || txtProjectName.Text == "CustomAssetPack")
             {
                 MessageBox.Show("Please enter a name that ends with 'AssetPack' and does not contain any spaces or other characters", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -129,7 +170,7 @@ namespace AssetPackCreator
 
         private void cmdAddThumbnail_Click(object sender, EventArgs e)
         {
-            Asset? selected = (Asset) lbAssets.SelectedItem;
+            Asset? selected = (Asset)lbAssets.SelectedItem;
             if (selected == null)
                 return;
             if (cmdAddThumbnail.Text == "Remove Thumbnail") // Remove Thumbnail
@@ -160,16 +201,14 @@ namespace AssetPackCreator
 
         }
 
-        private void cmdStep1_Click(object sender, EventArgs e)
-        {
-            groupAddAssets.Enabled = false;
-            groupRename.Enabled = true;
-        }
-
         private void cmdStep2_Click(object sender, EventArgs e)
         {
-            groupAddAssets.Enabled = true;
-            groupRename.Enabled = false;
+            ChooseStep(2);
+        }
+
+        private void cmdStep3_Click(object sender, EventArgs e)
+        {
+            ChooseStep(3);
         }
 
         private void cmdApplyAssetName_Click(object sender, EventArgs e)
@@ -221,6 +260,71 @@ namespace AssetPackCreator
             if (pack == null)
                 return;
             cmdRenameProject.Enabled = txtProjectName.Text != pack.name;
+        }
+
+        private void cmdStep1_Click(object sender, EventArgs e)
+        {
+            ChooseStep(1);
+        }
+
+        private void cmdBrowseGamePath_Click(object sender, EventArgs e)
+        {
+            browseGamePathDialog.InitialDirectory = txtCities2Location.Text;
+            if (browseGamePathDialog.ShowDialog() == DialogResult.OK)
+            {
+                txtCities2Location.Text = browseGamePathDialog.FileName;
+            }
+        }
+
+        private void txtCities2Location_TextChanged(object sender, EventArgs e)
+        {
+            // Game path [...]\Cities Skylines II\Cities2.exe
+            // GameDLL path [...]\Cities Skylines II\Cities2_Data\Managed\Game.dll
+            try
+            {
+                var gameDir = Path.GetDirectoryName(txtCities2Location.Text);
+                var gameDllPath = Path.Combine(gameDir, "Cities2_Data", "Managed", "Game.dll");
+                if (File.Exists(gameDllPath))
+                {
+                    settings.Cities2Path = txtCities2Location.Text;
+                    groupPrepare.Text = "Prepare \u2705";
+                    ChooseStep(2);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void toolStripMenuButton_ButtonClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripMenu_OpenAppDir_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("explorer.exe", Directory.GetCurrentDirectory());
+        }
+
+        private void txtPdxMail_TextChanged(object sender, EventArgs e)
+        {
+            settings.PdxMail = txtPdxMail.Text;
+        }
+
+        private void txtPdxPw_TextChanged(object sender, EventArgs e)
+        {
+            settings.PdxPassword = txtPdxPw.Text;
+        }
+
+        private void cbSavePassword_CheckedChanged(object sender, EventArgs e)
+        {
+            settings.SavePassword = cbSavePassword.Checked;
+        }
+
+        private void cmdStep4_Click(object sender, EventArgs e)
+        {
+            ChooseStep(4);
         }
     }
 }
