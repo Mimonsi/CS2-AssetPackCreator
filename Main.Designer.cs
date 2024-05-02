@@ -43,7 +43,7 @@
             cmdApplyAssetName = new Button();
             cmdAddThumbnail = new Button();
             cmdRemoveSelectedAsset = new Button();
-            thumbnailBox = new PictureBox();
+            assetThumbnailBox = new PictureBox();
             txtPrefabName = new TextBox();
             label3 = new Label();
             cmdBrowseAssets = new Button();
@@ -68,7 +68,7 @@
             txtPdxMail = new TextBox();
             groupPublishConfig = new GroupBox();
             label10 = new Label();
-            thumbnailPictureBox = new PictureBox();
+            packThumbnailBox = new PictureBox();
             label9 = new Label();
             txtPublishLongDescription = new TextBox();
             label8 = new Label();
@@ -81,12 +81,12 @@
             groupRename.SuspendLayout();
             groupBox1.SuspendLayout();
             groupAddAssets.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)thumbnailBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)assetThumbnailBox).BeginInit();
             statusStrip1.SuspendLayout();
             groupPrepare.SuspendLayout();
             groupPDXCredentials.SuspendLayout();
             groupPublishConfig.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)thumbnailPictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)packThumbnailBox).BeginInit();
             mainTabControl.SuspendLayout();
             tabPrepare.SuspendLayout();
             tabPublishConfig.SuspendLayout();
@@ -203,7 +203,7 @@
             groupAddAssets.Controls.Add(cmdApplyAssetName);
             groupAddAssets.Controls.Add(cmdAddThumbnail);
             groupAddAssets.Controls.Add(cmdRemoveSelectedAsset);
-            groupAddAssets.Controls.Add(thumbnailBox);
+            groupAddAssets.Controls.Add(assetThumbnailBox);
             groupAddAssets.Controls.Add(txtPrefabName);
             groupAddAssets.Controls.Add(label3);
             groupAddAssets.Controls.Add(cmdBrowseAssets);
@@ -251,14 +251,15 @@
             cmdRemoveSelectedAsset.UseVisualStyleBackColor = true;
             cmdRemoveSelectedAsset.Click += cmdRemoveSelectedAsset_Click;
             // 
-            // thumbnailBox
+            // assetThumbnailBox
             // 
-            thumbnailBox.Location = new Point(6, 169);
-            thumbnailBox.Name = "thumbnailBox";
-            thumbnailBox.Size = new Size(100, 100);
-            thumbnailBox.SizeMode = PictureBoxSizeMode.Zoom;
-            thumbnailBox.TabIndex = 7;
-            thumbnailBox.TabStop = false;
+            assetThumbnailBox.Location = new Point(6, 169);
+            assetThumbnailBox.Name = "assetThumbnailBox";
+            assetThumbnailBox.Size = new Size(100, 100);
+            assetThumbnailBox.SizeMode = PictureBoxSizeMode.Zoom;
+            assetThumbnailBox.TabIndex = 7;
+            assetThumbnailBox.TabStop = false;
+            assetThumbnailBox.Click += assetThumbnailBox_Click;
             // 
             // txtPrefabName
             // 
@@ -468,7 +469,7 @@
             // 
             groupPublishConfig.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             groupPublishConfig.Controls.Add(label10);
-            groupPublishConfig.Controls.Add(thumbnailPictureBox);
+            groupPublishConfig.Controls.Add(packThumbnailBox);
             groupPublishConfig.Controls.Add(label9);
             groupPublishConfig.Controls.Add(txtPublishLongDescription);
             groupPublishConfig.Controls.Add(label8);
@@ -493,13 +494,15 @@
             label10.TabIndex = 8;
             label10.Text = "Asset Pack Thumbnail: (Click to Change)";
             // 
-            // thumbnailPictureBox
+            // packThumbnailBox
             // 
-            thumbnailPictureBox.Location = new Point(9, 119);
-            thumbnailPictureBox.Name = "thumbnailPictureBox";
-            thumbnailPictureBox.Size = new Size(250, 250);
-            thumbnailPictureBox.TabIndex = 7;
-            thumbnailPictureBox.TabStop = false;
+            packThumbnailBox.Location = new Point(9, 119);
+            packThumbnailBox.Name = "packThumbnailBox";
+            packThumbnailBox.Size = new Size(250, 250);
+            packThumbnailBox.SizeMode = PictureBoxSizeMode.Zoom;
+            packThumbnailBox.TabIndex = 7;
+            packThumbnailBox.TabStop = false;
+            packThumbnailBox.Click += PackThumbnailBoxClick;
             // 
             // label9
             // 
@@ -604,7 +607,7 @@
             groupBox1.ResumeLayout(false);
             groupAddAssets.ResumeLayout(false);
             groupAddAssets.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)thumbnailBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)assetThumbnailBox).EndInit();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             groupPrepare.ResumeLayout(false);
@@ -613,7 +616,7 @@
             groupPDXCredentials.PerformLayout();
             groupPublishConfig.ResumeLayout(false);
             groupPublishConfig.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)thumbnailPictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)packThumbnailBox).EndInit();
             mainTabControl.ResumeLayout(false);
             tabPrepare.ResumeLayout(false);
             tabPublishConfig.ResumeLayout(false);
@@ -640,7 +643,7 @@
         private OpenFileDialog addThumbnailDialog;
         private TextBox txtPrefabName;
         private Label label3;
-        private PictureBox thumbnailBox;
+        private PictureBox assetThumbnailBox;
         private Button cmdApplyAssetName;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel statusLabel;
@@ -669,7 +672,7 @@
         private Label label9;
         private TextBox txtPublishLongDescription;
         private Label label10;
-        private PictureBox thumbnailPictureBox;
+        private PictureBox packThumbnailBox;
         private TabControl mainTabControl;
         private TabPage tabPrepare;
         private TabPage tabPublishConfig;

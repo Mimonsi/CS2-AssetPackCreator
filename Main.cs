@@ -8,11 +8,14 @@ namespace AssetPackCreator
         public static Main Instance;
         public static int delay = 100;
         public static Settings settings;
+        public static PublishConfig publishConfig;
         public Main()
         {
             InitializeComponent();
             Instance = this;
             settings = Settings.Load();
+            publishConfig = PublishConfig.Load();
+
         }
 
         private AssetPack pack;
@@ -51,6 +54,12 @@ namespace AssetPackCreator
             txtPdxMail.Text = settings.PdxMail;
             txtPdxPw.Text = settings.PdxPassword;
             cbSavePassword.Checked = settings.SavePassword;
+
+            // Load Publish Configuration
+            txtPublishDisplayName.DataBindings.Add("Text", publishConfig, "DisplayName", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtPublishShortDescription.DataBindings.Add("Text", publishConfig, "ShortDescription", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtPublishLongDescription.DataBindings.Add("Text", publishConfig, "LongDescription", false, DataSourceUpdateMode.OnPropertyChanged);
+            packThumbnailBox.ImageLocation = publishConfig.ThumbnailPath;
         }
 
         private void DisableAllGroups()
@@ -157,12 +166,12 @@ namespace AssetPackCreator
             txtPrefabName.Text = selected.prefabName;
             if (selected.HasThumbnail())
             {
-                thumbnailBox.ImageLocation = selected.thumbnailPath;
+                assetThumbnailBox.ImageLocation = selected.thumbnailPath;
                 cmdAddThumbnail.Text = "Remove Thumbnail";
             }
             else
             {
-                thumbnailBox.ImageLocation = "";
+                assetThumbnailBox.ImageLocation = "";
                 cmdAddThumbnail.Text = "Add Thumbnail";
             }
 
@@ -183,7 +192,7 @@ namespace AssetPackCreator
             {
                 selected.DeleteThumbnail();
                 selected.thumbnailExt = "";
-                thumbnailBox.ImageLocation = selected.thumbnailPath;
+                assetThumbnailBox.ImageLocation = selected.thumbnailPath;
             }
             else // Add Thumbnail
             {
@@ -193,7 +202,7 @@ namespace AssetPackCreator
                     if (!string.IsNullOrEmpty(addThumbnailDialog.FileName))
                     {
                         selected.AddThumbnail(addThumbnailDialog.FileName);
-                        thumbnailBox.ImageLocation = selected.thumbnailPath;
+                        assetThumbnailBox.ImageLocation = selected.thumbnailPath;
                     }
                 }
             }
@@ -313,6 +322,33 @@ namespace AssetPackCreator
         private void cmdStep5_Click(object sender, EventArgs e)
         {
             ChooseStep(5);
+        }
+
+        private void cmdPublishConfigSave_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmdPublishAddRemoveThumbnail_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PackThumbnailBoxClick(object sender, EventArgs e)
+        {
+            if (addThumbnailDialog.ShowDialog() != DialogResult.OK)
+                return;
+            if (!string.IsNullOrEmpty(addThumbnailDialog.FileName) && File.Exists(addThumbnailDialog.FileName))
+            {
+                publishConfig.ChangeThumbnail(addThumbnailDialog.FileName);
+                packThumbnailBox.ImageLocation = publishConfig.ThumbnailPath;
+
+            }
+        }
+
+        private void assetThumbnailBox_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
