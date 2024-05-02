@@ -33,13 +33,6 @@
             txtProjectName = new TextBox();
             label1 = new Label();
             groupRename = new GroupBox();
-            groupBox1 = new GroupBox();
-            cmdStep6 = new Button();
-            cmdStep5 = new Button();
-            cmdStep4 = new Button();
-            cmdStep1 = new Button();
-            cmdStep3 = new Button();
-            cmdStep2 = new Button();
             groupAddAssets = new GroupBox();
             cmdApplyAssetName = new Button();
             cmdAddThumbnail = new Button();
@@ -81,13 +74,13 @@
             txtPublishDisplayName = new TextBox();
             mainTabControl = new TabControl();
             tabPrepare = new TabPage();
+            tabAssets = new TabPage();
             tabPublishConfig = new TabPage();
             tabPublish = new TabPage();
             cmdUpdatePublishedConfiguration = new Button();
-            cmdPublishNewVersion = new Button();
             cmdPublishNewMod = new Button();
+            cmdPublishNewVersion = new Button();
             groupRename.SuspendLayout();
-            groupBox1.SuspendLayout();
             groupAddAssets.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)assetThumbnailBox).BeginInit();
             statusStrip.SuspendLayout();
@@ -97,6 +90,7 @@
             ((System.ComponentModel.ISupportInitialize)packThumbnailBox).BeginInit();
             mainTabControl.SuspendLayout();
             tabPrepare.SuspendLayout();
+            tabAssets.SuspendLayout();
             tabPublishConfig.SuspendLayout();
             tabPublish.SuspendLayout();
             SuspendLayout();
@@ -135,88 +129,12 @@
             groupRename.Controls.Add(cmdRenameProject);
             groupRename.Controls.Add(txtProjectName);
             groupRename.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            groupRename.Location = new Point(3, 96);
+            groupRename.Location = new Point(6, 99);
             groupRename.Name = "groupRename";
             groupRename.Size = new Size(279, 130);
             groupRename.TabIndex = 3;
             groupRename.TabStop = false;
             groupRename.Text = "Rename";
-            // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(cmdStep6);
-            groupBox1.Controls.Add(cmdStep5);
-            groupBox1.Controls.Add(cmdStep4);
-            groupBox1.Controls.Add(cmdStep1);
-            groupBox1.Controls.Add(cmdStep3);
-            groupBox1.Controls.Add(cmdStep2);
-            groupBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            groupBox1.Location = new Point(12, 12);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(200, 444);
-            groupBox1.TabIndex = 4;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Creating your Asset Pack";
-            // 
-            // cmdStep6
-            // 
-            cmdStep6.Location = new Point(0, 368);
-            cmdStep6.Name = "cmdStep6";
-            cmdStep6.Size = new Size(188, 62);
-            cmdStep6.TabIndex = 8;
-            cmdStep6.Text = "Step 6: Open Publish Menu";
-            cmdStep6.UseVisualStyleBackColor = true;
-            cmdStep6.Click += cmdStep6_Click;
-            // 
-            // cmdStep5
-            // 
-            cmdStep5.Location = new Point(0, 300);
-            cmdStep5.Name = "cmdStep5";
-            cmdStep5.Size = new Size(188, 62);
-            cmdStep5.TabIndex = 7;
-            cmdStep5.Text = "Step 5: Edit Publish Configuration";
-            cmdStep5.UseVisualStyleBackColor = true;
-            cmdStep5.Click += cmdStep5_Click;
-            // 
-            // cmdStep4
-            // 
-            cmdStep4.Location = new Point(0, 232);
-            cmdStep4.Name = "cmdStep4";
-            cmdStep4.Size = new Size(188, 62);
-            cmdStep4.TabIndex = 6;
-            cmdStep4.Text = "Step 4: Enter Paradox Mods Credentials";
-            cmdStep4.UseVisualStyleBackColor = true;
-            cmdStep4.Click += cmdStep4_Click;
-            // 
-            // cmdStep1
-            // 
-            cmdStep1.Location = new Point(0, 28);
-            cmdStep1.Name = "cmdStep1";
-            cmdStep1.Size = new Size(188, 62);
-            cmdStep1.TabIndex = 5;
-            cmdStep1.Text = "Step 1: Prepare the Pack";
-            cmdStep1.UseVisualStyleBackColor = true;
-            cmdStep1.Click += cmdStep1_Click;
-            // 
-            // cmdStep3
-            // 
-            cmdStep3.Location = new Point(0, 164);
-            cmdStep3.Name = "cmdStep3";
-            cmdStep3.Size = new Size(188, 62);
-            cmdStep3.TabIndex = 4;
-            cmdStep3.Text = "Step 3: Add Assets to your Pack";
-            cmdStep3.UseVisualStyleBackColor = true;
-            cmdStep3.Click += cmdStep3_Click;
-            // 
-            // cmdStep2
-            // 
-            cmdStep2.Location = new Point(0, 96);
-            cmdStep2.Name = "cmdStep2";
-            cmdStep2.Size = new Size(188, 62);
-            cmdStep2.TabIndex = 3;
-            cmdStep2.Text = "Step 2: Name your Asset Pack";
-            cmdStep2.UseVisualStyleBackColor = true;
-            cmdStep2.Click += cmdStep2_Click;
             // 
             // groupAddAssets
             // 
@@ -230,7 +148,7 @@
             groupAddAssets.Controls.Add(lbAssets);
             groupAddAssets.Controls.Add(label2);
             groupAddAssets.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            groupAddAssets.Location = new Point(294, 96);
+            groupAddAssets.Location = new Point(3, 3);
             groupAddAssets.Name = "groupAddAssets";
             groupAddAssets.Size = new Size(431, 286);
             groupAddAssets.TabIndex = 4;
@@ -345,9 +263,9 @@
             // statusStrip
             // 
             statusStrip.Items.AddRange(new ToolStripItem[] { toolStripMenuButton, statusLabel });
-            statusStrip.Location = new Point(0, 463);
+            statusStrip.Location = new Point(0, 462);
             statusStrip.Name = "statusStrip";
-            statusStrip.Size = new Size(973, 22);
+            statusStrip.Size = new Size(768, 22);
             statusStrip.TabIndex = 5;
             statusStrip.Text = "statusStrip1";
             // 
@@ -382,7 +300,7 @@
             groupPrepare.Controls.Add(cmdBrowseGamePath);
             groupPrepare.Controls.Add(txtCities2Location);
             groupPrepare.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            groupPrepare.Location = new Point(0, 0);
+            groupPrepare.Location = new Point(3, 3);
             groupPrepare.Name = "groupPrepare";
             groupPrepare.Size = new Size(725, 90);
             groupPrepare.TabIndex = 4;
@@ -429,7 +347,7 @@
             groupPDXCredentials.Controls.Add(label5);
             groupPDXCredentials.Controls.Add(txtPdxMail);
             groupPDXCredentials.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            groupPDXCredentials.Location = new Point(3, 235);
+            groupPDXCredentials.Location = new Point(6, 6);
             groupPDXCredentials.Name = "groupPDXCredentials";
             groupPDXCredentials.Size = new Size(279, 147);
             groupPDXCredentials.TabIndex = 4;
@@ -609,9 +527,10 @@
             // mainTabControl
             // 
             mainTabControl.Controls.Add(tabPrepare);
+            mainTabControl.Controls.Add(tabAssets);
             mainTabControl.Controls.Add(tabPublishConfig);
             mainTabControl.Controls.Add(tabPublish);
-            mainTabControl.Location = new Point(224, 12);
+            mainTabControl.Location = new Point(12, 12);
             mainTabControl.Name = "mainTabControl";
             mainTabControl.SelectedIndex = 0;
             mainTabControl.Size = new Size(745, 444);
@@ -619,87 +538,95 @@
             // 
             // tabPrepare
             // 
+            tabPrepare.BackColor = SystemColors.Control;
             tabPrepare.Controls.Add(groupPrepare);
-            tabPrepare.Controls.Add(groupAddAssets);
             tabPrepare.Controls.Add(groupRename);
-            tabPrepare.Controls.Add(groupPDXCredentials);
             tabPrepare.Location = new Point(4, 24);
             tabPrepare.Name = "tabPrepare";
             tabPrepare.Padding = new Padding(3);
             tabPrepare.Size = new Size(737, 416);
             tabPrepare.TabIndex = 0;
-            tabPrepare.Text = "Asset Pack Creation";
-            tabPrepare.UseVisualStyleBackColor = true;
+            tabPrepare.Text = "Step 1: Prepare";
+            tabPrepare.Click += tabPrepare_Click;
+            // 
+            // tabAssets
+            // 
+            tabAssets.BackColor = SystemColors.Control;
+            tabAssets.Controls.Add(groupAddAssets);
+            tabAssets.Location = new Point(4, 24);
+            tabAssets.Name = "tabAssets";
+            tabAssets.Size = new Size(737, 416);
+            tabAssets.TabIndex = 3;
+            tabAssets.Text = "Step 2: Assets & Thumbnails";
             // 
             // tabPublishConfig
             // 
+            tabPublishConfig.BackColor = SystemColors.Control;
             tabPublishConfig.Controls.Add(groupPublishConfig);
             tabPublishConfig.Location = new Point(4, 24);
             tabPublishConfig.Name = "tabPublishConfig";
             tabPublishConfig.Padding = new Padding(3);
             tabPublishConfig.Size = new Size(737, 416);
             tabPublishConfig.TabIndex = 1;
-            tabPublishConfig.Text = "Publish Configuration";
-            tabPublishConfig.UseVisualStyleBackColor = true;
+            tabPublishConfig.Text = "Step 3: Publish Configuration";
             // 
             // tabPublish
             // 
+            tabPublish.BackColor = SystemColors.Control;
+            tabPublish.Controls.Add(groupPDXCredentials);
             tabPublish.Controls.Add(cmdUpdatePublishedConfiguration);
-            tabPublish.Controls.Add(cmdPublishNewVersion);
             tabPublish.Controls.Add(cmdPublishNewMod);
+            tabPublish.Controls.Add(cmdPublishNewVersion);
             tabPublish.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             tabPublish.Location = new Point(4, 24);
             tabPublish.Name = "tabPublish";
             tabPublish.Padding = new Padding(3);
             tabPublish.Size = new Size(737, 416);
             tabPublish.TabIndex = 2;
-            tabPublish.Text = "Publish";
-            tabPublish.UseVisualStyleBackColor = true;
+            tabPublish.Text = "Step 4: Publish";
             // 
             // cmdUpdatePublishedConfiguration
             // 
-            cmdUpdatePublishedConfiguration.Location = new Point(0, 144);
+            cmdUpdatePublishedConfiguration.Location = new Point(6, 303);
             cmdUpdatePublishedConfiguration.Name = "cmdUpdatePublishedConfiguration";
-            cmdUpdatePublishedConfiguration.Size = new Size(195, 66);
+            cmdUpdatePublishedConfiguration.Size = new Size(279, 66);
             cmdUpdatePublishedConfiguration.TabIndex = 2;
             cmdUpdatePublishedConfiguration.Text = "Update Published Configuration";
             cmdUpdatePublishedConfiguration.UseVisualStyleBackColor = true;
             cmdUpdatePublishedConfiguration.Click += cmdUpdatePublishedConfiguration_Click;
             // 
-            // cmdPublishNewVersion
-            // 
-            cmdPublishNewVersion.Location = new Point(0, 72);
-            cmdPublishNewVersion.Name = "cmdPublishNewVersion";
-            cmdPublishNewVersion.Size = new Size(195, 66);
-            cmdPublishNewVersion.TabIndex = 1;
-            cmdPublishNewVersion.Text = "Publish New Version";
-            cmdPublishNewVersion.UseVisualStyleBackColor = true;
-            cmdPublishNewVersion.Click += cmdPublishNewVersion_Click;
-            // 
             // cmdPublishNewMod
             // 
-            cmdPublishNewMod.Location = new Point(0, 0);
+            cmdPublishNewMod.Location = new Point(6, 159);
             cmdPublishNewMod.Name = "cmdPublishNewMod";
-            cmdPublishNewMod.Size = new Size(195, 66);
+            cmdPublishNewMod.Size = new Size(279, 66);
             cmdPublishNewMod.TabIndex = 0;
             cmdPublishNewMod.Text = "Publish New Mod";
             cmdPublishNewMod.UseVisualStyleBackColor = true;
             cmdPublishNewMod.Click += cmdPublishNewMod_Click;
             // 
+            // cmdPublishNewVersion
+            // 
+            cmdPublishNewVersion.Location = new Point(6, 231);
+            cmdPublishNewVersion.Name = "cmdPublishNewVersion";
+            cmdPublishNewVersion.Size = new Size(279, 66);
+            cmdPublishNewVersion.TabIndex = 1;
+            cmdPublishNewVersion.Text = "Publish New Version";
+            cmdPublishNewVersion.UseVisualStyleBackColor = true;
+            cmdPublishNewVersion.Click += cmdPublishNewVersion_Click;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(973, 485);
+            ClientSize = new Size(768, 484);
             Controls.Add(mainTabControl);
             Controls.Add(statusStrip);
-            Controls.Add(groupBox1);
             Name = "Main";
             Text = " ";
             Load += Main_Load;
             groupRename.ResumeLayout(false);
             groupRename.PerformLayout();
-            groupBox1.ResumeLayout(false);
             groupAddAssets.ResumeLayout(false);
             groupAddAssets.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)assetThumbnailBox).EndInit();
@@ -714,6 +641,7 @@
             ((System.ComponentModel.ISupportInitialize)packThumbnailBox).EndInit();
             mainTabControl.ResumeLayout(false);
             tabPrepare.ResumeLayout(false);
+            tabAssets.ResumeLayout(false);
             tabPublishConfig.ResumeLayout(false);
             tabPublish.ResumeLayout(false);
             ResumeLayout(false);
@@ -726,14 +654,11 @@
         private TextBox txtProjectName;
         private Label label1;
         private GroupBox groupRename;
-        private GroupBox groupBox1;
-        private Button cmdStep2;
         private GroupBox groupAddAssets;
         private Label label2;
         private Button cmdBrowseAssets;
         private ListBox lbAssets;
         private Button cmdRemoveSelectedAsset;
-        private Button cmdStep3;
         private OpenFileDialog selectAssetsDialog;
         private Button cmdAddThumbnail;
         private OpenFileDialog addThumbnailDialog;
@@ -743,7 +668,6 @@
         private Button cmdApplyAssetName;
         private StatusStrip statusStrip;
         private ToolStripStatusLabel statusLabel;
-        private Button cmdStep1;
         private GroupBox groupPrepare;
         private Label label4;
         private Button cmdBrowseGamePath;
@@ -757,8 +681,6 @@
         private Label label6;
         private TextBox txtPdxPw;
         private CheckBox cbSavePassword;
-        private Button cmdStep4;
-        private Button cmdStep5;
         private GroupBox groupPublishConfig;
         private Label label7;
         private Button cmdPublishNewMod;
@@ -773,11 +695,11 @@
         private TabPage tabPrepare;
         private TabPage tabPublishConfig;
         private Button cmdMarkdownPreview;
-        private Button cmdStep6;
         private TabPage tabPublish;
         private TextBox txtPublishModId;
         private Label label11;
         private Button cmdUpdatePublishedConfiguration;
         private Button cmdPublishNewVersion;
+        private TabPage tabAssets;
     }
 }

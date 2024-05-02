@@ -28,7 +28,6 @@ namespace AssetPackCreator
 
         private void Main_Load(object sender, EventArgs e)
         {
-            ChooseStep(1);
             // Look for sln file in current folder
             foreach (string file in Directory.GetFiles(Directory.GetCurrentDirectory()))
             {
@@ -61,51 +60,6 @@ namespace AssetPackCreator
             txtPublishLongDescription.DataBindings.Add("Text", publishConfig, "LongDescription", false, DataSourceUpdateMode.OnPropertyChanged);
             txtPublishModId.DataBindings.Add("Text", publishConfig, "ModId", false, DataSourceUpdateMode.OnPropertyChanged);
             packThumbnailBox.ImageLocation = publishConfig.ThumbnailPath;
-        }
-
-        private void DisableAllGroups()
-        {
-            groupPrepare.Enabled = false;
-            groupRename.Enabled = false;
-            groupAddAssets.Enabled = false;
-            groupPDXCredentials.Enabled = false;
-            cmdStep1.Enabled = false;
-            groupPublishConfig.Enabled = false;
-        }
-
-
-        private void ChooseStep(int step)
-        {
-            DisableAllGroups();
-            switch (step)
-            {
-                case 1:
-                    groupPrepare.Enabled = true;
-                    mainTabControl.SelectTab(0);
-                    break;
-                case 2:
-                    groupRename.Enabled = true;
-                    mainTabControl.SelectTab(0);
-                    break;
-                case 3:
-                    groupAddAssets.Enabled = true;
-                    mainTabControl.SelectTab(0);
-                    break;
-                case 4:
-                    groupPDXCredentials.Enabled = true;
-                    mainTabControl.SelectTab(0);
-                    break;
-                case 5:
-                    groupPublishConfig.Enabled = true;
-                    mainTabControl.SelectTab(1);
-                    break;
-                case 6:
-                    mainTabControl.SelectTab(2);
-                    break;
-                default:
-                    MessageBox.Show("Unknown step", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    break;
-            }
         }
 
         private void cmdRenameProject_Click(object sender, EventArgs e)
@@ -220,16 +174,6 @@ namespace AssetPackCreator
 
         }
 
-        private void cmdStep2_Click(object sender, EventArgs e)
-        {
-            ChooseStep(2);
-        }
-
-        private void cmdStep3_Click(object sender, EventArgs e)
-        {
-            ChooseStep(3);
-        }
-
         private void cmdApplyAssetName_Click(object sender, EventArgs e)
         {
             Asset? selected = (Asset)lbAssets.SelectedItem;
@@ -258,11 +202,6 @@ namespace AssetPackCreator
             cmdRenameProject.Enabled = txtProjectName.Text != pack.name;
         }
 
-        private void cmdStep1_Click(object sender, EventArgs e)
-        {
-            ChooseStep(1);
-        }
-
         private void cmdBrowseGamePath_Click(object sender, EventArgs e)
         {
             browseGamePathDialog.InitialDirectory = txtCities2Location.Text;
@@ -284,7 +223,6 @@ namespace AssetPackCreator
                 {
                     settings.Cities2Path = txtCities2Location.Text;
                     groupPrepare.Text = "Prepare \u2705";
-                    ChooseStep(2);
                 }
             }
             catch (Exception ex)
@@ -316,16 +254,6 @@ namespace AssetPackCreator
         private void cbSavePassword_CheckedChanged(object sender, EventArgs e)
         {
             settings.SavePassword = cbSavePassword.Checked;
-        }
-
-        private void cmdStep4_Click(object sender, EventArgs e)
-        {
-            ChooseStep(4);
-        }
-
-        private void cmdStep5_Click(object sender, EventArgs e)
-        {
-            ChooseStep(5);
         }
 
         private void cmdPublishConfigSave_Click(object sender, EventArgs e)
@@ -375,9 +303,16 @@ namespace AssetPackCreator
             preview.Show();
         }
 
-        private void cmdStep6_Click(object sender, EventArgs e)
+        private void createPdxAccountFile()
         {
-            ChooseStep(6);
+            var pdxAccountFile = $"C:/Users/{Environment.UserName}/Desktop/pdx_account.txt";
+            if (!File.Exists(pdxAccountFile))
+            {
+                FileStream fs;
+                fs = File.Create(pdxAccountFile);
+                fs.Close();
+            }
+            File.WriteAllText(pdxAccountFile, settings.PdxMail + "\n" + settings.PdxPassword);
         }
 
         private void cmdPublishNewMod_Click(object sender, EventArgs e)
@@ -385,17 +320,24 @@ namespace AssetPackCreator
             //var localModPath = Path.Combine("C:\\Users", Environment.UserName, "AppData", "LocalLow", "Colossal Order", "Cities Skylines II", "Mods", pack.name);
             //var publishConfigPath = Path.Combine(Directory.GetCurrentDirectory(), "Properties", "PublishConfiguration.xml");
             //Publisher.PublishNewMod(settings.Cities2Path, publishConfigPath, settings.PdxMail, settings.PdxPassword, localModPath);
+            createPdxAccountFile();
             Publisher.PublishNewMod(Directory.GetCurrentDirectory());
         }
 
         private void cmdPublishNewVersion_Click(object sender, EventArgs e)
         {
+            createPdxAccountFile();
             Publisher.PublishNewVersion(Directory.GetCurrentDirectory());
         }
 
         private void cmdUpdatePublishedConfiguration_Click(object sender, EventArgs e)
         {
+            createPdxAccountFile();
             Publisher.UpdatePublishedConfiguration(Directory.GetCurrentDirectory());
+        }
+
+        private void tabPrepare_Click(object sender, EventArgs e)
+        {
         }
     }
 }
