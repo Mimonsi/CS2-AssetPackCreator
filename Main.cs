@@ -53,35 +53,41 @@ namespace AssetPackCreator
             cbSavePassword.Checked = settings.SavePassword;
         }
 
+        private void DisableAllGroups()
+        {
+            groupPrepare.Enabled = false;
+            groupRename.Enabled = false;
+            groupAddAssets.Enabled = false;
+            groupPDXCredentials.Enabled = false;
+            cmdStep1.Enabled = false;
+            groupPublishConfig.Enabled = false;
+        }
+
+
         private void ChooseStep(int step)
         {
+            DisableAllGroups();
             switch (step)
             {
                 case 1:
                     groupPrepare.Enabled = true;
-                    groupRename.Enabled = false;
-                    groupAddAssets.Enabled = false;
-                    groupPDXCredentials.Enabled = false;
-                    cmdStep1.Enabled = true;
+                    mainTabControl.SelectTab(0);
                     break;
                 case 2:
-                    groupPrepare.Enabled = false;
                     groupRename.Enabled = true;
-                    groupAddAssets.Enabled = false;
-                    groupPDXCredentials.Enabled = false;
-                    cmdStep1.Enabled = false;
+                    mainTabControl.SelectTab(0);
                     break;
                 case 3:
-                    groupPrepare.Enabled = false;
-                    groupRename.Enabled = false;
                     groupAddAssets.Enabled = true;
-                    groupPDXCredentials.Enabled = false;
+                    mainTabControl.SelectTab(0);
                     break;
                 case 4:
-                    groupPrepare.Enabled = false;
-                    groupRename.Enabled = false;
-                    groupAddAssets.Enabled = false;
                     groupPDXCredentials.Enabled = true;
+                    mainTabControl.SelectTab(0);
+                    break;
+                case 5:
+                    groupPublishConfig.Enabled = true;
+                    mainTabControl.SelectTab(1);
                     break;
                 default:
                     MessageBox.Show("Unknown step", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -302,6 +308,11 @@ namespace AssetPackCreator
         private void cmdStep4_Click(object sender, EventArgs e)
         {
             ChooseStep(4);
+        }
+
+        private void cmdStep5_Click(object sender, EventArgs e)
+        {
+            ChooseStep(5);
         }
     }
 }
