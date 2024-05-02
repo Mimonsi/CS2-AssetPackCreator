@@ -34,6 +34,7 @@
             label1 = new Label();
             groupRename = new GroupBox();
             groupBox1 = new GroupBox();
+            cmdStep6 = new Button();
             cmdStep5 = new Button();
             cmdStep4 = new Button();
             cmdStep1 = new Button();
@@ -67,6 +68,8 @@
             label5 = new Label();
             txtPdxMail = new TextBox();
             groupPublishConfig = new GroupBox();
+            label11 = new Label();
+            txtPublishModId = new TextBox();
             cmdMarkdownPreview = new Button();
             label10 = new Label();
             packThumbnailBox = new PictureBox();
@@ -79,8 +82,9 @@
             mainTabControl = new TabControl();
             tabPrepare = new TabPage();
             tabPublishConfig = new TabPage();
-            cmdStep6 = new Button();
             tabPublish = new TabPage();
+            cmdUpdatePublishedConfiguration = new Button();
+            cmdPublishNewVersion = new Button();
             cmdPublishNewMod = new Button();
             groupRename.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -153,6 +157,16 @@
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
             groupBox1.Text = "Creating your Asset Pack";
+            // 
+            // cmdStep6
+            // 
+            cmdStep6.Location = new Point(0, 368);
+            cmdStep6.Name = "cmdStep6";
+            cmdStep6.Size = new Size(188, 62);
+            cmdStep6.TabIndex = 8;
+            cmdStep6.Text = "Step 6: Open Publish Menu";
+            cmdStep6.UseVisualStyleBackColor = true;
+            cmdStep6.Click += cmdStep6_Click;
             // 
             // cmdStep5
             // 
@@ -474,6 +488,8 @@
             // groupPublishConfig
             // 
             groupPublishConfig.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            groupPublishConfig.Controls.Add(label11);
+            groupPublishConfig.Controls.Add(txtPublishModId);
             groupPublishConfig.Controls.Add(cmdMarkdownPreview);
             groupPublishConfig.Controls.Add(label10);
             groupPublishConfig.Controls.Add(packThumbnailBox);
@@ -491,6 +507,22 @@
             groupPublishConfig.TabIndex = 4;
             groupPublishConfig.TabStop = false;
             groupPublishConfig.Text = "Publish Configuration (will be displayed in PDX Mods)";
+            // 
+            // label11
+            // 
+            label11.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label11.Location = new Point(9, 383);
+            label11.Name = "label11";
+            label11.Size = new Size(66, 21);
+            label11.TabIndex = 11;
+            label11.Text = "Mod ID:";
+            // 
+            // txtPublishModId
+            // 
+            txtPublishModId.Location = new Point(81, 377);
+            txtPublishModId.Name = "txtPublishModId";
+            txtPublishModId.Size = new Size(181, 29);
+            txtPublishModId.TabIndex = 10;
             // 
             // cmdMarkdownPreview
             // 
@@ -610,18 +642,10 @@
             tabPublishConfig.Text = "Publish Configuration";
             tabPublishConfig.UseVisualStyleBackColor = true;
             // 
-            // cmdStep6
-            // 
-            cmdStep6.Location = new Point(0, 368);
-            cmdStep6.Name = "cmdStep6";
-            cmdStep6.Size = new Size(188, 62);
-            cmdStep6.TabIndex = 8;
-            cmdStep6.Text = "Step 6: Open Publish Menu";
-            cmdStep6.UseVisualStyleBackColor = true;
-            cmdStep6.Click += cmdStep6_Click;
-            // 
             // tabPublish
             // 
+            tabPublish.Controls.Add(cmdUpdatePublishedConfiguration);
+            tabPublish.Controls.Add(cmdPublishNewVersion);
             tabPublish.Controls.Add(cmdPublishNewMod);
             tabPublish.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             tabPublish.Location = new Point(4, 24);
@@ -631,6 +655,26 @@
             tabPublish.TabIndex = 2;
             tabPublish.Text = "Publish";
             tabPublish.UseVisualStyleBackColor = true;
+            // 
+            // cmdUpdatePublishedConfiguration
+            // 
+            cmdUpdatePublishedConfiguration.Location = new Point(0, 144);
+            cmdUpdatePublishedConfiguration.Name = "cmdUpdatePublishedConfiguration";
+            cmdUpdatePublishedConfiguration.Size = new Size(195, 66);
+            cmdUpdatePublishedConfiguration.TabIndex = 2;
+            cmdUpdatePublishedConfiguration.Text = "Update Published Configuration";
+            cmdUpdatePublishedConfiguration.UseVisualStyleBackColor = true;
+            cmdUpdatePublishedConfiguration.Click += cmdUpdatePublishedConfiguration_Click;
+            // 
+            // cmdPublishNewVersion
+            // 
+            cmdPublishNewVersion.Location = new Point(0, 72);
+            cmdPublishNewVersion.Name = "cmdPublishNewVersion";
+            cmdPublishNewVersion.Size = new Size(195, 66);
+            cmdPublishNewVersion.TabIndex = 1;
+            cmdPublishNewVersion.Text = "Publish New Version";
+            cmdPublishNewVersion.UseVisualStyleBackColor = true;
+            cmdPublishNewVersion.Click += cmdPublishNewVersion_Click;
             // 
             // cmdPublishNewMod
             // 
@@ -731,5 +775,9 @@
         private Button cmdMarkdownPreview;
         private Button cmdStep6;
         private TabPage tabPublish;
+        private TextBox txtPublishModId;
+        private Label label11;
+        private Button cmdUpdatePublishedConfiguration;
+        private Button cmdPublishNewVersion;
     }
 }

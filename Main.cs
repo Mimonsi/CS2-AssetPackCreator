@@ -59,6 +59,7 @@ namespace AssetPackCreator
             txtPublishDisplayName.DataBindings.Add("Text", publishConfig, "DisplayName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtPublishShortDescription.DataBindings.Add("Text", publishConfig, "ShortDescription", false, DataSourceUpdateMode.OnPropertyChanged);
             txtPublishLongDescription.DataBindings.Add("Text", publishConfig, "LongDescription", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtPublishModId.DataBindings.Add("Text", publishConfig, "ModId", false, DataSourceUpdateMode.OnPropertyChanged);
             packThumbnailBox.ImageLocation = publishConfig.ThumbnailPath;
         }
 
@@ -343,6 +344,13 @@ namespace AssetPackCreator
                 return;
             if (!string.IsNullOrEmpty(addThumbnailDialog.FileName) && File.Exists(addThumbnailDialog.FileName))
             {
+                // Check file size
+                FileInfo fi = new FileInfo(addThumbnailDialog.FileName);
+                if (fi.Length > 2048 * 1024)
+                {
+                    MessageBox.Show("File size must not exceed 2MB", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 publishConfig.ChangeThumbnail(addThumbnailDialog.FileName);
                 packThumbnailBox.ImageLocation = publishConfig.ThumbnailPath;
 
@@ -374,9 +382,20 @@ namespace AssetPackCreator
 
         private void cmdPublishNewMod_Click(object sender, EventArgs e)
         {
-            var localModPath = Path.Combine("C:\\Users", Environment.UserName, "AppData", "LocalLow", "Colossal Order", "Cities Skylines II", "Mods", pack.name);
-            var publishConfigPath = Path.Combine(Directory.GetCurrentDirectory(), "Properties", "PublishConfiguration.xml");
-            Publisher.PublishNewMod(settings.Cities2Path, publishConfigPath, settings.PdxMail, settings.PdxPassword, localModPath);
+            //var localModPath = Path.Combine("C:\\Users", Environment.UserName, "AppData", "LocalLow", "Colossal Order", "Cities Skylines II", "Mods", pack.name);
+            //var publishConfigPath = Path.Combine(Directory.GetCurrentDirectory(), "Properties", "PublishConfiguration.xml");
+            //Publisher.PublishNewMod(settings.Cities2Path, publishConfigPath, settings.PdxMail, settings.PdxPassword, localModPath);
+            Publisher.PublishNewMod(Directory.GetCurrentDirectory());
+        }
+
+        private void cmdPublishNewVersion_Click(object sender, EventArgs e)
+        {
+            Publisher.PublishNewVersion(Directory.GetCurrentDirectory());
+        }
+
+        private void cmdUpdatePublishedConfiguration_Click(object sender, EventArgs e)
+        {
+            Publisher.UpdatePublishedConfiguration(Directory.GetCurrentDirectory());
         }
     }
 }
