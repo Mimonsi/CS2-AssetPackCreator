@@ -40,6 +40,24 @@ namespace AssetPackCreator
             SetField(ref displayText, $"\u274c {prefabName}");
         }
 
+        public void Rename(string newPrefabName)
+        {
+            string newAssetPath = $@"{pack.baseDirectory.FullName}\{newPrefabName}";
+
+            string oldPrefabName = new String(prefabName);
+
+            // Asset directory
+            Directory.Move(assetPath, newAssetPath);
+
+            File.Move($@"{newAssetPath}\{oldPrefabName}.Prefab", $@"{newAssetPath}\{newPrefabName}.Prefab");
+            File.Move($@"{newAssetPath}\{oldPrefabName}.Prefab.cid", $@"{newAssetPath}\{newPrefabName}.Prefab.cid");
+            File.Move($@"{newAssetPath}\{oldPrefabName}{thumbnailExt}", $@"{newAssetPath}\{newPrefabName}{thumbnailExt}");
+
+            SetField(ref prefabName, newPrefabName);
+
+
+        }
+
         public string GetIconPath()
         {
             return $"coui://customassets/{pack.name}/{prefabName}/{prefabName}{thumbnailExt}";

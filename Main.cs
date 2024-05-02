@@ -84,7 +84,7 @@ namespace AssetPackCreator
                     groupPDXCredentials.Enabled = true;
                     break;
                 default:
-                    MessageBox.Show("?");
+                    MessageBox.Show("Unknown step", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     break;
             }
         }
@@ -213,46 +213,23 @@ namespace AssetPackCreator
 
         private void cmdApplyAssetName_Click(object sender, EventArgs e)
         {
-            /*if (string.IsNullOrEmpty(txtPrefabName.Text) || txtPrefabName.Text.Length < 5)
+            Asset? selected = (Asset)lbAssets.SelectedItem;
+            if (selected == null)
+                return;
+            if (string.IsNullOrEmpty(txtPrefabName.Text) || txtPrefabName.Text.Length < 5)
             {
                 MessageBox.Show("Please enter at least 5 characters", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            Asset selected = addedAssets[lbAssets.SelectedIndex];
-
-            string oldPrefabName = selected.prefabName;
-            string oldDir = selected.dir;
-            string oldThumbnailPath = selected.thumbnailPath;
-
-            selected.prefabName = txtPrefabName.Text;
-
-            string newDir = Path.Combine(Path.GetDirectoryName(oldDir), selected.prefabName);
-            File.Move(Path.Combine(oldDir, oldPrefabName + ".Prefab"), Path.Combine(oldDir, selected.prefabName + ".Prefab"));
-            File.Move(Path.Combine(oldDir, oldPrefabName + ".Prefab.cid"), Path.Combine(oldDir, selected.prefabName + ".Prefab.cid"));
-            if (!string.IsNullOrEmpty(oldThumbnailPath))
-            {
-                File.Move(Path.Combine(oldThumbnailPath), Path.Combine(oldDir, Path.GetFileName(oldThumbnailPath)));
-            }
-
-            Directory.Move(oldDir, newDir);
-            selected.dir = newDir;
-
-
-            if (selected.HasThumbnail())
-            {
-                File.Move(selected.thumbnailPath, Path.Combine(newDir, Path.GetFileName(selected.thumbnailPath)));
-                selected.thumbnailPath = Path.Combine(newDir, Path.GetFileName(selected.thumbnailPath));
-                selected.UpdateThumbnailInPrefab();
-            }*/
-
+            selected.Rename(txtPrefabName.Text);
         }
 
         private void txtPrefabName_TextChanged(object sender, EventArgs e)
         {
-            /*if (lbAssets.SelectedIndex < 0)
+            Asset? selected = (Asset)lbAssets.SelectedItem;
+            if (selected == null)
                 return;
-            Asset selected = addedAssets[lbAssets.SelectedIndex];
-            cmdApplyAssetName.Enabled = txtPrefabName.Text != selected.prefabName;*/
+            cmdApplyAssetName.Enabled = !pack.ContainsAssetWithName(txtPrefabName.Text);
         }
 
         private void txtProjectName_TextChanged(object sender, EventArgs e)

@@ -105,5 +105,15 @@ namespace AssetPackCreator;
             Directory.Delete(Path.Combine(baseDirectory.FullName, asset.prefabName), true);
             assets.Remove(asset);
         }
+
+        public bool ContainsAssetWithName(string prefabName)
+        {
+            foreach(Asset a in assets)
+            {
+                if (a.prefabName == prefabName)
+                    return true;
+            }
+            return false;
+        }
     }
 
