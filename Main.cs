@@ -256,16 +256,6 @@ namespace AssetPackCreator
             settings.SavePassword = cbSavePassword.Checked;
         }
 
-        private void cmdPublishConfigSave_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cmdPublishAddRemoveThumbnail_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void PackThumbnailBoxClick(object sender, EventArgs e)
         {
             if (addThumbnailDialog.ShowDialog() != DialogResult.OK)
@@ -303,9 +293,9 @@ namespace AssetPackCreator
             preview.Show();
         }
 
-        private void createPdxAccountFile()
+        private void CreatePdxAccountFile()
         {
-            var pdxAccountFile = $"C:/Users/{Environment.UserName}/Desktop/pdx_account.txt";
+            var pdxAccountFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/pdx_account.txt";
             if (!File.Exists(pdxAccountFile))
             {
                 FileStream fs;
@@ -320,19 +310,19 @@ namespace AssetPackCreator
             //var localModPath = Path.Combine("C:\\Users", Environment.UserName, "AppData", "LocalLow", "Colossal Order", "Cities Skylines II", "Mods", pack.name);
             //var publishConfigPath = Path.Combine(Directory.GetCurrentDirectory(), "Properties", "PublishConfiguration.xml");
             //Publisher.PublishNewMod(settings.Cities2Path, publishConfigPath, settings.PdxMail, settings.PdxPassword, localModPath);
-            createPdxAccountFile();
+            CreatePdxAccountFile();
             Publisher.PublishNewMod(Directory.GetCurrentDirectory());
         }
 
         private void cmdPublishNewVersion_Click(object sender, EventArgs e)
         {
-            createPdxAccountFile();
+            CreatePdxAccountFile();
             Publisher.PublishNewVersion(Directory.GetCurrentDirectory());
         }
 
         private void cmdUpdatePublishedConfiguration_Click(object sender, EventArgs e)
         {
-            createPdxAccountFile();
+            CreatePdxAccountFile();
             Publisher.UpdatePublishedConfiguration(Directory.GetCurrentDirectory());
         }
 
