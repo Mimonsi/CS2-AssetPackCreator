@@ -44,6 +44,7 @@ namespace AssetPackCreator
             else
                 pack = AssetPack.New(txtProjectName.Text, assetsDir);
 
+            comboLocale.SelectedItem = "en-US";
             lbAssets.DataSource = pack.assets;
             lbAssets.DisplayMember = "displayText";
             selectAssetsDialog.InitialDirectory = $@"C:\Users\{Environment.UserName}\AppData\LocalLow\Colossal Order\Cities Skylines II\StreamingAssets~";
@@ -328,6 +329,11 @@ namespace AssetPackCreator
 
         private void tabPrepare_Click(object sender, EventArgs e)
         {
+        }
+
+        private void comboLocale_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

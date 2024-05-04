@@ -75,11 +75,18 @@
             mainTabControl = new TabControl();
             tabPrepare = new TabPage();
             tabAssets = new TabPage();
+            groupAssetLocatization = new GroupBox();
+            label12 = new Label();
+            comboLocale = new ComboBox();
             tabPublishConfig = new TabPage();
             tabPublish = new TabPage();
             cmdUpdatePublishedConfiguration = new Button();
             cmdPublishNewMod = new Button();
             cmdPublishNewVersion = new Button();
+            txtLocalizedName = new TextBox();
+            label13 = new Label();
+            label14 = new Label();
+            txtLocalizedDescription = new TextBox();
             groupRename.SuspendLayout();
             groupAddAssets.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)assetThumbnailBox).BeginInit();
@@ -91,6 +98,7 @@
             mainTabControl.SuspendLayout();
             tabPrepare.SuspendLayout();
             tabAssets.SuspendLayout();
+            groupAssetLocatization.SuspendLayout();
             tabPublishConfig.SuspendLayout();
             tabPublish.SuspendLayout();
             SuspendLayout();
@@ -265,7 +273,7 @@
             statusStrip.Items.AddRange(new ToolStripItem[] { toolStripMenuButton, statusLabel });
             statusStrip.Location = new Point(0, 462);
             statusStrip.Name = "statusStrip";
-            statusStrip.Size = new Size(768, 22);
+            statusStrip.Size = new Size(763, 22);
             statusStrip.TabIndex = 5;
             statusStrip.Text = "statusStrip1";
             // 
@@ -552,12 +560,50 @@
             // tabAssets
             // 
             tabAssets.BackColor = SystemColors.Control;
+            tabAssets.Controls.Add(groupAssetLocatization);
             tabAssets.Controls.Add(groupAddAssets);
             tabAssets.Location = new Point(4, 24);
             tabAssets.Name = "tabAssets";
             tabAssets.Size = new Size(737, 416);
             tabAssets.TabIndex = 3;
             tabAssets.Text = "Step 2: Assets & Thumbnails";
+            // 
+            // groupAssetLocatization
+            // 
+            groupAssetLocatization.Controls.Add(label14);
+            groupAssetLocatization.Controls.Add(txtLocalizedDescription);
+            groupAssetLocatization.Controls.Add(label13);
+            groupAssetLocatization.Controls.Add(txtLocalizedName);
+            groupAssetLocatization.Controls.Add(label12);
+            groupAssetLocatization.Controls.Add(comboLocale);
+            groupAssetLocatization.Enabled = false;
+            groupAssetLocatization.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            groupAssetLocatization.Location = new Point(437, 3);
+            groupAssetLocatization.Name = "groupAssetLocatization";
+            groupAssetLocatization.Size = new Size(297, 404);
+            groupAssetLocatization.TabIndex = 9;
+            groupAssetLocatization.TabStop = false;
+            groupAssetLocatization.Text = "Asset Localization (coming soon)";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(6, 31);
+            label12.Name = "label12";
+            label12.Size = new Size(57, 21);
+            label12.TabIndex = 1;
+            label12.Text = "Locale:";
+            // 
+            // comboLocale
+            // 
+            comboLocale.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboLocale.FormattingEnabled = true;
+            comboLocale.Items.AddRange(new object[] { "de-DE", "en-US", "es-ES", "fr-FR", "it-IT", "ja-JP", "ko-KR", "pl-PL", "pt-BR", "ru-RU", "zh-HANS", "zh-HANT" });
+            comboLocale.Location = new Point(69, 28);
+            comboLocale.Name = "comboLocale";
+            comboLocale.Size = new Size(222, 29);
+            comboLocale.TabIndex = 0;
+            comboLocale.SelectedIndexChanged += comboLocale_SelectedIndexChanged;
             // 
             // tabPublishConfig
             // 
@@ -615,11 +661,44 @@
             cmdPublishNewVersion.UseVisualStyleBackColor = true;
             cmdPublishNewVersion.Click += cmdPublishNewVersion_Click;
             // 
+            // txtLocalizedName
+            // 
+            txtLocalizedName.Location = new Point(6, 102);
+            txtLocalizedName.Name = "txtLocalizedName";
+            txtLocalizedName.Size = new Size(285, 29);
+            txtLocalizedName.TabIndex = 9;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(6, 78);
+            label13.Name = "label13";
+            label13.Size = new Size(110, 21);
+            label13.TabIndex = 10;
+            label13.Text = "Display Name:";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(6, 134);
+            label14.Name = "label14";
+            label14.Size = new Size(92, 21);
+            label14.TabIndex = 12;
+            label14.Text = "Description:";
+            // 
+            // txtLocalizedDescription
+            // 
+            txtLocalizedDescription.Location = new Point(6, 158);
+            txtLocalizedDescription.Multiline = true;
+            txtLocalizedDescription.Name = "txtLocalizedDescription";
+            txtLocalizedDescription.Size = new Size(285, 240);
+            txtLocalizedDescription.TabIndex = 11;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(768, 484);
+            ClientSize = new Size(763, 484);
             Controls.Add(mainTabControl);
             Controls.Add(statusStrip);
             Name = "Main";
@@ -642,6 +721,8 @@
             mainTabControl.ResumeLayout(false);
             tabPrepare.ResumeLayout(false);
             tabAssets.ResumeLayout(false);
+            groupAssetLocatization.ResumeLayout(false);
+            groupAssetLocatization.PerformLayout();
             tabPublishConfig.ResumeLayout(false);
             tabPublish.ResumeLayout(false);
             ResumeLayout(false);
@@ -701,5 +782,12 @@
         private Button cmdUpdatePublishedConfiguration;
         private Button cmdPublishNewVersion;
         private TabPage tabAssets;
+        private GroupBox groupAssetLocatization;
+        private Label label12;
+        private ComboBox comboLocale;
+        private Label label14;
+        private TextBox txtLocalizedDescription;
+        private Label label13;
+        private TextBox txtLocalizedName;
     }
 }
