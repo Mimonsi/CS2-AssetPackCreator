@@ -76,6 +76,10 @@
             tabPrepare = new TabPage();
             tabAssets = new TabPage();
             groupAssetLocatization = new GroupBox();
+            label14 = new Label();
+            txtLocalizedDescription = new TextBox();
+            label13 = new Label();
+            txtLocalizedName = new TextBox();
             label12 = new Label();
             comboLocale = new ComboBox();
             tabPublishConfig = new TabPage();
@@ -83,10 +87,6 @@
             cmdUpdatePublishedConfiguration = new Button();
             cmdPublishNewMod = new Button();
             cmdPublishNewVersion = new Button();
-            txtLocalizedName = new TextBox();
-            label13 = new Label();
-            label14 = new Label();
-            txtLocalizedDescription = new TextBox();
             groupRename.SuspendLayout();
             groupAddAssets.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)assetThumbnailBox).BeginInit();
@@ -576,7 +576,6 @@
             groupAssetLocatization.Controls.Add(txtLocalizedName);
             groupAssetLocatization.Controls.Add(label12);
             groupAssetLocatization.Controls.Add(comboLocale);
-            groupAssetLocatization.Enabled = false;
             groupAssetLocatization.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupAssetLocatization.Location = new Point(437, 3);
             groupAssetLocatization.Name = "groupAssetLocatization";
@@ -584,6 +583,41 @@
             groupAssetLocatization.TabIndex = 9;
             groupAssetLocatization.TabStop = false;
             groupAssetLocatization.Text = "Asset Localization (coming soon)";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(6, 134);
+            label14.Name = "label14";
+            label14.Size = new Size(92, 21);
+            label14.TabIndex = 12;
+            label14.Text = "Description:";
+            // 
+            // txtLocalizedDescription
+            // 
+            txtLocalizedDescription.Location = new Point(6, 158);
+            txtLocalizedDescription.Multiline = true;
+            txtLocalizedDescription.Name = "txtLocalizedDescription";
+            txtLocalizedDescription.Size = new Size(285, 240);
+            txtLocalizedDescription.TabIndex = 11;
+            txtLocalizedDescription.TextChanged += txtLocalizedDescription_TextChanged;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(6, 78);
+            label13.Name = "label13";
+            label13.Size = new Size(110, 21);
+            label13.TabIndex = 10;
+            label13.Text = "Display Name:";
+            // 
+            // txtLocalizedName
+            // 
+            txtLocalizedName.Location = new Point(6, 102);
+            txtLocalizedName.Name = "txtLocalizedName";
+            txtLocalizedName.Size = new Size(285, 29);
+            txtLocalizedName.TabIndex = 9;
+            txtLocalizedName.TextChanged += txtLocalizedName_TextChanged;
             // 
             // label12
             // 
@@ -598,7 +632,6 @@
             // 
             comboLocale.DropDownStyle = ComboBoxStyle.DropDownList;
             comboLocale.FormattingEnabled = true;
-            comboLocale.Items.AddRange(new object[] { "de-DE", "en-US", "es-ES", "fr-FR", "it-IT", "ja-JP", "ko-KR", "pl-PL", "pt-BR", "ru-RU", "zh-HANS", "zh-HANT" });
             comboLocale.Location = new Point(69, 28);
             comboLocale.Name = "comboLocale";
             comboLocale.Size = new Size(222, 29);
@@ -660,39 +693,6 @@
             cmdPublishNewVersion.Text = "Publish New Version";
             cmdPublishNewVersion.UseVisualStyleBackColor = true;
             cmdPublishNewVersion.Click += cmdPublishNewVersion_Click;
-            // 
-            // txtLocalizedName
-            // 
-            txtLocalizedName.Location = new Point(6, 102);
-            txtLocalizedName.Name = "txtLocalizedName";
-            txtLocalizedName.Size = new Size(285, 29);
-            txtLocalizedName.TabIndex = 9;
-            // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Location = new Point(6, 78);
-            label13.Name = "label13";
-            label13.Size = new Size(110, 21);
-            label13.TabIndex = 10;
-            label13.Text = "Display Name:";
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Location = new Point(6, 134);
-            label14.Name = "label14";
-            label14.Size = new Size(92, 21);
-            label14.TabIndex = 12;
-            label14.Text = "Description:";
-            // 
-            // txtLocalizedDescription
-            // 
-            txtLocalizedDescription.Location = new Point(6, 158);
-            txtLocalizedDescription.Multiline = true;
-            txtLocalizedDescription.Name = "txtLocalizedDescription";
-            txtLocalizedDescription.Size = new Size(285, 240);
-            txtLocalizedDescription.TabIndex = 11;
             // 
             // Main
             // 

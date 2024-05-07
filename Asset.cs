@@ -54,6 +54,7 @@ namespace AssetPackCreator
             File.Move($@"{newAssetPath}\{oldPrefabName}{thumbnailExt}", $@"{newAssetPath}\{newPrefabName}{thumbnailExt}");
 
             SetField(ref prefabName, newPrefabName);
+            UpdateNameInPrefab();
 
 
         }
@@ -79,6 +80,35 @@ namespace AssetPackCreator
                         var start = line.IndexOf(prefix) + prefix.Length;
                         var end = line.IndexOf(suffix, start);
                         line = line.Substring(0, start) + GetIconPath() + line.Substring(end);
+                    }
+                    text += line + "\n";
+                }
+            }
+
+            using (StreamWriter sw = new StreamWriter(prefabPath))
+            {
+                sw.Write(text);
+            }
+        }
+
+        public void UpdateNameInPrefab()
+        {
+            bool alreadyReplaced = false;
+            string text = "";
+            using (StreamReader sr = new StreamReader(prefabPath))
+            {
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    var prefix = "\"name\": ";
+                    var suffix = "\",";
+                    if (!alreadyReplaced && line.Contains(prefix) && line.Contains(suffix))
+                    {
+                        // Replace text between prefix and suffix by prefabName
+                        var start = line.IndexOf(prefix) + prefix.Length;
+                        var end = line.IndexOf(suffix, start);
+                        line = line.Substring(0, start) + prefabName + line.Substring(end);
+                        alreadyReplaced = true;
                     }
                     text += line + "\n";
                 }

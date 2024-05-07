@@ -9,13 +9,14 @@ namespace AssetPackCreator
         public static int delay = 100;
         public static Settings settings;
         public static PublishConfig publishConfig;
+        public static Localization localization;
         public Main()
         {
             InitializeComponent();
             Instance = this;
             settings = Settings.Load();
             publishConfig = PublishConfig.Load();
-
+            localization = new Localization();
         }
 
         private AssetPack pack;
@@ -44,10 +45,14 @@ namespace AssetPackCreator
             else
                 pack = AssetPack.New(txtProjectName.Text, assetsDir);
 
-            comboLocale.SelectedItem = "en-US";
-            lbAssets.DataSource = pack.assets;
             lbAssets.DisplayMember = "displayText";
+            lbAssets.DataSource = pack.assets;
             selectAssetsDialog.InitialDirectory = $@"C:\Users\{Environment.UserName}\AppData\LocalLow\Colossal Order\Cities Skylines II\StreamingAssets~";
+
+
+            comboLocale.DisplayMember = "Id";
+            comboLocale.DataSource = localization.Locales;
+            comboLocale.SelectedItem = localization.GetLocale("en-US");
 
             // Load Settings
             txtCities2Location.Text = settings.Cities2Path;
@@ -65,7 +70,7 @@ namespace AssetPackCreator
 
         private void cmdRenameProject_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtProjectName.Text) || txtProjectName.Text.Contains(" ") || !txtProjectName.Text.ToLower().EndsWith("assetpack") || txtProjectName.Text == "CustomAssetPack")
+            if (string.IsNullOrEmpty(txtProjectName.Text) || txtProjectName.Text.Contains(' ') || !txtProjectName.Text.ToLower().EndsWith("assetpack") || txtProjectName.Text == "CustomAssetPack")
             {
                 MessageBox.Show("Please enter a name that ends with 'AssetPack' and does not contain any spaces or other characters", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -76,7 +81,7 @@ namespace AssetPackCreator
             string newSolutionName = txtProjectName.Text;
 
 
-            if (MessageBox.Show("Detected Solution file: " + oldSolutionName + ".sln. Would you like to continue renaming it to " + newSolutionName + ".sln?", "Info", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information) != DialogResult.Yes)
+            if (MessageBox.Show($"Detected Solution file: {oldSolutionName}.sln. Would you like to continue renaming it to {newSolutionName}.sln?", "Info", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information) != DialogResult.Yes)
             {
                 return;
             }
@@ -113,19 +118,28 @@ namespace AssetPackCreator
 
         private void lbAssets_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Asset? selected = (Asset)lbAssets.SelectedItem;
-            if (selected == null)
+            Asset? selectedAsset = (Asset?)lbAssets.SelectedItem;
+            Locale? selectedLocale = (Locale?)comboLocale.SelectedItem;
+            if (selectedAsset == null)
             {
                 cmdAddThumbnail.Enabled = false;
                 cmdRemoveSelectedAsset.Enabled = false;
+                groupAssetLocatization.Enabled = false;
                 return;
             }
             cmdRemoveSelectedAsset.Enabled = true;
             cmdAddThumbnail.Enabled = true;
-            txtPrefabName.Text = selected.prefabName;
-            if (selected.HasThumbnail())
+            txtPrefabName.Text = selectedAsset.prefabName;
+            groupAssetLocatization.Enabled = true;
+
+
+            // Update Combo Locale
+            comboLocale_SelectedIndexChanged(sender, e);
+
+
+            if (selectedAsset.HasThumbnail())
             {
-                assetThumbnailBox.ImageLocation = selected.thumbnailPath;
+                assetThumbnailBox.ImageLocation = selectedAsset.thumbnailPath;
                 cmdAddThumbnail.Text = "Remove Thumbnail";
             }
             else
@@ -138,13 +152,15 @@ namespace AssetPackCreator
 
         private void cmdRemoveSelectedAsset_Click(object sender, EventArgs e)
         {
-            Asset? selected = (Asset)lbAssets.SelectedItem;
+            Asset? selected = (Asset?)lbAssets.SelectedItem;
+            if (selected == null)
+                return;
             pack.RemoveAsset(selected);
         }
 
         private void cmdAddThumbnail_Click(object sender, EventArgs e)
         {
-            Asset? selected = (Asset)lbAssets.SelectedItem;
+            Asset? selected = (Asset?)lbAssets.SelectedItem;
             if (selected == null)
                 return;
             if (cmdAddThumbnail.Text == "Remove Thumbnail") // Remove Thumbnail
@@ -333,7 +349,42 @@ namespace AssetPackCreator
 
         private void comboLocale_SelectedIndexChanged(object sender, EventArgs e)
         {
+            var selectedAsset = (Asset)lbAssets.SelectedItem;
+            if (selectedAsset == null)
+                return;
+            var selectedLocale = (Locale)comboLocale.SelectedItem;
+            if (selectedLocale == null)
+            {
+                txtLocalizedName.Enabled = txtLocalizedDescription.Enabled = false;
+                txtLocalizedName.Text = "";
+                txtLocalizedDescription.Text = "";
+            }
+            else
+            {
+                txtLocalizedName.Enabled = txtLocalizedDescription.Enabled = true;
+                txtLocalizedName.Text = selectedLocale.GetAssetName(selectedAsset);
+                txtLocalizedDescription.Text = selectedLocale.GetAssetDescription(selectedAsset);
+            }
+        }
 
+        private void txtLocalizedName_TextChanged(object sender, EventArgs e)
+        {
+            var selectedLocale = (Locale)comboLocale.SelectedItem;
+            var selectedAsset = (Asset)lbAssets.SelectedItem;
+            if (selectedLocale == null || selectedAsset == null)
+                return;
+
+            selectedLocale.SetAssetName(selectedAsset, txtLocalizedName.Text);
+        }
+
+        private void txtLocalizedDescription_TextChanged(object sender, EventArgs e)
+        {
+            var selectedLocale = (Locale)comboLocale.SelectedItem;
+            var selectedAsset = (Asset)lbAssets.SelectedItem;
+            if (selectedLocale == null || selectedAsset == null)
+                return;
+
+            selectedLocale.SetAssetDescription(selectedAsset, txtLocalizedDescription.Text);
         }
     }
 }

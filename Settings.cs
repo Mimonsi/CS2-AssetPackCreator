@@ -63,7 +63,7 @@ namespace AssetPackCreator
             Settings s;
             if (File.Exists(settingsFile))
             {
-                string json = System.IO.File.ReadAllText(settingsFile);
+                string json = File.ReadAllText(settingsFile);
                 s = Newtonsoft.Json.JsonConvert.DeserializeObject<Settings>(json);
                 if (s != null)
                     return s;
