@@ -204,7 +204,7 @@ namespace AssetPackCreator
                         config.Dependencies.Add(node.Attributes["Id"].Value);
                         break;
                     case "ChangeLog":
-                        config.ChangeLog = node.Attributes["Value"].Value;
+                        config.ChangeLog = node.InnerText.Trim();
                         break;
                     case "ExternalLink":
                         config.ExternalLinks ??= new Dictionary<string, string>();
@@ -289,7 +289,7 @@ namespace AssetPackCreator
             }
 
             XmlElement changeLogElement = doc.CreateElement("ChangeLog");
-            changeLogElement.SetAttribute("Value", ChangeLog);
+            changeLogElement.InnerText = ChangeLog;
             root.AppendChild(changeLogElement);
 
             if (ExternalLinks != null)

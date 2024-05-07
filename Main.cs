@@ -64,7 +64,11 @@ namespace AssetPackCreator
             txtPublishDisplayName.DataBindings.Add("Text", publishConfig, "DisplayName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtPublishShortDescription.DataBindings.Add("Text", publishConfig, "ShortDescription", false, DataSourceUpdateMode.OnPropertyChanged);
             txtPublishLongDescription.DataBindings.Add("Text", publishConfig, "LongDescription", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtPublishChangeLog.DataBindings.Add("Text", publishConfig, "ChangeLog", false, DataSourceUpdateMode.OnPropertyChanged);
             txtPublishModId.DataBindings.Add("Text", publishConfig, "ModId", false, DataSourceUpdateMode.OnPropertyChanged);
+
+            txtPublishGameVersion.DataBindings.Add("Text", publishConfig, "GameVersion", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtPublishModVersion.DataBindings.Add("Text", publishConfig, "ModVersion", false, DataSourceUpdateMode.OnPropertyChanged);
             packThumbnailBox.ImageLocation = publishConfig.ThumbnailPath;
         }
 
@@ -300,6 +304,12 @@ namespace AssetPackCreator
         private void txtPublishLongDescription_TextChanged(object sender, EventArgs e)
         {
             var md = txtPublishLongDescription.Text;
+            markdownPreviewHtml = Markdig.Markdown.ToHtml(md);
+        }
+
+        private void txtPublishChangeLog_TextChanged(object sender, EventArgs e)
+        {
+            var md = txtPublishChangeLog.Text;
             markdownPreviewHtml = Markdig.Markdown.ToHtml(md);
         }
 

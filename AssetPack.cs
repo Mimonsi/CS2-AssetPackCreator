@@ -26,7 +26,7 @@ namespace AssetPackCreator;
                 foreach(DirectoryInfo assetDir in new DirectoryInfo(baseDirectoryPath).GetDirectories())
                 {
                     Main.UpdateStatus($"Loading Asset: {assetDir.Name}");
-                    Asset asset = new Asset()
+                    Asset asset = new Asset
                     {
                         pack = pack,
                         prefabName = assetDir.Name,

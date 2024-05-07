@@ -46,14 +46,18 @@ namespace AssetPackCreator
 
             string oldPrefabName = new String(prefabName);
 
+
+            var hasThumbnail = HasThumbnail();
             // Asset directory
             Directory.Move(assetPath, newAssetPath);
 
             File.Move($@"{newAssetPath}\{oldPrefabName}.Prefab", $@"{newAssetPath}\{newPrefabName}.Prefab");
             File.Move($@"{newAssetPath}\{oldPrefabName}.Prefab.cid", $@"{newAssetPath}\{newPrefabName}.Prefab.cid");
-            File.Move($@"{newAssetPath}\{oldPrefabName}{thumbnailExt}", $@"{newAssetPath}\{newPrefabName}{thumbnailExt}");
+            if (hasThumbnail)
+                File.Move($@"{newAssetPath}\{oldPrefabName}{thumbnailExt}", $@"{newAssetPath}\{newPrefabName}{thumbnailExt}");
 
             SetField(ref prefabName, newPrefabName);
+            UpdateThumbnailInPrefab();
             UpdateNameInPrefab();
 
 
@@ -79,7 +83,7 @@ namespace AssetPackCreator
                         // Replace text between prefix and suffix by thumbnailPath
                         var start = line.IndexOf(prefix) + prefix.Length;
                         var end = line.IndexOf(suffix, start);
-                        line = line.Substring(0, start) + GetIconPath() + line.Substring(end);
+                        line = line.Substring(0, start) + "\"" + GetIconPath() + line.Substring(end);
                     }
                     text += line + "\n";
                 }
@@ -107,7 +111,7 @@ namespace AssetPackCreator
                         // Replace text between prefix and suffix by prefabName
                         var start = line.IndexOf(prefix) + prefix.Length;
                         var end = line.IndexOf(suffix, start);
-                        line = line.Substring(0, start) + prefabName + line.Substring(end);
+                        line = line.Substring(0, start) + "\"" + prefabName + line.Substring(end);
                         alreadyReplaced = true;
                     }
                     text += line + "\n";

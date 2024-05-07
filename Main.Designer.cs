@@ -84,9 +84,16 @@
             comboLocale = new ComboBox();
             tabPublishConfig = new TabPage();
             tabPublish = new TabPage();
+            cmdMarkdownPreview2 = new Button();
+            label15 = new Label();
+            txtPublishChangeLog = new TextBox();
             cmdUpdatePublishedConfiguration = new Button();
             cmdPublishNewMod = new Button();
             cmdPublishNewVersion = new Button();
+            label16 = new Label();
+            txtPublishModVersion = new TextBox();
+            label17 = new Label();
+            txtPublishGameVersion = new TextBox();
             groupRename.SuspendLayout();
             groupAddAssets.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)assetThumbnailBox).BeginInit();
@@ -582,7 +589,7 @@
             groupAssetLocatization.Size = new Size(297, 404);
             groupAssetLocatization.TabIndex = 9;
             groupAssetLocatization.TabStop = false;
-            groupAssetLocatization.Text = "Asset Localization (coming soon)";
+            groupAssetLocatization.Text = "Asset Localization";
             // 
             // label14
             // 
@@ -652,6 +659,13 @@
             // tabPublish
             // 
             tabPublish.BackColor = SystemColors.Control;
+            tabPublish.Controls.Add(label17);
+            tabPublish.Controls.Add(txtPublishGameVersion);
+            tabPublish.Controls.Add(label16);
+            tabPublish.Controls.Add(txtPublishModVersion);
+            tabPublish.Controls.Add(cmdMarkdownPreview2);
+            tabPublish.Controls.Add(label15);
+            tabPublish.Controls.Add(txtPublishChangeLog);
             tabPublish.Controls.Add(groupPDXCredentials);
             tabPublish.Controls.Add(cmdUpdatePublishedConfiguration);
             tabPublish.Controls.Add(cmdPublishNewMod);
@@ -663,6 +677,36 @@
             tabPublish.Size = new Size(737, 416);
             tabPublish.TabIndex = 2;
             tabPublish.Text = "Step 4: Publish";
+            // 
+            // cmdMarkdownPreview2
+            // 
+            cmdMarkdownPreview2.Location = new Point(647, 46);
+            cmdMarkdownPreview2.Name = "cmdMarkdownPreview2";
+            cmdMarkdownPreview2.Size = new Size(75, 29);
+            cmdMarkdownPreview2.TabIndex = 12;
+            cmdMarkdownPreview2.Text = "Preview";
+            cmdMarkdownPreview2.UseVisualStyleBackColor = true;
+            cmdMarkdownPreview2.Click += CmdMarkdownPreviewClick;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(291, 49);
+            label15.Name = "label15";
+            label15.Size = new Size(252, 21);
+            label15.TabIndex = 11;
+            label15.Text = "Change Log: (Supports Markdown)";
+            // 
+            // txtPublishChangeLog
+            // 
+            txtPublishChangeLog.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            txtPublishChangeLog.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtPublishChangeLog.Location = new Point(291, 73);
+            txtPublishChangeLog.Multiline = true;
+            txtPublishChangeLog.Name = "txtPublishChangeLog";
+            txtPublishChangeLog.Size = new Size(431, 224);
+            txtPublishChangeLog.TabIndex = 10;
+            txtPublishChangeLog.TextChanged += txtPublishChangeLog_TextChanged;
             // 
             // cmdUpdatePublishedConfiguration
             // 
@@ -693,6 +737,39 @@
             cmdPublishNewVersion.Text = "Publish New Version";
             cmdPublishNewVersion.UseVisualStyleBackColor = true;
             cmdPublishNewVersion.Click += cmdPublishNewVersion_Click;
+            // 
+            // label16
+            // 
+            label16.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label16.Location = new Point(291, 303);
+            label16.Name = "label16";
+            label16.Size = new Size(431, 34);
+            label16.TabIndex = 14;
+            label16.Text = "Mod Version: (has to be changed before publishing update)";
+            // 
+            // txtPublishModVersion
+            // 
+            txtPublishModVersion.Location = new Point(291, 340);
+            txtPublishModVersion.Name = "txtPublishModVersion";
+            txtPublishModVersion.Size = new Size(184, 29);
+            txtPublishModVersion.TabIndex = 13;
+            // 
+            // label17
+            // 
+            label17.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label17.Location = new Point(291, 25);
+            label17.Name = "label17";
+            label17.Size = new Size(107, 21);
+            label17.TabIndex = 16;
+            label17.Text = "Game Version:";
+            // 
+            // txtPublishGameVersion
+            // 
+            txtPublishGameVersion.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtPublishGameVersion.Location = new Point(404, 22);
+            txtPublishGameVersion.Name = "txtPublishGameVersion";
+            txtPublishGameVersion.Size = new Size(181, 25);
+            txtPublishGameVersion.TabIndex = 15;
             // 
             // Main
             // 
@@ -725,6 +802,7 @@
             groupAssetLocatization.PerformLayout();
             tabPublishConfig.ResumeLayout(false);
             tabPublish.ResumeLayout(false);
+            tabPublish.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -789,5 +867,12 @@
         private TextBox txtLocalizedDescription;
         private Label label13;
         private TextBox txtLocalizedName;
+        private Button cmdMarkdownPreview2;
+        private Label label15;
+        private TextBox txtPublishChangeLog;
+        private Label label17;
+        private TextBox txtPublishGameVersion;
+        private Label label16;
+        private TextBox txtPublishModVersion;
     }
 }
