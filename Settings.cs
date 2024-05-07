@@ -53,6 +53,18 @@ namespace AssetPackCreator
             }
         }
 
+        private bool _openModPageAfterUpdate = true;
+
+        public bool OpenModPageAfterUpdate
+        {
+            get => _openModPageAfterUpdate;
+            set
+            {
+                _openModPageAfterUpdate = value;
+                Save();
+            }
+        }
+
         public Settings()
         {
             _cities2Path = @"C:\Program Files (x86)\Steam\steamapps\common\Cities Skylines II\Cities_Data\Cities2.exe";

@@ -84,16 +84,17 @@
             comboLocale = new ComboBox();
             tabPublishConfig = new TabPage();
             tabPublish = new TabPage();
+            cbOpenModPageAfterUpdate = new CheckBox();
+            label17 = new Label();
+            txtPublishGameVersion = new TextBox();
+            label16 = new Label();
+            txtPublishModVersion = new TextBox();
             cmdMarkdownPreview2 = new Button();
             label15 = new Label();
             txtPublishChangeLog = new TextBox();
             cmdUpdatePublishedConfiguration = new Button();
             cmdPublishNewMod = new Button();
             cmdPublishNewVersion = new Button();
-            label16 = new Label();
-            txtPublishModVersion = new TextBox();
-            label17 = new Label();
-            txtPublishGameVersion = new TextBox();
             groupRename.SuspendLayout();
             groupAddAssets.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)assetThumbnailBox).BeginInit();
@@ -659,6 +660,7 @@
             // tabPublish
             // 
             tabPublish.BackColor = SystemColors.Control;
+            tabPublish.Controls.Add(cbOpenModPageAfterUpdate);
             tabPublish.Controls.Add(label17);
             tabPublish.Controls.Add(txtPublishGameVersion);
             tabPublish.Controls.Add(label16);
@@ -677,6 +679,52 @@
             tabPublish.Size = new Size(737, 416);
             tabPublish.TabIndex = 2;
             tabPublish.Text = "Step 4: Publish";
+            // 
+            // cbOpenModPageAfterUpdate
+            // 
+            cbOpenModPageAfterUpdate.AutoSize = true;
+            cbOpenModPageAfterUpdate.Checked = true;
+            cbOpenModPageAfterUpdate.CheckState = CheckState.Checked;
+            cbOpenModPageAfterUpdate.Location = new Point(6, 375);
+            cbOpenModPageAfterUpdate.Name = "cbOpenModPageAfterUpdate";
+            cbOpenModPageAfterUpdate.Size = new Size(244, 25);
+            cbOpenModPageAfterUpdate.TabIndex = 17;
+            cbOpenModPageAfterUpdate.Text = "Open Mod Page after Updating";
+            cbOpenModPageAfterUpdate.UseVisualStyleBackColor = true;
+            cbOpenModPageAfterUpdate.CheckedChanged += cbOpenModPageAfterUpdate_CheckedChanged;
+            // 
+            // label17
+            // 
+            label17.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label17.Location = new Point(291, 25);
+            label17.Name = "label17";
+            label17.Size = new Size(107, 21);
+            label17.TabIndex = 16;
+            label17.Text = "Game Version:";
+            // 
+            // txtPublishGameVersion
+            // 
+            txtPublishGameVersion.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtPublishGameVersion.Location = new Point(404, 22);
+            txtPublishGameVersion.Name = "txtPublishGameVersion";
+            txtPublishGameVersion.Size = new Size(181, 25);
+            txtPublishGameVersion.TabIndex = 15;
+            // 
+            // label16
+            // 
+            label16.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label16.Location = new Point(291, 303);
+            label16.Name = "label16";
+            label16.Size = new Size(431, 34);
+            label16.TabIndex = 14;
+            label16.Text = "Mod Version: (has to be changed before publishing update)";
+            // 
+            // txtPublishModVersion
+            // 
+            txtPublishModVersion.Location = new Point(291, 340);
+            txtPublishModVersion.Name = "txtPublishModVersion";
+            txtPublishModVersion.Size = new Size(184, 29);
+            txtPublishModVersion.TabIndex = 13;
             // 
             // cmdMarkdownPreview2
             // 
@@ -737,39 +785,6 @@
             cmdPublishNewVersion.Text = "Publish New Version";
             cmdPublishNewVersion.UseVisualStyleBackColor = true;
             cmdPublishNewVersion.Click += cmdPublishNewVersion_Click;
-            // 
-            // label16
-            // 
-            label16.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label16.Location = new Point(291, 303);
-            label16.Name = "label16";
-            label16.Size = new Size(431, 34);
-            label16.TabIndex = 14;
-            label16.Text = "Mod Version: (has to be changed before publishing update)";
-            // 
-            // txtPublishModVersion
-            // 
-            txtPublishModVersion.Location = new Point(291, 340);
-            txtPublishModVersion.Name = "txtPublishModVersion";
-            txtPublishModVersion.Size = new Size(184, 29);
-            txtPublishModVersion.TabIndex = 13;
-            // 
-            // label17
-            // 
-            label17.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label17.Location = new Point(291, 25);
-            label17.Name = "label17";
-            label17.Size = new Size(107, 21);
-            label17.TabIndex = 16;
-            label17.Text = "Game Version:";
-            // 
-            // txtPublishGameVersion
-            // 
-            txtPublishGameVersion.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtPublishGameVersion.Location = new Point(404, 22);
-            txtPublishGameVersion.Name = "txtPublishGameVersion";
-            txtPublishGameVersion.Size = new Size(181, 25);
-            txtPublishGameVersion.TabIndex = 15;
             // 
             // Main
             // 
@@ -874,5 +889,6 @@
         private TextBox txtPublishGameVersion;
         private Label label16;
         private TextBox txtPublishModVersion;
+        private CheckBox cbOpenModPageAfterUpdate;
     }
 }

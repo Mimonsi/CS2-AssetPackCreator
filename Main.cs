@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Web;
 // ReSharper disable LocalizableElement
 
@@ -59,6 +60,7 @@ namespace AssetPackCreator
             txtPdxMail.Text = settings.PdxMail;
             txtPdxPw.Text = settings.PdxPassword;
             cbSavePassword.Checked = settings.SavePassword;
+            cbOpenModPageAfterUpdate.Checked = settings.OpenModPageAfterUpdate;
 
             // Load Publish Configuration
             txtPublishDisplayName.DataBindings.Add("Text", publishConfig, "DisplayName", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -322,6 +324,7 @@ namespace AssetPackCreator
 
         private void CreatePdxAccountFile()
         {
+            UpdateStatus("Creating PDX Account File");
             var pdxAccountFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/pdx_account.txt";
             if (!File.Exists(pdxAccountFile))
             {
@@ -330,6 +333,7 @@ namespace AssetPackCreator
                 fs.Close();
             }
             File.WriteAllText(pdxAccountFile, settings.PdxMail + "\n" + settings.PdxPassword);
+            UpdateStatus("PDX Account File created");
         }
 
         private void cmdPublishNewMod_Click(object sender, EventArgs e)
@@ -338,19 +342,41 @@ namespace AssetPackCreator
             //var publishConfigPath = Path.Combine(Directory.GetCurrentDirectory(), "Properties", "PublishConfiguration.xml");
             //Publisher.PublishNewMod(settings.Cities2Path, publishConfigPath, settings.PdxMail, settings.PdxPassword, localModPath);
             CreatePdxAccountFile();
-            Publisher.PublishNewMod(Directory.GetCurrentDirectory());
+            UseWaitCursor = true;
+            var result = Publisher.PublishNewMod(Directory.GetCurrentDirectory(), out int modId);
+            UseWaitCursor = false;
+            if (result == PublishResult.Success)
+            {
+                txtPublishModId.Text = modId.ToString();
+                if (settings.OpenModPageAfterUpdate)
+                {
+                    Process.Start($"https://mods.paradoxplaza.com/mods/{txtPublishModId.Text}/Windows");
+                }
+            }
         }
 
         private void cmdPublishNewVersion_Click(object sender, EventArgs e)
         {
             CreatePdxAccountFile();
-            Publisher.PublishNewVersion(Directory.GetCurrentDirectory());
+            UseWaitCursor = true;
+            var result = Publisher.PublishNewVersion(Directory.GetCurrentDirectory());
+            UseWaitCursor = false;
+            if (result == PublishResult.Success && settings.OpenModPageAfterUpdate)
+            {
+                Process.Start($"https://mods.paradoxplaza.com/mods/{txtPublishModId.Text}/Windows");
+            }
         }
 
         private void cmdUpdatePublishedConfiguration_Click(object sender, EventArgs e)
         {
             CreatePdxAccountFile();
-            Publisher.UpdatePublishedConfiguration(Directory.GetCurrentDirectory());
+            UseWaitCursor = true;
+            var result = Publisher.UpdatePublishedConfiguration(Directory.GetCurrentDirectory());
+            UseWaitCursor = false;
+            if (result == PublishResult.Success && settings.OpenModPageAfterUpdate)
+            {
+                Process.Start($"https://mods.paradoxplaza.com/mods/{txtPublishModId.Text}/Windows");
+            }
         }
 
         private void tabPrepare_Click(object sender, EventArgs e)
@@ -395,6 +421,11 @@ namespace AssetPackCreator
                 return;
 
             selectedLocale.SetAssetDescription(selectedAsset, txtLocalizedDescription.Text);
+        }
+
+        private void cbOpenModPageAfterUpdate_CheckedChanged(object sender, EventArgs e)
+        {
+            settings.OpenModPageAfterUpdate = cbOpenModPageAfterUpdate.Checked;
         }
     }
 }
