@@ -58,6 +58,9 @@ public class Locale(string id)
         {
             if (!string.IsNullOrEmpty(item.Value.Item1) || !string.IsNullOrEmpty(item.Value.Item2))
                 empty = false;
+
+            if (string.IsNullOrEmpty(item.Value.Item2))
+                continue;
             dict.Add($"Assets.NAME[{item.Key}]", item.Value.Item1);
             dict.Add($"Assets.DESCRIPTION[{item.Key}]", item.Value.Item2);
         }
@@ -98,5 +101,16 @@ public class Locale(string id)
             }
         }
         return dict;
+    }
+
+    public void RenamePrefab(string oldName, string newName)
+    {
+        if (_strings.ContainsKey(oldName))
+        {
+            var x = _strings[oldName];
+            _strings.Remove(oldName);
+            _strings.Add(newName, x);
+            Save();
+        }
     }
 }

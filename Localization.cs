@@ -43,4 +43,12 @@ public class Localization
             locale.Save();
         }
     }
+
+    public void RenamePrefab(string oldName, string newName)
+    {
+        foreach(Locale l in Locales)
+        {
+            l.RenamePrefab(oldName, newName);
+        }
+    }
 }

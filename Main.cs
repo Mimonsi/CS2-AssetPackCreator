@@ -207,6 +207,7 @@ namespace AssetPackCreator
                 MessageBox.Show("Please enter at least 5 characters", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            localization.RenamePrefab(selected.prefabName, txtPrefabName.Text);
             selected.Rename(txtPrefabName.Text);
         }
 
