@@ -262,7 +262,7 @@ namespace AssetPackCreator
 
         private void toolStripMenu_OpenAppDir_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("explorer.exe", Directory.GetCurrentDirectory());
+            Process.Start("explorer.exe", Directory.GetCurrentDirectory());
         }
 
         private void txtPdxMail_TextChanged(object sender, EventArgs e)
@@ -351,20 +351,33 @@ namespace AssetPackCreator
                 txtPublishModId.Text = modId.ToString();
                 if (settings.OpenModPageAfterUpdate)
                 {
-                    Process.Start($"https://mods.paradoxplaza.com/mods/{txtPublishModId.Text}/Windows");
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = $"https://mods.paradoxplaza.com/mods/{txtPublishModId.Text}/Windows",
+                        UseShellExecute = true
+                    });
                 }
             }
         }
 
         private void cmdPublishNewVersion_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtPublishChangeLog.Text))
+            {
+                MessageBox.Show("Please enter a changelog", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             CreatePdxAccountFile();
             UseWaitCursor = true;
             var result = Publisher.PublishNewVersion(Directory.GetCurrentDirectory());
             UseWaitCursor = false;
             if (result == PublishResult.Success && settings.OpenModPageAfterUpdate)
             {
-                Process.Start($"https://mods.paradoxplaza.com/mods/{txtPublishModId.Text}/Windows");
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = $"https://mods.paradoxplaza.com/mods/{txtPublishModId.Text}/Windows",
+                    UseShellExecute = true
+                });
             }
         }
 
@@ -376,7 +389,11 @@ namespace AssetPackCreator
             UseWaitCursor = false;
             if (result == PublishResult.Success && settings.OpenModPageAfterUpdate)
             {
-                Process.Start($"https://mods.paradoxplaza.com/mods/{txtPublishModId.Text}/Windows");
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = $"https://mods.paradoxplaza.com/mods/{txtPublishModId.Text}/Windows",
+                    UseShellExecute = true
+                });
             }
         }
 
