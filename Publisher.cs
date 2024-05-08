@@ -113,14 +113,14 @@ public class Publisher
             var successString = "Mod configuration updating process finished successfully";
             if (output.Contains(successString))
             {
-                MessageBox.Show($"New version published successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Mod configuration updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return PublishResult.Success;
             }
             else
             {
                 // Remove everything before "Start publishing process"
                 output = output.Substring(output.IndexOf("Start mod configuration updating process", StringComparison.Ordinal));
-                MessageBox.Show("Error publishing new version: " + output, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error publishing updated configuration: " + output, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         catch (Exception e)

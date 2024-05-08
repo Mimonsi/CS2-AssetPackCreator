@@ -383,6 +383,11 @@ namespace AssetPackCreator
 
         private void cmdUpdatePublishedConfiguration_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtPublishChangeLog.Text))
+            {
+                MessageBox.Show("Please enter a changelog", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             CreatePdxAccountFile();
             UseWaitCursor = true;
             var result = Publisher.UpdatePublishedConfiguration(Directory.GetCurrentDirectory());
