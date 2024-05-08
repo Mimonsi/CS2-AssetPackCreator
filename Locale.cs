@@ -59,7 +59,7 @@ public class Locale(string id)
             if (!string.IsNullOrEmpty(item.Value.Item1) || !string.IsNullOrEmpty(item.Value.Item2))
                 empty = false;
 
-            if (string.IsNullOrEmpty(item.Value.Item2))
+            if (string.IsNullOrEmpty(item.Value.Item1) && string.IsNullOrEmpty(item.Value.Item2))
                 continue;
             dict.Add($"Assets.NAME[{item.Key}]", item.Value.Item1);
             dict.Add($"Assets.DESCRIPTION[{item.Key}]", item.Value.Item2);
