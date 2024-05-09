@@ -101,22 +101,14 @@ public partial class Form1 : Form
         }
 
         var targetPath = Path.Combine(assetPacksParent, name);
-        var targetRepo = "https://github.com/kosch104/CS2-CustomAssetPack.git";
-        var targetBranch = "-b AssetPackCreatorBeta";
-
-        var command = $"clone {targetBranch} {targetRepo} {targetPath}";
-        var startInfo = new ProcessStartInfo
+        if (!CreateNewPack_git(targetPath, name))
         {
-            WorkingDirectory = assetPacksParent,
-            FileName = "git",
-            Arguments = command,
-            UseShellExecute = true,
-            CreateNoWindow = true,
-            RedirectStandardOutput = false,
-            RedirectStandardError = false,
-        };
-        var process = Process.Start(startInfo);
-        process.WaitForExit();
+            if (!CreateNewPack_manualDownload(targetPath, name))
+            {
+                MessageBox.Show("Error creating new asset pack. Git creation and manual creation failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
 
         var instruction = $"RENAME={name}\n";
         File.WriteAllText(Path.Combine(targetPath, "ins.txt"), instruction);
@@ -132,9 +124,39 @@ public partial class Form1 : Form
                 break;
             }
         }
+    }
 
-        // Execute command
+    private bool CreateNewPack_git(string targetPath, string name)
+    {
+        try
+        {
+            var targetRepo = "https://github.com/kosch104/CS2-CustomAssetPack.git";
+            var targetBranch = "-b AssetPackCreatorBeta";
 
+            var command = $"clone {targetBranch} {targetRepo} {targetPath}";
+            var startInfo = new ProcessStartInfo
+            {
+                WorkingDirectory = assetPacksParent,
+                FileName = "git",
+                Arguments = command,
+                UseShellExecute = true,
+                CreateNoWindow = true,
+                RedirectStandardOutput = false,
+                RedirectStandardError = false,
+            };
+            var process = Process.Start(startInfo);
+            process.WaitForExit();
+            return true;
+        }
+        catch (FileNotFoundException e)
+        {
+            return false;
+        }
+    }
+
+    private bool CreateNewPack_manualDownload(string targetPath, string name)
+    {
+        return false;
     }
 
     private void cmdDelete_Click(object sender, EventArgs e)
