@@ -91,7 +91,15 @@ namespace AssetPackCreator
             if (!_savePassword)
                 toSave._pdxPassword = "";
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(toSave);
-            File.WriteAllText(settingsFile, json);
+            try
+            {
+                File.WriteAllText(settingsFile, json);
+            }
+            catch(IOException)
+            {
+                MessageBox.Show("Error: Saving Settings failed. Please try again or restart the program as administrator, if access was denied.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
     }
 }

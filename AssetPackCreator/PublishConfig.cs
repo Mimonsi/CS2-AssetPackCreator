@@ -303,7 +303,14 @@ namespace AssetPackCreator
                 }
             }
 
-            doc.Save(configFile);
+            try
+            {
+                doc.Save(configFile);
+            }
+            catch(IOException)
+            {
+                MessageBox.Show("Error: Saving Publish Config failed. Please try again or restart the program as administrator, if access was denied.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         public string ThumbnailPath => $"{Directory.GetCurrentDirectory()}/{Thumbnail}";

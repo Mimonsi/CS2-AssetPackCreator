@@ -70,7 +70,14 @@ public class Locale(string id)
             return;
 
         var json = JsonConvert.SerializeObject(dict, Formatting.Indented);
-        File.WriteAllText($"Resources/lang/{Id}.json", json);
+        try
+        {
+            File.WriteAllText($"Resources/lang/{Id}.json", json);
+        }
+        catch (IOException)
+        {
+            MessageBox.Show($"Error updating locale. Please try again or restart program as adminstrator, if access was denied.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 
     private static Dictionary<string, (string, string)> ParseFile(string file)

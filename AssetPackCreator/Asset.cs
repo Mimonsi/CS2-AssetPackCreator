@@ -91,7 +91,14 @@ namespace AssetPackCreator
 
             using (StreamWriter sw = new StreamWriter(prefabPath))
             {
-                sw.Write(text);
+                try
+                {
+                    sw.Write(text);
+                }
+                catch (IOException)
+                {
+                    MessageBox.Show($"Error updating thumbnail in prefab {prefabPath}. Please try again or restart program as adminstrator, if access was denied.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -120,7 +127,14 @@ namespace AssetPackCreator
 
             using (StreamWriter sw = new StreamWriter(prefabPath))
             {
-                sw.Write(text);
+                try
+                {
+                    sw.Write(text);
+                }
+                catch (IOException)
+                {
+                    MessageBox.Show($"Error updating thumbnail in prefab {prefabPath}. Please try again or restart program as adminstrator, if access was denied.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 

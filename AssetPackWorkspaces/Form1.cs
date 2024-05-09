@@ -107,7 +107,7 @@ public partial class Form1 : Form
             FileName = "git",
             Arguments = command,
             UseShellExecute = true,
-            CreateNoWindow = false,
+            CreateNoWindow = true,
             RedirectStandardOutput = false,
             RedirectStandardError = false,
         };
@@ -118,6 +118,16 @@ public partial class Form1 : Form
         File.WriteAllText(Path.Combine(targetPath, "ins.txt"), instruction);
 
         ReloadAssetPacks();
+
+        for(int i = 0; i < assetPacks.Count; i++)
+        {
+            if (assetPacks[i].Name == name)
+            {
+                lbAssetPacks.SelectedItem = assetPacks[i];
+                cmdOpenSelected_Click(null, null);
+                break;
+            }
+        }
 
         // Execute command
 

@@ -138,7 +138,8 @@ namespace AssetPackCreator
                 csprojContent = csprojContent.Replace(oldSolutionName, newSolutionName);
                 File.WriteAllText($"{newSolutionName}.sln", csprojContent);
 
-                MessageBox.Show("Solution successfully renamed.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (!skipConfirmation)
+                    MessageBox.Show("Solution successfully renamed.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
