@@ -18,6 +18,8 @@ jobs:
         with:
           dotnet-version: 8.0
 
+      - run: nuget restore AssetPackCreator.sln
+
       - name: Restore dependencies
         run: dotnet restore AssetPackWorkspaces/AssetPackWorkspaces.csproj
 
