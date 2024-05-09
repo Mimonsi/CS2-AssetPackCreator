@@ -76,6 +76,11 @@ namespace AssetPackCreator;
 
         public void AddAsset(string path)
         {
+            if (!File.Exists(path + ".cid"))
+            {
+                MessageBox.Show($"Asset .cid file is not at expected location: {path + ".cid"}. Asset was not added", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             string prefabName = Path.GetFileNameWithoutExtension(path);
             string prefabDir = Path.Combine(baseDirectory.FullName, prefabName);
             foreach(Asset a in assets)
