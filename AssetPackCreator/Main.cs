@@ -108,7 +108,7 @@ namespace AssetPackCreator
             ExecuteInstructions();
         }
 
-        private void RenameProject(bool skipConfirmation=false)
+        private void RenameProject(bool skipConfirmation = false)
         {
             if (string.IsNullOrEmpty(txtProjectName.Text) || txtProjectName.Text.Contains(' ') || !txtProjectName.Text.ToLower().EndsWith("assetpack") || txtProjectName.Text == "CustomAssetPack")
             {
@@ -490,6 +490,11 @@ namespace AssetPackCreator
         private void cbOpenModPageAfterUpdate_CheckedChanged(object sender, EventArgs e)
         {
             settings.OpenModPageAfterUpdate = cbOpenModPageAfterUpdate.Checked;
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+            PackThumbnailBoxClick(sender, e);
         }
     }
 }

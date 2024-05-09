@@ -476,6 +476,7 @@
             label10.Size = new Size(250, 21);
             label10.TabIndex = 8;
             label10.Text = "Asset Pack Thumbnail: (Click to Change)";
+            label10.Click += label10_Click;
             // 
             // packThumbnailBox
             // 
