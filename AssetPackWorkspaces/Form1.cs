@@ -1,5 +1,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO.Compression;
+using System.Net;
 using System.Security.AccessControl;
 using Microsoft.VisualBasic;
 using System.Security.AccessControl;
@@ -101,9 +103,14 @@ public partial class Form1 : Form
         }
 
         var targetPath = Path.Combine(assetPacksParent, name);
-        if (!CreateNewPack_git(targetPath, name))
+        if (Directory.Exists(targetPath))
         {
-            if (!CreateNewPack_manualDownload(targetPath, name))
+            MessageBox.Show("A directory with this name already exists.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+        if (!CreateNewPack_git(targetPath))
+        {
+            if (!CreateNewPack_manualDownload(targetPath))
             {
                 MessageBox.Show("Error creating new asset pack. Git creation and manual creation failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -126,12 +133,13 @@ public partial class Form1 : Form
         }
     }
 
-    private bool CreateNewPack_git(string targetPath, string name)
+    private bool CreateNewPack_git(string targetPath)
     {
         try
         {
             var targetRepo = "https://github.com/kosch104/CS2-CustomAssetPack.git";
-            var targetBranch = "-b AssetPackCreatorBeta";
+            //var targetBranch = "-b AssetPackCreatorBeta";
+            var targetBranch = "";
 
             var command = $"clone {targetBranch} {targetRepo} {targetPath}";
             var startInfo = new ProcessStartInfo
@@ -148,15 +156,36 @@ public partial class Form1 : Form
             process.WaitForExit();
             return true;
         }
-        catch (FileNotFoundException e)
+        catch (Exception e)
         {
             return false;
         }
     }
 
-    private bool CreateNewPack_manualDownload(string targetPath, string name)
+    private bool CreateNewPack_manualDownload(string targetPath)
     {
-        return false;
+        // Manually download the asset pack repository
+        var downloadLink = "https://codeload.github.com/kosch104/CS2-CustomAssetPack/zip/refs/heads/main";
+
+        // Download file
+        var tempPath = Path.Combine(Path.GetTempPath(), "CS2-CustomAssetPack");
+        if (Directory.Exists(tempPath))
+        {
+            Directory.Delete(tempPath, true);
+        }
+        using (var client = new WebClient())
+        {
+            client.DownloadFile(downloadLink, tempPath + ".zip");
+        }
+
+        // Extract file
+        ZipFile.ExtractToDirectory(tempPath + ".zip", tempPath, true);
+
+        // Move directory inside the extracted to targetPath
+        var extractedDir = new DirectoryInfo(tempPath).GetDirectories().First();
+        extractedDir.MoveTo(targetPath);
+
+        return true;
     }
 
     private void cmdDelete_Click(object sender, EventArgs e)
