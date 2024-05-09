@@ -35,6 +35,7 @@ partial class Form1
         cmdOpenSelected = new Button();
         cmdImportAssetPack = new Button();
         importDialog = new FolderBrowserDialog();
+        cmdDelete = new Button();
         SuspendLayout();
         // 
         // lbAssetPacks
@@ -84,17 +85,29 @@ partial class Form1
         cmdImportAssetPack.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
         cmdImportAssetPack.Location = new Point(12, 275);
         cmdImportAssetPack.Name = "cmdImportAssetPack";
-        cmdImportAssetPack.Size = new Size(513, 47);
+        cmdImportAssetPack.Size = new Size(251, 47);
         cmdImportAssetPack.TabIndex = 4;
         cmdImportAssetPack.Text = "Import Existing Asset Pack";
         cmdImportAssetPack.UseVisualStyleBackColor = true;
         cmdImportAssetPack.Click += cmdImportAssetPack_Click;
+        // 
+        // cmdDelete
+        // 
+        cmdDelete.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+        cmdDelete.Location = new Point(269, 275);
+        cmdDelete.Name = "cmdDelete";
+        cmdDelete.Size = new Size(256, 47);
+        cmdDelete.TabIndex = 5;
+        cmdDelete.Text = "Delete selected Asset Pack";
+        cmdDelete.UseVisualStyleBackColor = true;
+        cmdDelete.Click += cmdDelete_Click;
         // 
         // Form1
         // 
         AutoScaleDimensions = new SizeF(9F, 21F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(537, 346);
+        Controls.Add(cmdDelete);
         Controls.Add(cmdImportAssetPack);
         Controls.Add(cmdOpenSelected);
         Controls.Add(cmdCreateNew);
@@ -117,4 +130,5 @@ partial class Form1
     private Button cmdOpenSelected;
     private Button cmdImportAssetPack;
     private FolderBrowserDialog importDialog;
+    private Button cmdDelete;
 }

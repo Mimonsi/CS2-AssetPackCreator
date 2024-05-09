@@ -1,6 +1,8 @@
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Security.AccessControl;
 using Microsoft.VisualBasic;
+using System.Security.AccessControl;
 
 // ReSharper disable LocalizableElement
 
@@ -56,10 +58,12 @@ public partial class Form1 : Form
         if (lbAssetPacks.SelectedItem == null)
         {
             cmdOpenSelected.Enabled = false;
+            cmdDelete.Enabled = false;
         }
         else
         {
             cmdOpenSelected.Enabled = true;
+            cmdDelete.Enabled = true;
         }
     }
 
@@ -89,7 +93,7 @@ public partial class Form1 : Form
     private void cmdCreateNew_Click(object sender, EventArgs e)
     {
         // Create popup for name entry
-        var name = Interaction.InputBox("Enter the name of the new asset pack. Must end with 'AssetPack'", "New Asset Pack", $"Number{assetPacks.Count+1}_AssetPack");
+        var name = Interaction.InputBox("Enter the name of the new asset pack. Must end with 'AssetPack'", "New Asset Pack", $"Number{assetPacks.Count + 1}_AssetPack");
         if (string.IsNullOrEmpty(name) || name.Contains(' ') || !name.ToLower().EndsWith("assetpack") || name == "CustomAssetPack")
         {
             MessageBox.Show("Please enter a name that ends with 'AssetPack' and does not contain any spaces or other characters", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -119,7 +123,7 @@ public partial class Form1 : Form
 
         ReloadAssetPacks();
 
-        for(int i = 0; i < assetPacks.Count; i++)
+        for (int i = 0; i < assetPacks.Count; i++)
         {
             if (assetPacks[i].Name == name)
             {
@@ -131,5 +135,25 @@ public partial class Form1 : Form
 
         // Execute command
 
+    }
+
+    private void cmdDelete_Click(object sender, EventArgs e)
+    {
+        if (MessageBox.Show("Are you sure you want to delete this asset pack? Please make sure you have backed up any assets you may need. If you imported the pack, it has been moved from the original position and there will no be automatic backup. This cannot be undone.", "Are you sure?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning) == DialogResult.Yes)
+        {
+            var selected = lbAssetPacks.SelectedItem as DirectoryInfo;
+            if (selected?.FullName != null)
+            {
+                var directory = new DirectoryInfo(selected.FullName) { Attributes = FileAttributes.Normal };
+                foreach (var info in directory.GetFileSystemInfos("*", SearchOption.AllDirectories))
+                {
+                    info.Attributes = FileAttributes.Normal;
+                }
+                directory.Delete(true);
+                assetPacks.Remove(selected);
+                ReloadAssetPacks();
+            }
+
+        }
     }
 }
