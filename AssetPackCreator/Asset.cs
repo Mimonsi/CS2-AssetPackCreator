@@ -60,7 +60,7 @@ namespace AssetPackCreator
             UpdateThumbnailInPrefab();
             UpdateNameInPrefab();
 
-
+            Main.TriggerSavedText();
         }
 
         public string GetIconPath()

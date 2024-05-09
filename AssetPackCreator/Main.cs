@@ -28,6 +28,14 @@ namespace AssetPackCreator
             Thread.Sleep(delay);
         }
 
+        public static void TriggerSavedText()
+        {
+            Instance.saveLabel.Text = "Changes saved";
+            Instance.changesSavedTimer.Enabled = true;
+            Instance.changesSavedTimer.Stop();
+            Instance.changesSavedTimer.Start();
+        }
+
         private void ExecuteInstructions()
         {
             try
@@ -250,6 +258,7 @@ namespace AssetPackCreator
             }
             localization.RenamePrefab(selected.prefabName, txtPrefabName.Text);
             selected.Rename(txtPrefabName.Text);
+            UpdateStatus("Asset name updated");
         }
 
         private void txtPrefabName_TextChanged(object sender, EventArgs e)
@@ -269,10 +278,16 @@ namespace AssetPackCreator
 
         private void cmdBrowseGamePath_Click(object sender, EventArgs e)
         {
+            UpdateStatus("Showing Game Path Dialog");
             browseGamePathDialog.InitialDirectory = txtCities2Location.Text;
             if (browseGamePathDialog.ShowDialog() == DialogResult.OK)
             {
                 txtCities2Location.Text = browseGamePathDialog.FileName;
+                UpdateStatus("Game Path updated");
+            }
+            else
+            {
+                UpdateStatus("Game Path not updated");
             }
         }
 
@@ -495,6 +510,12 @@ namespace AssetPackCreator
         private void label10_Click(object sender, EventArgs e)
         {
             PackThumbnailBoxClick(sender, e);
+        }
+
+        private void changesSavedTimer_Tick(object sender, EventArgs e)
+        {
+            saveLabel.Text = "";
+            changesSavedTimer.Stop();
         }
     }
 }

@@ -73,6 +73,7 @@ public class Locale(string id)
         try
         {
             File.WriteAllText($"Resources/lang/{Id}.json", json);
+            Main.TriggerSavedText();
         }
         catch (IOException)
         {

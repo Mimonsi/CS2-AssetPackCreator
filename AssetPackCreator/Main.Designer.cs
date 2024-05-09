@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             cmdRenameProject = new Button();
             txtProjectName = new TextBox();
@@ -49,6 +50,7 @@
             toolStripMenuButton = new ToolStripSplitButton();
             toolStripMenu_OpenAppDir = new ToolStripMenuItem();
             statusLabel = new ToolStripStatusLabel();
+            saveLabel = new ToolStripStatusLabel();
             groupPrepare = new GroupBox();
             label4 = new Label();
             cmdBrowseGamePath = new Button();
@@ -95,6 +97,7 @@
             cmdUpdatePublishedConfiguration = new Button();
             cmdPublishNewMod = new Button();
             cmdPublishNewVersion = new Button();
+            changesSavedTimer = new System.Windows.Forms.Timer(components);
             groupRename.SuspendLayout();
             groupAddAssets.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)assetThumbnailBox).BeginInit();
@@ -278,7 +281,7 @@
             // 
             // statusStrip
             // 
-            statusStrip.Items.AddRange(new ToolStripItem[] { toolStripMenuButton, statusLabel });
+            statusStrip.Items.AddRange(new ToolStripItem[] { toolStripMenuButton, statusLabel, saveLabel });
             statusStrip.Location = new Point(0, 462);
             statusStrip.Name = "statusStrip";
             statusStrip.Size = new Size(763, 22);
@@ -309,6 +312,13 @@
             statusLabel.Name = "statusLabel";
             statusLabel.Size = new Size(39, 17);
             statusLabel.Text = "Ready";
+            // 
+            // saveLabel
+            // 
+            saveLabel.Name = "saveLabel";
+            saveLabel.Size = new Size(677, 17);
+            saveLabel.Spring = true;
+            saveLabel.TextAlign = ContentAlignment.MiddleRight;
             // 
             // groupPrepare
             // 
@@ -787,6 +797,12 @@
             cmdPublishNewVersion.UseVisualStyleBackColor = true;
             cmdPublishNewVersion.Click += cmdPublishNewVersion_Click;
             // 
+            // changesSavedTimer
+            // 
+            changesSavedTimer.Enabled = true;
+            changesSavedTimer.Interval = 1000;
+            changesSavedTimer.Tick += changesSavedTimer_Tick;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -891,5 +907,7 @@
         private Label label16;
         private TextBox txtPublishModVersion;
         private CheckBox cbOpenModPageAfterUpdate;
+        private ToolStripStatusLabel saveLabel;
+        private System.Windows.Forms.Timer changesSavedTimer;
     }
 }

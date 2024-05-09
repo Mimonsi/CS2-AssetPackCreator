@@ -306,6 +306,7 @@ namespace AssetPackCreator
             try
             {
                 doc.Save(configFile);
+                Main.TriggerSavedText();
             }
             catch(IOException)
             {
