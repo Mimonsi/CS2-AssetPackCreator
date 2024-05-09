@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetPackCreator", "AssetPackCreator\AssetPackCreator.csproj", "{7570CE5F-862A-413E-A269-E52C5724DC04}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetPackWorkspaces", "AssetPackWorkspaces\AssetPackWorkspaces.csproj", "{BE71CB7F-F126-41CA-B641-5880478B7798}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{74D939A9-1F7C-4E75-8723-13A85983C34F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74D939A9-1F7C-4E75-8723-13A85983C34F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74D939A9-1F7C-4E75-8723-13A85983C34F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE71CB7F-F126-41CA-B641-5880478B7798}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE71CB7F-F126-41CA-B641-5880478B7798}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE71CB7F-F126-41CA-B641-5880478B7798}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE71CB7F-F126-41CA-B641-5880478B7798}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
