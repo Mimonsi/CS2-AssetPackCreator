@@ -1,5 +1,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
+using Microsoft.VisualBasic;
+
 // ReSharper disable LocalizableElement
 
 namespace AssetPackWorkspaces;
@@ -86,11 +88,19 @@ public partial class Form1 : Form
 
     private void cmdCreateNew_Click(object sender, EventArgs e)
     {
-        var targetName = Path.Combine(assetPacksParent, "NewAssetPack_" + (assetPacks.Count+1));
+        // Create popup for name entry
+        var name = Interaction.InputBox("Enter the name of the new asset pack. Must end with 'AssetPack'", "New Asset Pack", $"Number{assetPacks.Count+1}_AssetPack");
+        if (string.IsNullOrEmpty(name) || name.Contains(' ') || !name.ToLower().EndsWith("assetpack") || name == "CustomAssetPack")
+        {
+            MessageBox.Show("Please enter a name that ends with 'AssetPack' and does not contain any spaces or other characters", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        var targetPath = Path.Combine(assetPacksParent, name);
         var targetRepo = "https://github.com/kosch104/CS2-CustomAssetPack.git";
         var targetBranch = "-b AssetPackCreatorBeta";
 
-        var command = $"clone {targetBranch} {targetRepo} {targetName}";
+        var command = $"clone {targetBranch} {targetRepo} {targetPath}";
         var startInfo = new ProcessStartInfo
         {
             WorkingDirectory = assetPacksParent,
@@ -103,6 +113,10 @@ public partial class Form1 : Form
         };
         var process = Process.Start(startInfo);
         process.WaitForExit();
+
+        var instruction = $"RENAME={name}\n";
+        File.WriteAllText(Path.Combine(targetPath, "ins.txt"), instruction);
+
         ReloadAssetPacks();
 
         // Execute command

@@ -28,6 +28,38 @@ namespace AssetPackCreator
             Thread.Sleep(delay);
         }
 
+        private void ExecuteInstructions()
+        {
+            try
+            {
+                var instructionsFile = Path.Combine(Directory.GetCurrentDirectory(), "ins.txt");
+                if (File.Exists(instructionsFile))
+                {
+                    UpdateStatus("Executing Startup Instructions");
+                    using StreamReader sr = new StreamReader("ins.txt");
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        string[] parts = line.Split('=');
+                        var command = parts[0];
+                        var value = parts[1];
+                        if (command == "RENAME")
+                        {
+                            txtProjectName.Text = value;
+                            RenameProject(true);
+                        }
+                    }
+                }
+
+                File.Delete(instructionsFile);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Error executing instructions: {e.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
         private void Main_Load(object sender, EventArgs e)
         {
             // Look for sln file in current folder
@@ -72,9 +104,11 @@ namespace AssetPackCreator
             txtPublishGameVersion.DataBindings.Add("Text", publishConfig, "GameVersion", false, DataSourceUpdateMode.OnPropertyChanged);
             txtPublishModVersion.DataBindings.Add("Text", publishConfig, "ModVersion", false, DataSourceUpdateMode.OnPropertyChanged);
             packThumbnailBox.ImageLocation = publishConfig.ThumbnailPath;
+
+            ExecuteInstructions();
         }
 
-        private void cmdRenameProject_Click(object sender, EventArgs e)
+        private void RenameProject(bool skipConfirmation=false)
         {
             if (string.IsNullOrEmpty(txtProjectName.Text) || txtProjectName.Text.Contains(' ') || !txtProjectName.Text.ToLower().EndsWith("assetpack") || txtProjectName.Text == "CustomAssetPack")
             {
@@ -86,10 +120,12 @@ namespace AssetPackCreator
             pack.Rename(txtProjectName.Text);
             string newSolutionName = txtProjectName.Text;
 
-
-            if (MessageBox.Show($"Detected Solution file: {oldSolutionName}.sln. Would you like to continue renaming it to {newSolutionName}.sln?", "Info", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information) != DialogResult.Yes)
+            if (!skipConfirmation)
             {
-                return;
+                if (MessageBox.Show($"Detected Solution file: {oldSolutionName}.sln. Would you like to continue renaming it to {newSolutionName}.sln?", "Info", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information) != DialogResult.Yes)
+                {
+                    return;
+                }
             }
 
             try
@@ -108,7 +144,11 @@ namespace AssetPackCreator
             {
                 MessageBox.Show($"Error renaming solution: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
 
+        private void cmdRenameProject_Click(object sender, EventArgs e)
+        {
+            RenameProject();
         }
 
         private void cmdBrowseAssets_Click(object sender, EventArgs e)
