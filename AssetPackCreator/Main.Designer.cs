@@ -64,8 +64,9 @@
             label5 = new Label();
             txtPdxMail = new TextBox();
             groupPublishConfig = new GroupBox();
-            label11 = new Label();
-            txtPublishModId = new TextBox();
+            cmdRemoveImage = new Button();
+            cmdAddImage = new Button();
+            lbImages = new ListBox();
             cmdMarkdownPreview = new Button();
             label10 = new Label();
             packThumbnailBox = new PictureBox();
@@ -87,6 +88,8 @@
             comboLocale = new ComboBox();
             tabPublishConfig = new TabPage();
             tabPublish = new TabPage();
+            label11 = new Label();
+            txtPublishModId = new TextBox();
             cbOpenModPageAfterUpdate = new CheckBox();
             label17 = new Label();
             txtPublishGameVersion = new TextBox();
@@ -100,6 +103,7 @@
             cmdPublishNewVersion = new Button();
             changesSavedTimer = new System.Windows.Forms.Timer(components);
             selectAssetsFolderDialog = new FolderBrowserDialog();
+            imageBox = new PictureBox();
             groupRename.SuspendLayout();
             groupAddAssets.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)assetThumbnailBox).BeginInit();
@@ -114,6 +118,7 @@
             groupAssetLocatization.SuspendLayout();
             tabPublishConfig.SuspendLayout();
             tabPublish.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)imageBox).BeginInit();
             SuspendLayout();
             // 
             // cmdRenameProject
@@ -448,8 +453,10 @@
             // groupPublishConfig
             // 
             groupPublishConfig.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            groupPublishConfig.Controls.Add(label11);
-            groupPublishConfig.Controls.Add(txtPublishModId);
+            groupPublishConfig.Controls.Add(imageBox);
+            groupPublishConfig.Controls.Add(cmdRemoveImage);
+            groupPublishConfig.Controls.Add(cmdAddImage);
+            groupPublishConfig.Controls.Add(lbImages);
             groupPublishConfig.Controls.Add(cmdMarkdownPreview);
             groupPublishConfig.Controls.Add(label10);
             groupPublishConfig.Controls.Add(packThumbnailBox);
@@ -468,21 +475,35 @@
             groupPublishConfig.TabStop = false;
             groupPublishConfig.Text = "Publish Configuration (will be displayed in PDX Mods)";
             // 
-            // label11
+            // cmdRemoveImage
             // 
-            label11.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label11.Location = new Point(9, 383);
-            label11.Name = "label11";
-            label11.Size = new Size(66, 21);
-            label11.TabIndex = 11;
-            label11.Text = "Mod ID:";
+            cmdRemoveImage.Location = new Point(147, 368);
+            cmdRemoveImage.Name = "cmdRemoveImage";
+            cmdRemoveImage.Size = new Size(128, 42);
+            cmdRemoveImage.TabIndex = 12;
+            cmdRemoveImage.Text = "Remove Image";
+            cmdRemoveImage.UseVisualStyleBackColor = true;
+            cmdRemoveImage.Click += cmdRemoveImage_Click;
             // 
-            // txtPublishModId
+            // cmdAddImage
             // 
-            txtPublishModId.Location = new Point(81, 377);
-            txtPublishModId.Name = "txtPublishModId";
-            txtPublishModId.Size = new Size(181, 29);
-            txtPublishModId.TabIndex = 10;
+            cmdAddImage.Location = new Point(9, 368);
+            cmdAddImage.Name = "cmdAddImage";
+            cmdAddImage.Size = new Size(128, 42);
+            cmdAddImage.TabIndex = 11;
+            cmdAddImage.Text = "Add Image";
+            cmdAddImage.UseVisualStyleBackColor = true;
+            cmdAddImage.Click += cmdAddImage_Click;
+            // 
+            // lbImages
+            // 
+            lbImages.FormattingEnabled = true;
+            lbImages.ItemHeight = 21;
+            lbImages.Location = new Point(9, 253);
+            lbImages.Name = "lbImages";
+            lbImages.Size = new Size(266, 109);
+            lbImages.TabIndex = 10;
+            lbImages.SelectedIndexChanged += lbImages_SelectedIndexChanged;
             // 
             // cmdMarkdownPreview
             // 
@@ -508,7 +529,7 @@
             // 
             packThumbnailBox.Location = new Point(9, 119);
             packThumbnailBox.Name = "packThumbnailBox";
-            packThumbnailBox.Size = new Size(250, 250);
+            packThumbnailBox.Size = new Size(128, 128);
             packThumbnailBox.SizeMode = PictureBoxSizeMode.Zoom;
             packThumbnailBox.TabIndex = 7;
             packThumbnailBox.TabStop = false;
@@ -530,6 +551,7 @@
             txtPublishLongDescription.Location = new Point(281, 115);
             txtPublishLongDescription.Multiline = true;
             txtPublishLongDescription.Name = "txtPublishLongDescription";
+            txtPublishLongDescription.ScrollBars = ScrollBars.Vertical;
             txtPublishLongDescription.Size = new Size(431, 295);
             txtPublishLongDescription.TabIndex = 5;
             txtPublishLongDescription.TextChanged += txtPublishLongDescription_TextChanged;
@@ -688,6 +710,8 @@
             // tabPublish
             // 
             tabPublish.BackColor = SystemColors.Control;
+            tabPublish.Controls.Add(label11);
+            tabPublish.Controls.Add(txtPublishModId);
             tabPublish.Controls.Add(cbOpenModPageAfterUpdate);
             tabPublish.Controls.Add(label17);
             tabPublish.Controls.Add(txtPublishGameVersion);
@@ -708,6 +732,23 @@
             tabPublish.TabIndex = 2;
             tabPublish.Text = "Step 4: Publish";
             // 
+            // label11
+            // 
+            label11.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label11.Location = new Point(291, 14);
+            label11.Name = "label11";
+            label11.Size = new Size(107, 21);
+            label11.TabIndex = 19;
+            label11.Text = "Mod ID:";
+            // 
+            // txtPublishModId
+            // 
+            txtPublishModId.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtPublishModId.Location = new Point(404, 8);
+            txtPublishModId.Name = "txtPublishModId";
+            txtPublishModId.Size = new Size(181, 25);
+            txtPublishModId.TabIndex = 18;
+            // 
             // cbOpenModPageAfterUpdate
             // 
             cbOpenModPageAfterUpdate.AutoSize = true;
@@ -724,7 +765,7 @@
             // label17
             // 
             label17.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label17.Location = new Point(291, 25);
+            label17.Location = new Point(290, 39);
             label17.Name = "label17";
             label17.Size = new Size(107, 21);
             label17.TabIndex = 16;
@@ -733,7 +774,7 @@
             // txtPublishGameVersion
             // 
             txtPublishGameVersion.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtPublishGameVersion.Location = new Point(404, 22);
+            txtPublishGameVersion.Location = new Point(404, 35);
             txtPublishGameVersion.Name = "txtPublishGameVersion";
             txtPublishGameVersion.Size = new Size(181, 25);
             txtPublishGameVersion.TabIndex = 15;
@@ -741,15 +782,15 @@
             // label16
             // 
             label16.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label16.Location = new Point(291, 303);
+            label16.Location = new Point(291, 328);
             label16.Name = "label16";
-            label16.Size = new Size(431, 34);
+            label16.Size = new Size(431, 22);
             label16.TabIndex = 14;
             label16.Text = "Mod Version: (has to be changed before publishing update)";
             // 
             // txtPublishModVersion
             // 
-            txtPublishModVersion.Location = new Point(291, 340);
+            txtPublishModVersion.Location = new Point(291, 353);
             txtPublishModVersion.Name = "txtPublishModVersion";
             txtPublishModVersion.Size = new Size(184, 29);
             txtPublishModVersion.TabIndex = 13;
@@ -767,7 +808,7 @@
             // label15
             // 
             label15.AutoSize = true;
-            label15.Location = new Point(291, 49);
+            label15.Location = new Point(291, 63);
             label15.Name = "label15";
             label15.Size = new Size(252, 21);
             label15.TabIndex = 11;
@@ -777,10 +818,10 @@
             // 
             txtPublishChangeLog.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             txtPublishChangeLog.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtPublishChangeLog.Location = new Point(291, 73);
+            txtPublishChangeLog.Location = new Point(291, 87);
             txtPublishChangeLog.Multiline = true;
             txtPublishChangeLog.Name = "txtPublishChangeLog";
-            txtPublishChangeLog.Size = new Size(431, 224);
+            txtPublishChangeLog.Size = new Size(431, 238);
             txtPublishChangeLog.TabIndex = 10;
             txtPublishChangeLog.TextChanged += txtPublishChangeLog_TextChanged;
             // 
@@ -824,6 +865,15 @@
             // 
             selectAssetsFolderDialog.HelpRequest += selectAssetsFolderDialog_HelpRequest;
             // 
+            // imageBox
+            // 
+            imageBox.Location = new Point(147, 119);
+            imageBox.Name = "imageBox";
+            imageBox.Size = new Size(128, 128);
+            imageBox.SizeMode = PictureBoxSizeMode.Zoom;
+            imageBox.TabIndex = 13;
+            imageBox.TabStop = false;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -856,6 +906,7 @@
             tabPublishConfig.ResumeLayout(false);
             tabPublish.ResumeLayout(false);
             tabPublish.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)imageBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -907,8 +958,6 @@
         private TabPage tabPublishConfig;
         private Button cmdMarkdownPreview;
         private TabPage tabPublish;
-        private TextBox txtPublishModId;
-        private Label label11;
         private Button cmdUpdatePublishedConfiguration;
         private Button cmdPublishNewVersion;
         private TabPage tabAssets;
@@ -932,5 +981,11 @@
         private Button cmdBrowseAssetsFolder;
         private Label label2;
         private FolderBrowserDialog selectAssetsFolderDialog;
+        private Label label11;
+        private TextBox txtPublishModId;
+        private ListBox lbImages;
+        private Button cmdRemoveImage;
+        private Button cmdAddImage;
+        private PictureBox imageBox;
     }
 }

@@ -95,6 +95,8 @@ namespace AssetPackCreator
             comboLocale.DataSource = localization.Locales;
             comboLocale.SelectedItem = localization.GetLocale("en-US");
 
+            lbImages.DataSource = publishConfig.Screenshots;
+
             // Load Settings
             txtCities2Location.Text = settings.Cities2Path;
             txtPdxMail.Text = settings.PdxMail;
@@ -605,6 +607,58 @@ namespace AssetPackCreator
         private void lbAssets_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+
+        private void lbImages_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbImages.SelectedItem == null || string.IsNullOrEmpty(lbImages.SelectedItem.ToString()))
+            {
+                cmdRemoveImage.Enabled = false;
+            }
+            else
+            {
+                cmdRemoveImage.Enabled = true;
+                imageBox.ImageLocation = Path.Combine(Directory.GetCurrentDirectory(), lbImages.SelectedItem.ToString());;
+            }
+
+        }
+
+        private void cmdAddImage_Click(object sender, EventArgs e)
+        {
+            if (addThumbnailDialog.ShowDialog() != DialogResult.OK)
+                return;
+            if (!string.IsNullOrEmpty(addThumbnailDialog.FileName) && File.Exists(addThumbnailDialog.FileName))
+            {
+                FileInfo fi = new FileInfo(addThumbnailDialog.FileName);
+                if (fi.Length > 2048 * 1024)
+                {
+                    MessageBox.Show("File size must not exceed 2MB", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                var copiedFile = Path.Combine(Directory.GetCurrentDirectory(), "Properties", fi.Name);
+                File.Copy(fi.FullName, copiedFile, true);
+                imageBox.ImageLocation = copiedFile;
+                if (!publishConfig.Screenshots.Contains(Path.Combine("Properties", fi.Name)))
+                    publishConfig.AddScreenshot(Path.Combine("Properties", fi.Name));
+            }
+        }
+
+        private void cmdRemoveImage_Click(object sender, EventArgs e)
+        {
+            if (lbImages.SelectedIndex == -1)
+                return;
+            string path = Path.Combine(Directory.GetCurrentDirectory(), (string)lbImages.SelectedItem);
+            publishConfig.RemoveScreenshot((string)lbImages.SelectedItem);
+            try
+            {
+                File.Delete(path);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error deleting image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
     }
 }

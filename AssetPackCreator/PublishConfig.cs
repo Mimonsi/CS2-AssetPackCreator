@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Xml;
 
@@ -62,15 +63,25 @@ namespace AssetPackCreator
             }
         }
 
-        private List<string> _screenshots;
-        public List<string> Screenshots
+        private BindingList<string> _screenshots = new();
+        public BindingList<string> Screenshots
         {
             get => _screenshots;
-            set
-            {
-                _screenshots = value;
-                Save();
-            }
+        }
+
+        public void AddScreenshot(string screenshot)
+        {
+            if (string.IsNullOrEmpty(screenshot))
+                return;
+            screenshot = screenshot.Replace("\\", "/");
+            _screenshots.Add(screenshot);
+            Save();
+        }
+
+        public void RemoveScreenshot(string lbImagesSelectedItem)
+        {
+            _screenshots.Remove(lbImagesSelectedItem);
+            Save();
         }
 
         private List<string> _tags;
@@ -183,8 +194,7 @@ namespace AssetPackCreator
                         config.Thumbnail = node.Attributes["Value"].Value;
                         break;
                     case "Screenshot":
-                        config.Screenshots ??= new List<string>();
-                        config.Screenshots.Add(node.Attributes["Value"].Value);
+                        config.AddScreenshot(node.Attributes["Value"].Value);
                         break;
                     case "Tag":
                         config.Tags ??= new List<string>();
