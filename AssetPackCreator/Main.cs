@@ -171,6 +171,17 @@ namespace AssetPackCreator
         }
 
 
+        private void cmdBrowseAssetsFolder_Click(object sender, EventArgs e)
+        {
+            if (selectAssetsFolderDialog.ShowDialog() != DialogResult.OK)
+                return;
+            foreach (string fileName in Directory.GetFiles(selectAssetsFolderDialog.SelectedPath, "*.Prefab", SearchOption.AllDirectories))
+            {
+                pack.AddAsset(fileName);
+            }
+        }
+
+
         private void lbAssets_SelectedIndexChanged(object sender, EventArgs e)
         {
             Asset? selectedAsset = (Asset?)lbAssets.SelectedItem;
@@ -393,14 +404,42 @@ namespace AssetPackCreator
             UpdateStatus("PDX Account File created");
         }
 
+        private bool CheckIsDifferentFromExample()
+        {
+            if (txtPublishLongDescription.Text.Contains("This asset packs adds xxx and yyy to the game"))
+                return false;
+            if (txtPublishDisplayName.Text.Contains("Example Pack") ||
+                txtPublishDisplayName.Text.Contains("do not subscribe"))
+                return false;
+            if (txtPublishShortDescription.Text.Contains("Example Pack Description"))
+                return false;
+            if (pack.ContainsExampleAsset())
+                return false;
+            return true;
+        }
+
         private void cmdPublishNewMod_Click(object sender, EventArgs e)
         {
             //var localModPath = Path.Combine("C:\\Users", Environment.UserName, "AppData", "LocalLow", "Colossal Order", "Cities Skylines II", "Mods", pack.name);
             //var publishConfigPath = Path.Combine(Directory.GetCurrentDirectory(), "Properties", "PublishConfiguration.xml");
             //Publisher.PublishNewMod(settings.Cities2Path, publishConfigPath, settings.PdxMail, settings.PdxPassword, localModPath);
+            if (!CheckIsDifferentFromExample())
+            {
+                MessageBox.Show("Please remove the Example Car Prop and enter real data for publishing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             CreatePdxAccountFile();
             UseWaitCursor = true;
             var result = Publisher.PublishNewMod(Directory.GetCurrentDirectory(), out int modId);
+            UpdateStatus("Waiting for PDX Cache to update...");
+            int waited = 0;
+            while (waited < 3000)
+            {
+                Application.DoEvents();
+                Thread.Sleep(250);
+                waited += 250;
+            }
             UseWaitCursor = false;
             if (result == PublishResult.Success)
             {
@@ -426,6 +465,14 @@ namespace AssetPackCreator
             CreatePdxAccountFile();
             UseWaitCursor = true;
             var result = Publisher.PublishNewVersion(Directory.GetCurrentDirectory());
+            UpdateStatus("Waiting for PDX Cache to update...");
+            int waited = 0;
+            while (waited < 3000)
+            {
+                Application.DoEvents();
+                Thread.Sleep(250);
+                waited += 250;
+            }
             UseWaitCursor = false;
             if (result == PublishResult.Success && settings.OpenModPageAfterUpdate)
             {
@@ -447,6 +494,14 @@ namespace AssetPackCreator
             CreatePdxAccountFile();
             UseWaitCursor = true;
             var result = Publisher.UpdatePublishedConfiguration(Directory.GetCurrentDirectory());
+            UpdateStatus("Waiting for PDX Cache to update...");
+            int waited = 0;
+            while (waited < 3000)
+            {
+                Application.DoEvents();
+                Thread.Sleep(250);
+                waited += 250;
+            }
             UseWaitCursor = false;
             if (result == PublishResult.Success && settings.OpenModPageAfterUpdate)
             {
@@ -516,6 +571,37 @@ namespace AssetPackCreator
         {
             saveLabel.Text = "";
             changesSavedTimer.Stop();
+        }
+
+        private void selectAssetsFolderDialog_HelpRequest(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lbAssets_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string file in files)
+            {
+                // Check if folder
+                if (Directory.Exists(file))
+                {
+                    foreach (string fileName in Directory.GetFiles(file, "*.Prefab", SearchOption.AllDirectories))
+                    {
+                        pack.AddAsset(fileName);
+                    }
+                }
+                else
+                {
+                    if (file.EndsWith(".Prefab"))
+                        pack.AddAsset(file);
+                }
+            }
+        }
+
+        private void lbAssets_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
         }
     }
 }

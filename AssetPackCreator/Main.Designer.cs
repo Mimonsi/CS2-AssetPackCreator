@@ -35,6 +35,8 @@
             label1 = new Label();
             groupRename = new GroupBox();
             groupAddAssets = new GroupBox();
+            label2 = new Label();
+            cmdBrowseAssetsFolder = new Button();
             cmdApplyAssetName = new Button();
             cmdAddThumbnail = new Button();
             cmdRemoveSelectedAsset = new Button();
@@ -43,7 +45,6 @@
             label3 = new Label();
             cmdBrowseAssets = new Button();
             lbAssets = new ListBox();
-            label2 = new Label();
             selectAssetsDialog = new OpenFileDialog();
             addThumbnailDialog = new OpenFileDialog();
             statusStrip = new StatusStrip();
@@ -98,6 +99,7 @@
             cmdPublishNewMod = new Button();
             cmdPublishNewVersion = new Button();
             changesSavedTimer = new System.Windows.Forms.Timer(components);
+            selectAssetsFolderDialog = new FolderBrowserDialog();
             groupRename.SuspendLayout();
             groupAddAssets.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)assetThumbnailBox).BeginInit();
@@ -157,6 +159,8 @@
             // 
             // groupAddAssets
             // 
+            groupAddAssets.Controls.Add(label2);
+            groupAddAssets.Controls.Add(cmdBrowseAssetsFolder);
             groupAddAssets.Controls.Add(cmdApplyAssetName);
             groupAddAssets.Controls.Add(cmdAddThumbnail);
             groupAddAssets.Controls.Add(cmdRemoveSelectedAsset);
@@ -165,20 +169,38 @@
             groupAddAssets.Controls.Add(label3);
             groupAddAssets.Controls.Add(cmdBrowseAssets);
             groupAddAssets.Controls.Add(lbAssets);
-            groupAddAssets.Controls.Add(label2);
             groupAddAssets.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupAddAssets.Location = new Point(3, 3);
             groupAddAssets.Name = "groupAddAssets";
-            groupAddAssets.Size = new Size(431, 286);
+            groupAddAssets.Size = new Size(431, 413);
             groupAddAssets.TabIndex = 4;
             groupAddAssets.TabStop = false;
             groupAddAssets.Text = "Add Assets";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(0, 25);
+            label2.Name = "label2";
+            label2.Size = new Size(178, 21);
+            label2.TabIndex = 10;
+            label2.Text = "Add Assets to your Pack:";
+            // 
+            // cmdBrowseAssetsFolder
+            // 
+            cmdBrowseAssetsFolder.Location = new Point(300, 19);
+            cmdBrowseAssetsFolder.Name = "cmdBrowseAssetsFolder";
+            cmdBrowseAssetsFolder.Size = new Size(118, 32);
+            cmdBrowseAssetsFolder.TabIndex = 9;
+            cmdBrowseAssetsFolder.Text = "Browse Folder";
+            cmdBrowseAssetsFolder.UseVisualStyleBackColor = true;
+            cmdBrowseAssetsFolder.Click += cmdBrowseAssetsFolder_Click;
             // 
             // cmdApplyAssetName
             // 
             cmdApplyAssetName.Enabled = false;
             cmdApplyAssetName.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cmdApplyAssetName.Location = new Point(266, 157);
+            cmdApplyAssetName.Location = new Point(266, 292);
             cmdApplyAssetName.Name = "cmdApplyAssetName";
             cmdApplyAssetName.Size = new Size(152, 33);
             cmdApplyAssetName.TabIndex = 8;
@@ -189,7 +211,7 @@
             // cmdAddThumbnail
             // 
             cmdAddThumbnail.Enabled = false;
-            cmdAddThumbnail.Location = new Point(112, 237);
+            cmdAddThumbnail.Location = new Point(112, 372);
             cmdAddThumbnail.Name = "cmdAddThumbnail";
             cmdAddThumbnail.Size = new Size(182, 32);
             cmdAddThumbnail.TabIndex = 6;
@@ -200,7 +222,7 @@
             // cmdRemoveSelectedAsset
             // 
             cmdRemoveSelectedAsset.Enabled = false;
-            cmdRemoveSelectedAsset.Location = new Point(300, 237);
+            cmdRemoveSelectedAsset.Location = new Point(300, 372);
             cmdRemoveSelectedAsset.Name = "cmdRemoveSelectedAsset";
             cmdRemoveSelectedAsset.Size = new Size(118, 32);
             cmdRemoveSelectedAsset.TabIndex = 5;
@@ -210,7 +232,7 @@
             // 
             // assetThumbnailBox
             // 
-            assetThumbnailBox.Location = new Point(6, 169);
+            assetThumbnailBox.Location = new Point(6, 304);
             assetThumbnailBox.Name = "assetThumbnailBox";
             assetThumbnailBox.Size = new Size(100, 100);
             assetThumbnailBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -220,7 +242,7 @@
             // 
             // txtPrefabName
             // 
-            txtPrefabName.Location = new Point(112, 193);
+            txtPrefabName.Location = new Point(112, 328);
             txtPrefabName.Name = "txtPrefabName";
             txtPrefabName.Size = new Size(306, 29);
             txtPrefabName.TabIndex = 7;
@@ -229,7 +251,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(112, 169);
+            label3.Location = new Point(112, 304);
             label3.Name = "label3";
             label3.Size = new Size(108, 21);
             label3.TabIndex = 5;
@@ -238,34 +260,28 @@
             // 
             // cmdBrowseAssets
             // 
-            cmdBrowseAssets.Location = new Point(317, 19);
+            cmdBrowseAssets.Location = new Point(176, 20);
             cmdBrowseAssets.Name = "cmdBrowseAssets";
-            cmdBrowseAssets.Size = new Size(93, 32);
+            cmdBrowseAssets.Size = new Size(118, 32);
             cmdBrowseAssets.TabIndex = 4;
-            cmdBrowseAssets.Text = "Browse";
+            cmdBrowseAssets.Text = "Browse Files";
             cmdBrowseAssets.UseVisualStyleBackColor = true;
             cmdBrowseAssets.Click += cmdBrowseAssets_Click;
             // 
             // lbAssets
             // 
+            lbAssets.AllowDrop = true;
             lbAssets.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbAssets.FormattingEnabled = true;
             lbAssets.HorizontalScrollbar = true;
             lbAssets.ItemHeight = 15;
             lbAssets.Location = new Point(6, 57);
             lbAssets.Name = "lbAssets";
-            lbAssets.Size = new Size(404, 94);
+            lbAssets.Size = new Size(412, 229);
             lbAssets.TabIndex = 3;
             lbAssets.SelectedIndexChanged += lbAssets_SelectedIndexChanged;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(6, 19);
-            label2.Name = "label2";
-            label2.Size = new Size(287, 21);
-            label2.TabIndex = 2;
-            label2.Text = "Please select asset files you want to add:";
+            lbAssets.DragDrop += lbAssets_DragDrop;
+            lbAssets.DragEnter += lbAssets_DragEnter;
             // 
             // selectAssetsDialog
             // 
@@ -598,7 +614,7 @@
             groupAssetLocatization.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupAssetLocatization.Location = new Point(437, 3);
             groupAssetLocatization.Name = "groupAssetLocatization";
-            groupAssetLocatization.Size = new Size(297, 404);
+            groupAssetLocatization.Size = new Size(297, 413);
             groupAssetLocatization.TabIndex = 9;
             groupAssetLocatization.TabStop = false;
             groupAssetLocatization.Text = "Asset Localization";
@@ -617,7 +633,8 @@
             txtLocalizedDescription.Location = new Point(6, 158);
             txtLocalizedDescription.Multiline = true;
             txtLocalizedDescription.Name = "txtLocalizedDescription";
-            txtLocalizedDescription.Size = new Size(285, 240);
+            txtLocalizedDescription.ScrollBars = ScrollBars.Vertical;
+            txtLocalizedDescription.Size = new Size(285, 255);
             txtLocalizedDescription.TabIndex = 11;
             txtLocalizedDescription.TextChanged += txtLocalizedDescription_TextChanged;
             // 
@@ -803,6 +820,10 @@
             changesSavedTimer.Interval = 1000;
             changesSavedTimer.Tick += changesSavedTimer_Tick;
             // 
+            // selectAssetsFolderDialog
+            // 
+            selectAssetsFolderDialog.HelpRequest += selectAssetsFolderDialog_HelpRequest;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -846,7 +867,6 @@
         private Label label1;
         private GroupBox groupRename;
         private GroupBox groupAddAssets;
-        private Label label2;
         private Button cmdBrowseAssets;
         private ListBox lbAssets;
         private Button cmdRemoveSelectedAsset;
@@ -909,5 +929,8 @@
         private CheckBox cbOpenModPageAfterUpdate;
         private ToolStripStatusLabel saveLabel;
         private System.Windows.Forms.Timer changesSavedTimer;
+        private Button cmdBrowseAssetsFolder;
+        private Label label2;
+        private FolderBrowserDialog selectAssetsFolderDialog;
     }
 }

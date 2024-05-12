@@ -15,9 +15,10 @@ public enum PublishResult
 
 public class Publisher
 {
-
     private static (string, string) ExecutePublishCommand(string projectPath, string command)
     {
+
+
         if (MessageBox.Show($"Do you want to execute the {command} command?", "Publish Mod", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information) != DialogResult.Yes)
             return ("", "");
 

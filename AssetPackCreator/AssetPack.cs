@@ -120,5 +120,15 @@ namespace AssetPackCreator;
             }
             return false;
         }
+
+        public bool ContainsExampleAsset()
+        {
+            foreach(Asset a in assets)
+            {
+                if (a.prefabName == "CarProp")
+                    return true;
+            }
+            return false;
+        }
     }
 
