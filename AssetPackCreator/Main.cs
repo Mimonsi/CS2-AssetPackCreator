@@ -532,7 +532,10 @@ namespace AssetPackCreator
             else
             {
                 txtLocalizedName.Enabled = txtLocalizedDescription.Enabled = true;
-                txtLocalizedName.Text = selectedLocale.GetAssetName(selectedAsset);
+                var assetDisplayName = selectedLocale.GetAssetName(selectedAsset);
+                if (string.IsNullOrEmpty(assetDisplayName))
+                    assetDisplayName = selectedAsset.prefabName;
+                txtLocalizedName.Text = assetDisplayName;
                 txtLocalizedDescription.Text = selectedLocale.GetAssetDescription(selectedAsset);
             }
         }
