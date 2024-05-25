@@ -386,9 +386,18 @@ namespace AssetPackCreator
         }
 
         public static string markdownPreviewHtml;
-        private void CmdMarkdownPreviewClick(object sender, EventArgs e)
+
+        private void CmdPublishConfigMarkdownPreviewClick(object sender, EventArgs e)
         {
             MarkdownPreview preview = new MarkdownPreview();
+            markdownPreviewHtml = Markdig.Markdown.ToHtml(txtPublishLongDescription.Text);
+            preview.Show();
+        }
+
+        private void CmdPublishMarkdownPreviewClick(object sender, EventArgs e)
+        {
+            MarkdownPreview preview = new MarkdownPreview();
+            markdownPreviewHtml = Markdig.Markdown.ToHtml(txtPublishChangeLog.Text);
             preview.Show();
         }
 

@@ -522,7 +522,7 @@
             cmdMarkdownPreview.TabIndex = 9;
             cmdMarkdownPreview.Text = "Preview";
             cmdMarkdownPreview.UseVisualStyleBackColor = true;
-            cmdMarkdownPreview.Click += CmdMarkdownPreviewClick;
+            cmdMarkdownPreview.Click += CmdPublishConfigMarkdownPreviewClick;
             // 
             // label10
             // 
@@ -812,7 +812,7 @@
             cmdMarkdownPreview2.TabIndex = 12;
             cmdMarkdownPreview2.Text = "Preview";
             cmdMarkdownPreview2.UseVisualStyleBackColor = true;
-            cmdMarkdownPreview2.Click += CmdMarkdownPreviewClick;
+            cmdMarkdownPreview2.Click += CmdPublishMarkdownPreviewClick;
             // 
             // label15
             // 
