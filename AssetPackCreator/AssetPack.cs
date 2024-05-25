@@ -94,8 +94,14 @@ namespace AssetPackCreator;
             {
                 if (a.prefabName == prefabName)
                 {
-                    MessageBox.Show($"Asset {prefabName} already exists in the pack", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Main.UpdateStatus("Asset already exists in pack, updated instead");
+                    File.Copy(path, Path.Combine(prefabDir, prefabName + ".Prefab"), true);
+                    File.Copy(path + ".cid", Path.Combine(prefabDir, prefabName + ".Prefab.cid"), true);
+                    a.UpdateThumbnailInPrefab();
+                    a.UpdateNameInPrefab();
                     return;
+                    //MessageBox.Show($"Asset {prefabName} already exists in the pack", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //return;
                 }
             }
 
