@@ -81,6 +81,13 @@ namespace AssetPackCreator;
                 MessageBox.Show($"Asset .cid file is not at expected location: {path + ".cid"}. Asset was not added", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            var imageFilesInDir = Directory.GetFiles(Path.GetDirectoryName(path), "*.*", SearchOption.TopDirectoryOnly)
+                .Where(s => supportedThumbnailExtensions.Contains(Path.GetExtension(s)));
+            string? thumbnail = null;
+            if (imageFilesInDir.Count() == 1)
+            {
+                thumbnail = imageFilesInDir.First();
+            }
             string prefabName = Path.GetFileNameWithoutExtension(path);
             string prefabDir = Path.Combine(baseDirectory.FullName, prefabName);
             foreach(Asset a in assets)
@@ -103,6 +110,11 @@ namespace AssetPackCreator;
                 thumbnailExt = "",
             };
             assets.Add(asset);
+            if (thumbnail != null)
+            {
+                Main.UpdateStatus("Adding autodetected thumbnail");
+                asset.AddThumbnail(thumbnail);
+            }
         }
 
         public void RemoveAsset(Asset asset)
