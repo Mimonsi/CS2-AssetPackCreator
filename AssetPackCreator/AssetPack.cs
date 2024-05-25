@@ -5,7 +5,7 @@ namespace AssetPackCreator;
 
     public class AssetPack
     {
-        private static readonly string[] supportedThumbnailExtensions = new string[] { ".png", ".svg" };
+        private static readonly string[] supportedThumbnailExtensions = new string[] { ".png", ".svg", ".jpg" };
         public BindingList<Asset> assets = new();
 
         public string name;

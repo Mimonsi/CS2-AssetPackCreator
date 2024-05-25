@@ -64,6 +64,7 @@
             label5 = new Label();
             txtPdxMail = new TextBox();
             groupPublishConfig = new GroupBox();
+            imageBox = new PictureBox();
             cmdRemoveImage = new Button();
             cmdAddImage = new Button();
             lbImages = new ListBox();
@@ -103,7 +104,6 @@
             cmdPublishNewVersion = new Button();
             changesSavedTimer = new System.Windows.Forms.Timer(components);
             selectAssetsFolderDialog = new FolderBrowserDialog();
-            imageBox = new PictureBox();
             groupRename.SuspendLayout();
             groupAddAssets.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)assetThumbnailBox).BeginInit();
@@ -111,6 +111,7 @@
             groupPrepare.SuspendLayout();
             groupPDXCredentials.SuspendLayout();
             groupPublishConfig.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)imageBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)packThumbnailBox).BeginInit();
             mainTabControl.SuspendLayout();
             tabPrepare.SuspendLayout();
@@ -118,7 +119,6 @@
             groupAssetLocatization.SuspendLayout();
             tabPublishConfig.SuspendLayout();
             tabPublish.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)imageBox).BeginInit();
             SuspendLayout();
             // 
             // cmdRenameProject
@@ -197,7 +197,7 @@
             cmdBrowseAssetsFolder.Name = "cmdBrowseAssetsFolder";
             cmdBrowseAssetsFolder.Size = new Size(118, 32);
             cmdBrowseAssetsFolder.TabIndex = 9;
-            cmdBrowseAssetsFolder.Text = "Browse Folder";
+            cmdBrowseAssetsFolder.Text = "Add Folder";
             cmdBrowseAssetsFolder.UseVisualStyleBackColor = true;
             cmdBrowseAssetsFolder.Click += cmdBrowseAssetsFolder_Click;
             // 
@@ -269,7 +269,7 @@
             cmdBrowseAssets.Name = "cmdBrowseAssets";
             cmdBrowseAssets.Size = new Size(118, 32);
             cmdBrowseAssets.TabIndex = 4;
-            cmdBrowseAssets.Text = "Browse Files";
+            cmdBrowseAssets.Text = "Add Files";
             cmdBrowseAssets.UseVisualStyleBackColor = true;
             cmdBrowseAssets.Click += cmdBrowseAssets_Click;
             // 
@@ -298,7 +298,7 @@
             // addThumbnailDialog
             // 
             addThumbnailDialog.FileName = "Thumbnail";
-            addThumbnailDialog.Filter = "PNG Files | *.png|Scaled Vector Graphics | *.svg";
+            addThumbnailDialog.Filter = "JPG Files| *.jpg|PNG Files | *.png|Scaled Vector Graphics | *.svg";
             // 
             // statusStrip
             // 
@@ -474,6 +474,15 @@
             groupPublishConfig.TabIndex = 4;
             groupPublishConfig.TabStop = false;
             groupPublishConfig.Text = "Publish Configuration (will be displayed in PDX Mods)";
+            // 
+            // imageBox
+            // 
+            imageBox.Location = new Point(147, 119);
+            imageBox.Name = "imageBox";
+            imageBox.Size = new Size(128, 128);
+            imageBox.SizeMode = PictureBoxSizeMode.Zoom;
+            imageBox.TabIndex = 13;
+            imageBox.TabStop = false;
             // 
             // cmdRemoveImage
             // 
@@ -865,15 +874,6 @@
             // 
             selectAssetsFolderDialog.HelpRequest += selectAssetsFolderDialog_HelpRequest;
             // 
-            // imageBox
-            // 
-            imageBox.Location = new Point(147, 119);
-            imageBox.Name = "imageBox";
-            imageBox.Size = new Size(128, 128);
-            imageBox.SizeMode = PictureBoxSizeMode.Zoom;
-            imageBox.TabIndex = 13;
-            imageBox.TabStop = false;
-            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -897,6 +897,7 @@
             groupPDXCredentials.PerformLayout();
             groupPublishConfig.ResumeLayout(false);
             groupPublishConfig.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)imageBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)packThumbnailBox).EndInit();
             mainTabControl.ResumeLayout(false);
             tabPrepare.ResumeLayout(false);
@@ -906,7 +907,6 @@
             tabPublishConfig.ResumeLayout(false);
             tabPublish.ResumeLayout(false);
             tabPublish.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)imageBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }

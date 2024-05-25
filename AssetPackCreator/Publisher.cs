@@ -92,11 +92,13 @@ public class Publisher
             {
                 // Remove everything before "Start publishing process"
                 output = output.Substring(output.IndexOf("Start publishing new version process", StringComparison.Ordinal));
-                MessageBox.Show("Error publishing new version: " + output, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Clipboard.SetText(output);
+                MessageBox.Show("Error publishing new version: (full message copied to clipboard)" + output, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         catch (Exception e)
         {
+            Clipboard.SetText(result.Item1);
             MessageBox.Show("Unknown Error executing command. Full output: " + result.Item1, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         return PublishResult.Error;
@@ -121,11 +123,13 @@ public class Publisher
             {
                 // Remove everything before "Start publishing process"
                 output = output.Substring(output.IndexOf("Start mod configuration updating process", StringComparison.Ordinal));
-                MessageBox.Show("Error publishing updated configuration: " + output, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Clipboard.SetText("Error publishing updated configuration: " + output);
+                MessageBox.Show("Error publishing updated configuration: (full message copied to clipboard)" + output, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         catch (Exception e)
         {
+            Clipboard.SetText(result.Item1);
             MessageBox.Show("Unknown Error executing command. Full output: " + result.Item1, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         return PublishResult.Error;
@@ -158,12 +162,14 @@ public class Publisher
             {
                 // Remove everything before "Start publishing process"
                 output = output.Substring(output.IndexOf("Start publishing process", StringComparison.Ordinal));
-                MessageBox.Show("Error publishing mod: " + output, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Clipboard.SetText("Error publishing mod: " + output);
+                MessageBox.Show("Error publishing mod: (full message copied to clipboard)" + output, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
         catch (Exception e)
         {
+            Clipboard.SetText(result.Item1);
             MessageBox.Show("Unknown Error executing command. Full output: " + result.Item1, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         return PublishResult.Error;
