@@ -424,6 +424,12 @@ namespace AssetPackCreator
                 return;
             }
 
+            if (publishConfig.ModId != "0")
+            {
+                publishConfig.ModId = "0";
+                MessageBox.Show("Mod ID has been set to 0. This is required for new mods. The publishing will continue now.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
             UseWaitCursor = true;
             var result = Publisher.PublishNewMod(Directory.GetCurrentDirectory(), out int modId);
             UpdateStatus("Waiting for PDX Cache to update...");
