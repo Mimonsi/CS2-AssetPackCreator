@@ -99,9 +99,6 @@ namespace AssetPackCreator
 
             // Load Settings
             txtCities2Location.Text = settings.Cities2Path;
-            txtPdxMail.Text = settings.PdxMail;
-            txtPdxPw.Text = settings.PdxPassword;
-            cbSavePassword.Checked = settings.SavePassword;
             cbOpenModPageAfterUpdate.Checked = settings.OpenModPageAfterUpdate;
 
             // Load Publish Configuration
@@ -334,21 +331,6 @@ namespace AssetPackCreator
             Process.Start("explorer.exe", Directory.GetCurrentDirectory());
         }
 
-        private void txtPdxMail_TextChanged(object sender, EventArgs e)
-        {
-            settings.PdxMail = txtPdxMail.Text;
-        }
-
-        private void txtPdxPw_TextChanged(object sender, EventArgs e)
-        {
-            settings.PdxPassword = txtPdxPw.Text;
-        }
-
-        private void cbSavePassword_CheckedChanged(object sender, EventArgs e)
-        {
-            settings.SavePassword = cbSavePassword.Checked;
-        }
-
         private void PackThumbnailBoxClick(object sender, EventArgs e)
         {
             if (addThumbnailDialog.ShowDialog() != DialogResult.OK)
@@ -399,20 +381,6 @@ namespace AssetPackCreator
             MarkdownPreview preview = new MarkdownPreview();
             markdownPreviewHtml = Markdig.Markdown.ToHtml(txtPublishChangeLog.Text);
             preview.Show();
-        }
-
-        private void CreatePdxAccountFile()
-        {
-            UpdateStatus("Creating PDX Account File");
-            var pdxAccountFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/pdx_account.txt";
-            if (!File.Exists(pdxAccountFile))
-            {
-                FileStream fs;
-                fs = File.Create(pdxAccountFile);
-                fs.Close();
-            }
-            File.WriteAllText(pdxAccountFile, settings.PdxMail + "\n" + settings.PdxPassword);
-            UpdateStatus("PDX Account File created");
         }
 
         private bool CheckIsDifferentFromExample()

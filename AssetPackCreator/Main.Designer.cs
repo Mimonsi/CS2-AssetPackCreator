@@ -57,12 +57,6 @@
             cmdBrowseGamePath = new Button();
             txtCities2Location = new TextBox();
             browseGamePathDialog = new OpenFileDialog();
-            groupPDXCredentials = new GroupBox();
-            cbSavePassword = new CheckBox();
-            label6 = new Label();
-            txtPdxPw = new TextBox();
-            label5 = new Label();
-            txtPdxMail = new TextBox();
             groupPublishConfig = new GroupBox();
             imageBox = new PictureBox();
             cmdRemoveImage = new Button();
@@ -109,7 +103,6 @@
             ((System.ComponentModel.ISupportInitialize)assetThumbnailBox).BeginInit();
             statusStrip.SuspendLayout();
             groupPrepare.SuspendLayout();
-            groupPDXCredentials.SuspendLayout();
             groupPublishConfig.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)imageBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)packThumbnailBox).BeginInit();
@@ -385,70 +378,6 @@
             // 
             browseGamePathDialog.FileName = "Cities2.exe";
             browseGamePathDialog.Filter = "Cities Skylines 2 | Cities2.exe";
-            // 
-            // groupPDXCredentials
-            // 
-            groupPDXCredentials.Controls.Add(cbSavePassword);
-            groupPDXCredentials.Controls.Add(label6);
-            groupPDXCredentials.Controls.Add(txtPdxPw);
-            groupPDXCredentials.Controls.Add(label5);
-            groupPDXCredentials.Controls.Add(txtPdxMail);
-            groupPDXCredentials.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            groupPDXCredentials.Location = new Point(6, 6);
-            groupPDXCredentials.Name = "groupPDXCredentials";
-            groupPDXCredentials.Size = new Size(279, 147);
-            groupPDXCredentials.TabIndex = 4;
-            groupPDXCredentials.TabStop = false;
-            groupPDXCredentials.Text = "Paradox Credentials";
-            // 
-            // cbSavePassword
-            // 
-            cbSavePassword.AutoSize = true;
-            cbSavePassword.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cbSavePassword.Location = new Point(164, 75);
-            cbSavePassword.Name = "cbSavePassword";
-            cbSavePassword.Size = new Size(115, 21);
-            cbSavePassword.TabIndex = 6;
-            cbSavePassword.Text = "Save password";
-            cbSavePassword.UseVisualStyleBackColor = true;
-            cbSavePassword.CheckedChanged += cbSavePassword_CheckedChanged;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.Location = new Point(6, 75);
-            label6.Name = "label6";
-            label6.Size = new Size(157, 17);
-            label6.TabIndex = 5;
-            label6.Text = "Paradox Mods Password:";
-            // 
-            // txtPdxPw
-            // 
-            txtPdxPw.Location = new Point(6, 95);
-            txtPdxPw.Name = "txtPdxPw";
-            txtPdxPw.Size = new Size(264, 29);
-            txtPdxPw.TabIndex = 4;
-            txtPdxPw.UseSystemPasswordChar = true;
-            txtPdxPw.TextChanged += txtPdxPw_TextChanged;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(3, 23);
-            label5.Name = "label5";
-            label5.Size = new Size(190, 17);
-            label5.TabIndex = 3;
-            label5.Text = "Paradox Mods E-Mail Address:";
-            // 
-            // txtPdxMail
-            // 
-            txtPdxMail.Location = new Point(6, 43);
-            txtPdxMail.Name = "txtPdxMail";
-            txtPdxMail.Size = new Size(264, 29);
-            txtPdxMail.TabIndex = 0;
-            txtPdxMail.TextChanged += txtPdxMail_TextChanged;
             // 
             // groupPublishConfig
             // 
@@ -729,7 +658,6 @@
             tabPublish.Controls.Add(cmdMarkdownPreview2);
             tabPublish.Controls.Add(label15);
             tabPublish.Controls.Add(txtPublishChangeLog);
-            tabPublish.Controls.Add(groupPDXCredentials);
             tabPublish.Controls.Add(cmdUpdatePublishedConfiguration);
             tabPublish.Controls.Add(cmdPublishNewMod);
             tabPublish.Controls.Add(cmdPublishNewVersion);
@@ -836,7 +764,7 @@
             // 
             // cmdUpdatePublishedConfiguration
             // 
-            cmdUpdatePublishedConfiguration.Location = new Point(6, 303);
+            cmdUpdatePublishedConfiguration.Location = new Point(6, 162);
             cmdUpdatePublishedConfiguration.Name = "cmdUpdatePublishedConfiguration";
             cmdUpdatePublishedConfiguration.Size = new Size(279, 66);
             cmdUpdatePublishedConfiguration.TabIndex = 2;
@@ -846,7 +774,7 @@
             // 
             // cmdPublishNewMod
             // 
-            cmdPublishNewMod.Location = new Point(6, 159);
+            cmdPublishNewMod.Location = new Point(6, 18);
             cmdPublishNewMod.Name = "cmdPublishNewMod";
             cmdPublishNewMod.Size = new Size(279, 66);
             cmdPublishNewMod.TabIndex = 0;
@@ -856,7 +784,7 @@
             // 
             // cmdPublishNewVersion
             // 
-            cmdPublishNewVersion.Location = new Point(6, 231);
+            cmdPublishNewVersion.Location = new Point(6, 90);
             cmdPublishNewVersion.Name = "cmdPublishNewVersion";
             cmdPublishNewVersion.Size = new Size(279, 66);
             cmdPublishNewVersion.TabIndex = 1;
@@ -893,8 +821,6 @@
             statusStrip.PerformLayout();
             groupPrepare.ResumeLayout(false);
             groupPrepare.PerformLayout();
-            groupPDXCredentials.ResumeLayout(false);
-            groupPDXCredentials.PerformLayout();
             groupPublishConfig.ResumeLayout(false);
             groupPublishConfig.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)imageBox).EndInit();
@@ -937,12 +863,6 @@
         private OpenFileDialog browseGamePathDialog;
         private ToolStripSplitButton toolStripMenuButton;
         private ToolStripMenuItem toolStripMenu_OpenAppDir;
-        private GroupBox groupPDXCredentials;
-        private TextBox txtPdxMail;
-        private Label label5;
-        private Label label6;
-        private TextBox txtPdxPw;
-        private CheckBox cbSavePassword;
         private GroupBox groupPublishConfig;
         private Label label7;
         private Button cmdPublishNewMod;

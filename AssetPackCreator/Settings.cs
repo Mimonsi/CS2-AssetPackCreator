@@ -20,39 +20,6 @@ namespace AssetPackCreator
             }
         }
 
-        private string _pdxMail;
-        public string PdxMail
-        {
-            get => _pdxMail;
-            set
-            {
-                _pdxMail = value;
-                Save();
-            }
-        }
-
-        private string _pdxPassword;
-        public string PdxPassword
-        {
-            get => _pdxPassword;
-            set
-            {
-                _pdxPassword = value;
-                Save();
-            }
-        }
-
-        private bool _savePassword;
-        public bool SavePassword
-        {
-            get => _savePassword;
-            set
-            {
-                _savePassword = value;
-                Save();
-            }
-        }
-
         private bool _openModPageAfterUpdate = true;
 
         public bool OpenModPageAfterUpdate
@@ -88,8 +55,6 @@ namespace AssetPackCreator
         {
             // Copy object
             Settings toSave = this with { };
-            if (!_savePassword)
-                toSave._pdxPassword = "";
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(toSave);
             try
             {
