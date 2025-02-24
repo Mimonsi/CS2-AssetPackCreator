@@ -642,11 +642,12 @@ namespace AssetPackCreator
                     return;
                 }
 
-                var copiedFile = Path.Combine(Directory.GetCurrentDirectory(), "Properties", fi.Name);
+                var safeName = fi.Name.Replace(" ", "_");
+                var copiedFile = Path.Combine(Directory.GetCurrentDirectory(), "Properties", safeName);
                 File.Copy(fi.FullName, copiedFile, true);
                 imageBox.ImageLocation = copiedFile;
-                if (!publishConfig.Screenshots.Contains(Path.Combine("Properties", fi.Name)))
-                    publishConfig.AddScreenshot(Path.Combine("Properties", fi.Name));
+                if (!publishConfig.Screenshots.Contains(Path.Combine("Properties", safeName)))
+                    publishConfig.AddScreenshot(Path.Combine("Properties", safeName));
             }
         }
 

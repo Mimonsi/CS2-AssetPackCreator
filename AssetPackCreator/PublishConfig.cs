@@ -73,6 +73,11 @@ namespace AssetPackCreator
         {
             if (string.IsNullOrEmpty(screenshot))
                 return;
+            if (screenshot.Contains(" "))
+            {
+                MessageBox.Show("Error: Screenshot path contains spaces. They have been replaced by underscores.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                screenshot = screenshot.Replace(" ", "_");
+            }
             screenshot = screenshot.Replace("\\", "/");
             _screenshots.Add(screenshot);
             Save();
