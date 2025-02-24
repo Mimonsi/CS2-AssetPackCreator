@@ -429,6 +429,17 @@ namespace AssetPackCreator
             return true;
         }
 
+        public bool CheckIfValidConfig()
+        {
+            if (string.IsNullOrEmpty(txtPublishDisplayName.Text))
+                return false;
+            if (string.IsNullOrEmpty(txtPublishShortDescription.Text))
+                return false;
+            if (string.IsNullOrEmpty(txtPublishLongDescription.Text))
+                return false;
+            return true;
+        }
+
         private void cmdPublishNewMod_Click(object sender, EventArgs e)
         {
             //var localModPath = Path.Combine("C:\\Users", Environment.UserName, "AppData", "LocalLow", "Colossal Order", "Cities Skylines II", "Mods", pack.name);
@@ -439,8 +450,12 @@ namespace AssetPackCreator
                 MessageBox.Show("Please remove the Example Car Prop and enter real data for publishing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-            CreatePdxAccountFile();
+            if (!CheckIfValidConfig())
+            {
+                MessageBox.Show("Please enter valid data for publishing. Make sure all required fields have a value", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            
             UseWaitCursor = true;
             var result = Publisher.PublishNewMod(Directory.GetCurrentDirectory(), out int modId);
             UpdateStatus("Waiting for PDX Cache to update...");
@@ -468,12 +483,16 @@ namespace AssetPackCreator
 
         private void cmdPublishNewVersion_Click(object sender, EventArgs e)
         {
+            if (!CheckIfValidConfig())
+            {
+                MessageBox.Show("Please enter valid data for publishing. Make sure all required fields have a value", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (string.IsNullOrEmpty(txtPublishChangeLog.Text))
             {
                 MessageBox.Show("Please enter a changelog", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            CreatePdxAccountFile();
             UseWaitCursor = true;
             var result = Publisher.PublishNewVersion(Directory.GetCurrentDirectory());
             UpdateStatus("Waiting for PDX Cache to update...");
@@ -497,12 +516,16 @@ namespace AssetPackCreator
 
         private void cmdUpdatePublishedConfiguration_Click(object sender, EventArgs e)
         {
+            if (!CheckIfValidConfig())
+            {
+                MessageBox.Show("Please enter valid data for publishing. Make sure all required fields have a value", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (string.IsNullOrEmpty(txtPublishChangeLog.Text))
             {
                 MessageBox.Show("Please enter a changelog", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            CreatePdxAccountFile();
             UseWaitCursor = true;
             var result = Publisher.UpdatePublishedConfiguration(Directory.GetCurrentDirectory());
             UpdateStatus("Waiting for PDX Cache to update...");
