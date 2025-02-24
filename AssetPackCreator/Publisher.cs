@@ -72,6 +72,11 @@ public class Publisher
         return (output.ToString(), error.ToString());
     }
 
+    private static bool TryGiveHelpFullErrorInfo(string message)
+    {
+        return false;
+    }
+
 
     public static PublishResult PublishNewVersion(string projectPath)
     {
@@ -99,7 +104,10 @@ public class Publisher
         catch (Exception e)
         {
             Clipboard.SetText(result.Item1);
-            MessageBox.Show("Unknown Error executing command. Full output: " + result.Item1, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            var splitIn = "process failed";
+            var failedText = result.Item1.Substring(result.Item1.IndexOf(splitIn, StringComparison.Ordinal) + splitIn.Length);
+            if (!TryGiveHelpFullErrorInfo(result.Item1))
+                MessageBox.Show("Unknown Error executing command. Full error message has been copied to the clipboard, please share it if you need help. Error: " + failedText, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         return PublishResult.Error;
     }
@@ -130,7 +138,10 @@ public class Publisher
         catch (Exception e)
         {
             Clipboard.SetText(result.Item1);
-            MessageBox.Show("Unknown Error executing command. Full output: " + result.Item1, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            var splitIn = "process failed";
+            var failedText = result.Item1.Substring(result.Item1.IndexOf(splitIn, StringComparison.Ordinal) + splitIn.Length);
+            if (!TryGiveHelpFullErrorInfo(result.Item1))
+                MessageBox.Show("Unknown Error executing command. Full error message has been copied to the clipboard, please share it if you need help. Error: " + failedText, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         return PublishResult.Error;
     }
@@ -170,7 +181,10 @@ public class Publisher
         catch (Exception e)
         {
             Clipboard.SetText(result.Item1);
-            MessageBox.Show("Unknown Error executing command. Full output: " + result.Item1, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            var splitIn = "process failed";
+            var failedText = result.Item1.Substring(result.Item1.IndexOf(splitIn, StringComparison.Ordinal) + splitIn.Length);
+            if (!TryGiveHelpFullErrorInfo(result.Item1))
+                MessageBox.Show("Unknown Error executing command. Full error message has been copied to the clipboard, please share it if you need help. Error: " + failedText, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         return PublishResult.Error;
         /*
