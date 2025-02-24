@@ -95,9 +95,11 @@ public class Publisher
             }
             else
             {
+                // TODO: Error handle all error cases
                 // Remove everything before "Start publishing process"
                 output = output.Substring(output.IndexOf("Start publishing new version process", StringComparison.Ordinal));
-                Clipboard.SetText(output);
+                if (string.IsNullOrEmpty(output)) 
+                    Clipboard.SetText(output);
                 MessageBox.Show("Error publishing new version: (full message copied to clipboard)" + output, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -137,6 +139,8 @@ public class Publisher
         }
         catch (Exception e)
         {
+            if (string.IsNullOrEmpty(result.Item1)) 
+                Clipboard.SetText(result.Item1);
             Clipboard.SetText(result.Item1);
             var splitIn = "process failed";
             var failedText = result.Item1.Substring(result.Item1.IndexOf(splitIn, StringComparison.Ordinal) + splitIn.Length);
