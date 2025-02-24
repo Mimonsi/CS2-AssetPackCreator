@@ -423,7 +423,7 @@ namespace AssetPackCreator
                 MessageBox.Show("Please enter valid data for publishing. Make sure all required fields have a value", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            
+
             UseWaitCursor = true;
             var result = Publisher.PublishNewMod(Directory.GetCurrentDirectory(), out int modId);
             UpdateStatus("Waiting for PDX Cache to update...");
@@ -618,7 +618,7 @@ namespace AssetPackCreator
             else
             {
                 cmdRemoveImage.Enabled = true;
-                imageBox.ImageLocation = Path.Combine(Directory.GetCurrentDirectory(), lbImages.SelectedItem.ToString());;
+                imageBox.ImageLocation = Path.Combine(Directory.GetCurrentDirectory(), lbImages.SelectedItem.ToString()); ;
             }
 
         }
@@ -659,6 +659,18 @@ namespace AssetPackCreator
                 MessageBox.Show($"Error deleting image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+        }
+
+        private void cmdBuildMod_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Function not fully implemented yet. Using workaround by publishing with invalid id. You may ignore all errors that follow.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+            var description = publishConfig.ShortDescription;
+            publishConfig.ShortDescription = "";
+            // TODO: Circumvent errors
+            cmdPublishNewMod_Click(sender, e);
+            Thread.Sleep(1000);
+            publishConfig.ShortDescription = description;
+            
         }
     }
 }

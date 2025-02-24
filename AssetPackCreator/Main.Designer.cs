@@ -98,6 +98,7 @@
             cmdPublishNewVersion = new Button();
             changesSavedTimer = new System.Windows.Forms.Timer(components);
             selectAssetsFolderDialog = new FolderBrowserDialog();
+            cmdBuildMod = new Button();
             groupRename.SuspendLayout();
             groupAddAssets.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)assetThumbnailBox).BeginInit();
@@ -648,6 +649,7 @@
             // tabPublish
             // 
             tabPublish.BackColor = SystemColors.Control;
+            tabPublish.Controls.Add(cmdBuildMod);
             tabPublish.Controls.Add(label11);
             tabPublish.Controls.Add(txtPublishModId);
             tabPublish.Controls.Add(cbOpenModPageAfterUpdate);
@@ -764,7 +766,7 @@
             // 
             // cmdUpdatePublishedConfiguration
             // 
-            cmdUpdatePublishedConfiguration.Location = new Point(6, 162);
+            cmdUpdatePublishedConfiguration.Location = new Point(6, 303);
             cmdUpdatePublishedConfiguration.Name = "cmdUpdatePublishedConfiguration";
             cmdUpdatePublishedConfiguration.Size = new Size(279, 66);
             cmdUpdatePublishedConfiguration.TabIndex = 2;
@@ -774,7 +776,7 @@
             // 
             // cmdPublishNewMod
             // 
-            cmdPublishNewMod.Location = new Point(6, 18);
+            cmdPublishNewMod.Location = new Point(6, 159);
             cmdPublishNewMod.Name = "cmdPublishNewMod";
             cmdPublishNewMod.Size = new Size(279, 66);
             cmdPublishNewMod.TabIndex = 0;
@@ -784,7 +786,7 @@
             // 
             // cmdPublishNewVersion
             // 
-            cmdPublishNewVersion.Location = new Point(6, 90);
+            cmdPublishNewVersion.Location = new Point(6, 231);
             cmdPublishNewVersion.Name = "cmdPublishNewVersion";
             cmdPublishNewVersion.Size = new Size(279, 66);
             cmdPublishNewVersion.TabIndex = 1;
@@ -801,6 +803,16 @@
             // selectAssetsFolderDialog
             // 
             selectAssetsFolderDialog.HelpRequest += selectAssetsFolderDialog_HelpRequest;
+            // 
+            // cmdBuildMod
+            // 
+            cmdBuildMod.Location = new Point(6, 6);
+            cmdBuildMod.Name = "cmdBuildMod";
+            cmdBuildMod.Size = new Size(279, 66);
+            cmdBuildMod.TabIndex = 20;
+            cmdBuildMod.Text = "Build Mod Locally";
+            cmdBuildMod.UseVisualStyleBackColor = true;
+            cmdBuildMod.Click += cmdBuildMod_Click;
             // 
             // Main
             // 
@@ -907,5 +919,6 @@
         private Button cmdRemoveImage;
         private Button cmdAddImage;
         private PictureBox imageBox;
+        private Button cmdBuildMod;
     }
 }
