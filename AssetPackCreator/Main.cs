@@ -396,8 +396,8 @@ namespace AssetPackCreator
                 return false;
             return true;
         }
-
-        public bool CheckIfValidConfig()
+        
+        private bool CheckIfValidConfig()
         {
             if (string.IsNullOrEmpty(txtPublishDisplayName.Text))
                 return false;
@@ -410,9 +410,6 @@ namespace AssetPackCreator
 
         private void cmdPublishNewMod_Click(object sender, EventArgs e)
         {
-            //var localModPath = Path.Combine("C:\\Users", Environment.UserName, "AppData", "LocalLow", "Colossal Order", "Cities Skylines II", "Mods", pack.name);
-            //var publishConfigPath = Path.Combine(Directory.GetCurrentDirectory(), "Properties", "PublishConfiguration.xml");
-            //Publisher.PublishNewMod(settings.Cities2Path, publishConfigPath, settings.PdxMail, settings.PdxPassword, localModPath);
             if (!CheckIsDifferentFromExample())
             {
                 MessageBox.Show("Please remove the Example Car Prop and enter real data for publishing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -519,6 +516,25 @@ namespace AssetPackCreator
                     UseShellExecute = true
                 });
             }
+        }
+        
+        private void cmdBuildMod_Click(object sender, EventArgs e)
+        {
+            //MessageBox.Show("Function not fully implemented yet. Using workaround by publishing with invalid id. You may ignore all errors that follow.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+            //var description = publishConfig.ShortDescription; 
+            //publishConfig.ShortDescription = "";
+            Publisher.BuildMod(Directory.GetCurrentDirectory());
+            //publishConfig.ShortDescription = description;
+            UpdateStatus("Mod built successfully");
+            try
+            {
+                Process.Start($"C:/Users/{Environment.UserName}/AppData/LocalLow/Colossal Order/Cities Skylines II//Mods");
+            }
+            catch(Exception)
+            {
+                // Ignored
+            }
+            
         }
 
         private void tabPrepare_Click(object sender, EventArgs e)
@@ -666,18 +682,6 @@ namespace AssetPackCreator
                 MessageBox.Show($"Error deleting image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-        }
-
-        private void cmdBuildMod_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Function not fully implemented yet. Using workaround by publishing with invalid id. You may ignore all errors that follow.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-            var description = publishConfig.ShortDescription;
-            publishConfig.ShortDescription = "";
-            // TODO: Circumvent errors
-            cmdPublishNewMod_Click(sender, e);
-            Thread.Sleep(1000);
-            publishConfig.ShortDescription = description;
-            
         }
     }
 }
